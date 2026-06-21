@@ -35,19 +35,25 @@
   .eyebrow{font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
   .btn{display:inline-flex;align-items:center;gap:.5em;font-weight:600;font-size:.92rem;padding:.875rem 2.25rem;border-radius:5px;cursor:pointer;transition:.2s var(--ease)}
   .btn-red{background:var(--red);color:#fff}
-  .btn-red:hover{background:var(--red-deep)}
+  .btn-red:hover{background:var(--red-deep);transform:translateY(-1px);box-shadow:0 12px 28px -10px rgba(235,32,79,.65)}
   .btn-out{background:transparent;color:var(--fg);box-shadow:inset 0 0 0 1.5px var(--line-2)}
   .btn-out:hover{box-shadow:inset 0 0 0 1.5px var(--red);color:#fff}
 
   /* NAV */
-  header{position:sticky;top:0;z-index:50;background:rgba(22,16,31,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  .nav{display:flex;align-items:center;justify-content:space-between;height:68px;gap:20px}
+  header{position:sticky;top:0;z-index:50;background:rgba(12,8,30,.78);backdrop-filter:saturate(150%) blur(14px);border-bottom:1px solid var(--line);
+    transition:background .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease)}
+  header.scrolled{background:rgba(11,7,26,.97);box-shadow:0 16px 40px -18px rgba(0,0,0,.75);border-color:rgba(255,255,255,.12)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:74px;gap:20px;transition:height .3s var(--ease)}
+  header.scrolled .nav{height:60px}
   .brand{display:flex;align-items:center;gap:.55rem;font-weight:800;font-size:1.08rem;color:var(--fg);letter-spacing:-.02em}
   .brand img{width:26px;height:26px}
   .brand .z{color:var(--red)}
-  .nav-links{display:flex;align-items:center;gap:1.7rem}
-  .nav-links a{font-size:.86rem;font-weight:500;color:var(--muted);transition:color .2s}
-  .nav-links a:hover{color:var(--fg)}
+  .nav-links{display:flex;align-items:center;gap:.3rem}
+  .nav-links a{position:relative;font-size:.88rem;font-weight:500;color:var(--muted);padding:.5rem .85rem;border-radius:8px;transition:color .2s,background .2s}
+  .nav-links a:hover{color:#fff;background:rgba(255,255,255,.05)}
+  .nav-links a::after{content:"";position:absolute;left:.85rem;right:.85rem;bottom:.32rem;height:2px;background:var(--red);border-radius:2px;
+    transform:scaleX(0);transform-origin:left;transition:transform .28s var(--ease)}
+  .nav-links a:hover::after{transform:scaleX(1)}
   .nav-end{display:flex;align-items:center;gap:1rem}
   @media(max-width:980px){.nav-links{display:none}.nav-end .login{display:none}}
 
@@ -128,11 +134,17 @@
 
   /* STATS strip */
   .statsband{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:clamp(36px,4vw,52px) 0;text-align:center}
-  .stat .v{font-weight:800;font-size:clamp(2.2rem,4vw,3rem);color:#fff;letter-spacing:-.03em}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);padding:clamp(42px,5vw,66px) 0;text-align:center}
+  .stat{position:relative;padding:0 16px;opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+  .stat + .stat::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);height:56px;width:1px;background:linear-gradient(transparent,rgba(255,255,255,.16),transparent)}
+  .statsband.in .stat{opacity:1;transform:none}
+  .statsband.in .stat:nth-child(2){transition-delay:.08s}
+  .statsband.in .stat:nth-child(3){transition-delay:.16s}
+  .statsband.in .stat:nth-child(4){transition-delay:.24s}
+  .stat .v{font-weight:800;font-size:clamp(2.6rem,4.6vw,3.7rem);color:#fff;letter-spacing:-.035em;line-height:1;font-variant-numeric:tabular-nums}
   .stat .v .s{color:var(--red)}
-  .stat .l{margin-top:.4rem;font-size:.82rem;color:var(--muted)}
-  @media(max-width:680px){.stats{grid-template-columns:1fr 1fr;gap:32px}}
+  .stat .l{margin-top:.7rem;font-size:.84rem;color:var(--muted)}
+  @media(max-width:680px){.stats{grid-template-columns:1fr 1fr;gap:36px 0}.stat:nth-child(3)::before,.stat:nth-child(2)::before{content:none}}
 
   /* TESTIMONIALS */
   .tgrid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(28px,4vw,56px);align-items:center}
@@ -278,10 +290,10 @@
 <!-- STATS -->
 <div class="statsband">
   <div class="wrap stats">
-    <div class="stat"><div class="v">340<span class="s">+</span></div><div class="l">Assessments delivered</div></div>
-    <div class="stat"><div class="v">127<span class="s">+</span></div><div class="l">Critical findings proven</div></div>
-    <div class="stat"><div class="v">98<span class="s">%</span></div><div class="l">Remediation verified</div></div>
-    <div class="stat"><div class="v">15<span class="s">+</span></div><div class="l">Industries secured</div></div>
+    <div class="stat"><div class="v"><span class="num" data-to="340">0</span><span class="s">+</span></div><div class="l">Assessments delivered</div></div>
+    <div class="stat"><div class="v"><span class="num" data-to="127">0</span><span class="s">+</span></div><div class="l">Critical findings proven</div></div>
+    <div class="stat"><div class="v"><span class="num" data-to="98">0</span><span class="s">%</span></div><div class="l">Remediation verified</div></div>
+    <div class="stat"><div class="v"><span class="num" data-to="15">0</span><span class="s">+</span></div><div class="l">Industries secured</div></div>
   </div>
 </div>
 
@@ -345,6 +357,37 @@
       c.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
     });
   });
+
+  // Smooth scroll-shrink navbar
+  var hdr = document.querySelector('header');
+  function onScroll(){ hdr.classList.toggle('scrolled', window.scrollY > 24); }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  // Animated stat counters (21st.dev "Animated Counter" pattern) — count up on scroll in
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var band = document.querySelector('.statsband');
+  function runCounters(){
+    document.querySelectorAll('.statsband .num').forEach(function(el){
+      var to = +el.getAttribute('data-to'), dur = 1700, t0 = null;
+      if (reduce){ el.textContent = to; return; }
+      function step(ts){
+        if(!t0) t0 = ts;
+        var p = Math.min((ts - t0)/dur, 1);
+        var e = 1 - Math.pow(1 - p, 3);           // easeOutCubic
+        el.textContent = Math.round(to * e);
+        if(p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }
+  if (band){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ band.classList.add('in'); runCounters(); io.disconnect(); }
+      });
+    }, {threshold:.4});
+    io.observe(band);
+  }
 </script>
 </body>
 </html>
