@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SubZeroSec — Pragmatic (TypeUI design skill)</title>
+<link rel="icon" href="./logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     SubZeroSec · "PRAGMATIC" — built faithfully to the TypeUI
+     Pragmatic design skill (typeui.sh/design-skills/pragmatic).
+     Flat, square, borderless, shadow-free. Single typeface
+     (Gothic A1). Stark white/black with one yellow brand surface.
+     ============================================================ */
+  :root{
+    --surface:#FFFFFF; --surface-2:#F5F5F4; --brand:#FFE202; --brand-strong:#E5CB00;
+    --ink:#141414; --body:#4B4B47; --divider:#E3E3DF; --divider-ink:#141414;
+    --maxw:1200px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{background:var(--surface);color:var(--body);font-family:"Gothic A1",system-ui,sans-serif;line-height:1.6;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:var(--brand);color:var(--ink)}
+  a{color:inherit;text-decoration:none}
+  :focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+  h1,h2,h3{font-family:"Gothic A1";color:var(--ink);line-height:1.02;letter-spacing:-.02em}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,4vw,40px)}
+  .kick{font-size:.72rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--ink)}
+  .kick.dim{color:var(--body)}
+  /* square, flat buttons */
+  .btn{display:inline-flex;align-items:center;gap:.5em;font-family:"Gothic A1";font-weight:800;font-size:.92rem;
+    padding:16px 28px;border:0;border-radius:0;cursor:pointer;transition:background .15s ease,color .15s ease}
+  .btn-primary{background:var(--brand);color:var(--ink)}
+  .btn-primary:hover{background:var(--brand-strong)}
+  .btn-secondary{background:var(--ink);color:#fff}
+  .btn-secondary:hover{background:#000}
+  .btn-line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
+  .btn-line:hover{background:var(--ink);color:#fff}
+
+  /* ===== HEADER ===== */
+  header{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--divider-ink)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .brand{font-family:"Gothic A1";font-weight:900;font-size:1.15rem;letter-spacing:-.02em;color:var(--ink);display:flex;align-items:center}
+  .brand .z{background:var(--brand);padding:0 .25em;margin-left:.1em}
+  .nav-links{display:flex;align-items:center;gap:2.2rem}
+  .nav-links a{font-size:.9rem;font-weight:600;color:var(--ink);transition:color .15s}
+  .nav-links a:hover{color:var(--body)}
+  @media(max-width:880px){.nav-links a:not(.btn){display:none}}
+
+  /* ===== HERO ===== */
+  .hero{padding:clamp(64px,9vw,120px) 0 clamp(56px,7vw,96px)}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(32px,5vw,72px);align-items:center}
+  .hero h1{font-size:clamp(3.4rem,9vw,7rem);font-weight:900;letter-spacing:-.03em;line-height:.92}
+  .hero h1 .mk{background:var(--brand);color:var(--ink);padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+  .hero .desc{margin-top:clamp(20px,3vw,28px);font-size:1.18rem;max-width:34ch;color:var(--body);font-weight:400}
+  .hero .desc b{color:var(--ink);font-weight:700}
+  .hero .btnrow{margin-top:clamp(28px,4vw,40px);display:flex;gap:12px;flex-wrap:wrap}
+  /* flat engagement summary (background-step, no border/shadow) */
+  .panel{background:var(--surface-2);padding:clamp(24px,3vw,32px)}
+  .panel .ph{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:16px;border-bottom:1px solid var(--divider-ink)}
+  .panel .ph .t{font-size:.74rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+  .panel .ph .s{font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:#fff;padding:4px 8px}
+  .panel .sev{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--divider)}
+  .panel .sev:last-of-type{border-bottom:0}
+  .panel .sev .nm{width:80px;font-size:.92rem;font-weight:700;color:var(--ink)}
+  .panel .bar{flex:1;height:10px;background:#fff}
+  .panel .bar i{display:block;height:100%}
+  .panel .sev .ct{width:28px;text-align:right;font-weight:800;color:var(--ink)}
+  .panel .pf{margin-top:16px;padding-top:16px;border-top:1px solid var(--divider-ink);display:flex;justify-content:space-between;font-size:.82rem;font-weight:600;color:var(--body)}
+  .panel .pf b{color:var(--ink);font-weight:800}
+  @media(max-width:880px){.hero-grid{grid-template-columns:1fr}}
+
+  /* ===== ACCRED (surface step) ===== */
+  .accred{background:var(--surface-2);border-top:1px solid var(--divider-ink);border-bottom:1px solid var(--divider-ink)}
+  .accred .in{display:flex;align-items:center;gap:clamp(18px,3.5vw,44px);flex-wrap:wrap;padding:20px 0}
+  .accred .t{font-size:.7rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--body)}
+  .accred .b{font-size:.92rem;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+
+  /* ===== STATS — the one bright yellow surface ===== */
+  .stats{background:var(--brand)}
+  .stats .in{display:grid;grid-template-columns:repeat(4,1fr);padding:clamp(40px,5vw,64px) 0;gap:24px}
+  .stat{padding:0 clamp(8px,2vw,20px);border-right:1px solid rgba(20,20,20,.18)}
+  .stat:last-child{border-right:0}
+  .stat .v{font-size:clamp(2.8rem,5.5vw,4.2rem);font-weight:900;letter-spacing:-.04em;color:var(--ink);line-height:1}
+  .stat .l{margin-top:8px;font-size:.74rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+  @media(max-width:760px){.stats .in{grid-template-columns:1fr 1fr;gap:32px}.stat:nth-child(2){border-right:0}}
+
+  /* ===== SECTION SHELL ===== */
+  section.block{padding:clamp(56px,7vw,104px) 0}
+  .block.step{background:var(--surface-2)}
+  .shead{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:clamp(32px,4vw,56px)}
+  .shead .kick{display:block;margin-bottom:14px}
+  .shead h2{font-size:clamp(2rem,4.4vw,3.2rem);font-weight:800;letter-spacing:-.025em}
+
+  /* services — flat grid, hairline dividers, background-step hover */
+  .svc{border-top:1px solid var(--divider-ink);border-left:1px solid var(--divider-ink)}
+  .svc-row{display:grid;grid-template-columns:repeat(3,1fr)}
+  .cell{padding:clamp(28px,3vw,40px) clamp(22px,2.5vw,30px) clamp(34px,4vw,44px);border-right:1px solid var(--divider-ink);
+    border-bottom:1px solid var(--divider-ink);position:relative;min-height:220px;display:flex;flex-direction:column;transition:background .15s}
+  .cell:hover{background:var(--surface-2)}
+  .cell .ic{width:34px;height:34px;color:var(--ink)}
+  .cell .n{position:absolute;top:22px;right:26px;font-size:.8rem;font-weight:800;color:var(--ink)}
+  .cell h3{font-size:1.35rem;font-weight:800;margin:1.4rem 0 .5rem;letter-spacing:-.01em}
+  .cell p{color:var(--body);font-size:.95rem;flex:1;font-weight:400}
+  .cell .go{margin-top:1.2rem;font-size:.82rem;font-weight:800;letter-spacing:.04em;color:var(--ink)}
+  .cell.brand-cell{background:var(--brand)}
+  .cell.brand-cell:hover{background:var(--brand-strong)}
+  .cell.brand-cell h3,.cell.brand-cell p,.cell.brand-cell .go{color:var(--ink)}
+  @media(max-width:860px){.svc-row{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.svc-row{grid-template-columns:1fr}}
+
+  /* method — flat numbered steps */
+  .proc{border-top:1px solid var(--divider-ink);border-left:1px solid var(--divider-ink);display:grid;grid-template-columns:repeat(5,1fr)}
+  .pstep{padding:clamp(26px,3vw,38px) clamp(18px,2vw,24px);border-right:1px solid var(--divider-ink);border-bottom:1px solid var(--divider-ink)}
+  .pstep .n{font-size:1.5rem;font-weight:900;color:var(--ink);letter-spacing:-.03em}
+  .pstep h3{font-size:1.1rem;font-weight:800;margin:.6rem 0 .35rem}
+  .pstep p{color:var(--body);font-size:.86rem;font-weight:400}
+  @media(max-width:760px){.proc{grid-template-columns:1fr 1fr}}
+  @media(max-width:460px){.proc{grid-template-columns:1fr}}
+
+  /* featured */
+  .feat{display:grid;grid-template-columns:1.3fr 1fr;border:1px solid var(--divider-ink)}
+  .feat .m{padding:clamp(36px,5vw,60px) clamp(24px,4vw,48px);border-right:1px solid var(--divider-ink)}
+  .feat .sector{font-size:.74rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+  .feat h3{font-size:clamp(1.5rem,3vw,2.1rem);font-weight:800;margin:1rem 0 1.4rem;max-width:20ch;letter-spacing:-.02em}
+  .feat .o{padding:clamp(20px,3vw,28px) clamp(22px,3vw,30px);border-bottom:1px solid var(--divider-ink);display:flex;align-items:baseline;gap:14px}
+  .feat .o:last-child{border-bottom:0}
+  .feat .o b{font-size:1.9rem;font-weight:900;color:var(--ink);min-width:3.4ch;letter-spacing:-.03em}
+  .feat .o span{font-size:.82rem;font-weight:600;color:var(--body)}
+  @media(max-width:760px){.feat{grid-template-columns:1fr}.feat .m{border-right:0;border-bottom:1px solid var(--divider-ink)}}
+
+  /* CTA — black surface */
+  .cta{background:var(--ink)}
+  .cta .in{padding:clamp(56px,7vw,96px) 0;text-align:center}
+  .cta .kick{color:var(--brand)}
+  .cta h2{color:#fff;font-size:clamp(2.2rem,5vw,3.6rem);font-weight:900;margin-top:14px;letter-spacing:-.03em}
+  .cta h2 .mk{background:var(--brand);color:var(--ink);padding:0 .12em}
+  .cta .btnrow{margin-top:32px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .cta .btn-line{box-shadow:inset 0 0 0 2px #fff;color:#fff}
+  .cta .btn-line:hover{background:#fff;color:var(--ink)}
+
+  footer{background:var(--ink);color:#9a9a96;border-top:1px solid #2a2a2a}
+  .foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:28px 0;font-size:.82rem;font-weight:600}
+  footer a:hover{color:#fff}
+  .badge{position:fixed;left:14px;bottom:14px;z-index:60;font-size:.62rem;font-weight:800;letter-spacing:.14em;
+    color:var(--ink);background:var(--brand);padding:6px 10px}
+</style>
+</head>
+<body>
+<div class="badge">PRAGMATIC · TypeUI design skill</div>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#">SUBZERO<span class="z">SEC</span></a>
+    <nav class="nav-links">
+      <a href="#services">Services</a><a href="#method">Method</a><a href="#work">Work</a><a href="#">Insights</a>
+      <a href="#cta" class="btn btn-primary">Book assessment</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="kick">Offensive Security · Est. 2019</span>
+      <h1 style="margin-top:20px">Find the zero-day <span class="mk">before they do.</span></h1>
+      <p class="desc">Manual, exploit-driven security testing for organisations that <b>can't afford to be breached.</b></p>
+      <div class="btnrow">
+        <a href="#cta" class="btn btn-primary">Book an assessment →</a>
+        <a href="#services" class="btn btn-secondary">View capabilities</a>
+      </div>
+    </div>
+    <div class="panel" aria-hidden="true">
+      <div class="ph"><span class="t">Engagement · SZS-2291</span><span class="s">Verified closed</span></div>
+      <div style="padding-top:8px">
+        <div class="sev"><span class="nm">Critical</span><span class="bar"><i style="width:84%;background:#141414"></i></span><span class="ct">3</span></div>
+        <div class="sev"><span class="nm">High</span><span class="bar"><i style="width:62%;background:#141414"></i></span><span class="ct">7</span></div>
+        <div class="sev"><span class="nm">Medium</span><span class="bar"><i style="width:40%;background:#141414"></i></span><span class="ct">11</span></div>
+        <div class="sev"><span class="nm">Low</span><span class="bar"><i style="width:22%;background:#141414"></i></span><span class="ct">6</span></div>
+      </div>
+      <div class="pf"><span>Proven with PoC: <b>27 / 27</b></span><span>Retest: <b>PASSED</b></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCRED -->
+<div class="accred">
+  <div class="wrap in">
+    <span class="t">Accredited</span>
+    <span class="b">CREST</span><span class="b">OSCP / OSCE</span><span class="b">ISO 27001</span>
+    <span class="b">SOC 2 Type II</span><span class="b">PCI DSS · QSA</span><span class="b">CHECK · NCSC</span>
+  </div>
+</div>
+
+<!-- STATS (yellow surface) -->
+<div class="stats">
+  <div class="wrap in">
+    <div class="stat"><div class="v">340+</div><div class="l">Assessments delivered</div></div>
+    <div class="stat"><div class="v">127+</div><div class="l">Critical findings proven</div></div>
+    <div class="stat"><div class="v">98%</div><div class="l">Remediation verified</div></div>
+    <div class="stat"><div class="v">15+</div><div class="l">Industries secured</div></div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="block" id="services">
+  <div class="wrap">
+    <div class="shead">
+      <div><span class="kick">01 — Capabilities</span><h2>Five ways we reach it first.</h2></div>
+      <a href="#" class="btn btn-line">All services →</a>
+    </div>
+    <div class="svc">
+      <div class="svc-row">
+        <div class="cell"><span class="n">01</span>
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="2"/></svg>
+          <h3>Penetration Testing</h3><p>Web, API, network, cloud & mobile — every finding proven with a working exploit.</p><div class="go">EXPLORE →</div></div>
+        <div class="cell"><span class="n">02</span>
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 21l7-7M21 3l-7 7M14 4l6 6M4 14l6 6M14 10l-4 4"/></svg>
+          <h3>Red Teaming</h3><p>Intelligence-led adversary emulation against your live defences and detection.</p><div class="go">EXPLORE →</div></div>
+        <div class="cell"><span class="n">03</span>
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 12l6-3M12 12V4"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
+          <h3>Threat Hunting</h3><p>Assume breach. Surface the threats already inside before they act.</p><div class="go">EXPLORE →</div></div>
+      </div>
+      <div class="svc-row">
+        <div class="cell"><span class="n">04</span>
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.5 7.5L11 15M16.5 7.5L13 15M8 6h8"/></svg>
+          <h3>OSINT</h3><p>Exposed assets and leaked credentials, mapped before an attacker uses them.</p><div class="go">EXPLORE →</div></div>
+        <div class="cell"><span class="n">05</span>
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3"/><rect x="8" y="8" width="8" height="8"/></svg>
+          <h3>Attack-Surface Analysis</h3><p>Everything reachable from outside — the way an attacker sees you.</p><div class="go">EXPLORE →</div></div>
+        <a class="cell brand-cell" href="#cta">
+          <h3 style="margin-top:0">See yourself the way an adversary does.</h3><p>Book a scoped engagement.</p><div class="go">BOOK ASSESSMENT →</div></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METHOD -->
+<section class="block step" id="method">
+  <div class="wrap">
+    <div class="shead"><div><span class="kick">02 — Method</span><h2>From weakness to verified-gone.</h2></div></div>
+    <div class="proc">
+      <div class="pstep"><div class="n">01</div><h3>Discover</h3><p>Map the live attack surface.</p></div>
+      <div class="pstep"><div class="n">02</div><h3>Validate</h3><p>Prove it by exploitation.</p></div>
+      <div class="pstep"><div class="n">03</div><h3>Prioritise</h3><p>Rank by real-world impact.</p></div>
+      <div class="pstep"><div class="n">04</div><h3>Remediate</h3><p>Fix, with engineer-ready guidance.</p></div>
+      <div class="pstep"><div class="n">05</div><h3>Verify</h3><p>Re-attack the fix.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED -->
+<section class="block" id="work">
+  <div class="wrap">
+    <div class="shead"><div><span class="kick">03 — Proven work · Banking</span><h2>Evidence, not assurances.</h2></div></div>
+    <div class="feat">
+      <div class="m">
+        <div class="sector">Red Team + VAPT</div>
+        <h3>Phishing to fraudulent transfer — every path closed.</h3>
+        <a href="#" class="btn btn-line">Read the case study →</a>
+      </div>
+      <div>
+        <div class="o"><b>11</b><span>attack paths to payment systems closed</span></div>
+        <div class="o"><b>4 hrs</b><span>to detection after tuning, from undetected</span></div>
+        <div class="o"><b>0</b><span>fraudulent transfers possible at re-test</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta" id="cta">
+  <div class="wrap in">
+    <span class="kick">Get ahead of zero</span>
+    <h2>See yourself the way an attacker <span class="mk">already does.</span></h2>
+    <div class="btnrow">
+      <a href="#" class="btn btn-primary">Book a security assessment →</a>
+      <a href="#" class="btn btn-line">Talk to an operator</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 SUBZEROSEC — BEFORE ZERO. BEYOND BREACH.</span>
+    <span><a href="#">LinkedIn</a> · <a href="#">X</a> · <a href="#">GitHub</a> · hello@subzerosec.com</span>
+  </div>
+</footer>
+</body>
+</html>
