@@ -18,7 +18,7 @@
   :root{
     --paper:#FBFAF6; --paper-2:#F2EFE7; --ink:#16140F; --body:#4C473D; --muted:#6E685B; --faint:#A59E8E;
     --rule:#DED8CA; --rule-ink:#16140F; --brand:#1A2CC4; --brand-2:#3A4BD8;
-    --ease:cubic-bezier(.22,1,.36,1); --maxw:1360px;
+    --ease:cubic-bezier(.22,1,.36,1); --maxw:1180px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -118,7 +118,7 @@
   .foot{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:.82rem;color:var(--muted)}
   .foot a:hover{color:var(--brand)}
   .badge{position:fixed;left:14px;bottom:14px;z-index:60;font-family:"Inter";font-size:.62rem;font-weight:700;letter-spacing:.1em;color:var(--paper);background:var(--ink);padding:6px 10px}
-header{transition:box-shadow .35s ease,background-color .35s ease}header.scrolled{box-shadow:0 16px 40px -20px rgba(0,0,0,.5)}.nav{transition:height .3s ease}header.scrolled .nav{height:58px}</style>
+</style>
 </head>
 <body>
 <div class="badge">EDITORIAL · magazine</div>
@@ -176,10 +176,10 @@ header{transition:box-shadow .35s ease,background-color .35s ease}header.scrolle
 <section style="padding-top:0">
   <div class="wrap">
     <div class="figs">
-      <div class="fig"><div class="v"><span class="num" data-to="340">0</span><span class="s">+</span></div><div class="l">Assessments delivered</div></div>
-      <div class="fig"><div class="v"><span class="num" data-to="127">0</span><span class="s">+</span></div><div class="l">Critical findings proven</div></div>
-      <div class="fig"><div class="v"><span class="num" data-to="98">0</span><span class="s">%</span></div><div class="l">Remediation verified</div></div>
-      <div class="fig"><div class="v"><span class="num" data-to="15">0</span><span class="s">+</span></div><div class="l">Industries secured</div></div>
+      <div class="fig"><div class="v">340<span class="s">+</span></div><div class="l">Assessments delivered</div></div>
+      <div class="fig"><div class="v">127<span class="s">+</span></div><div class="l">Critical findings proven</div></div>
+      <div class="fig"><div class="v">98<span class="s">%</span></div><div class="l">Remediation verified</div></div>
+      <div class="fig"><div class="v">15<span class="s">+</span></div><div class="l">Industries secured</div></div>
     </div>
   </div>
 </section>
@@ -231,6 +231,5 @@ header{transition:box-shadow .35s ease,background-color .35s ease}header.scrolle
     <span><a href="#">LinkedIn</a> · <a href="#">X</a> · <a href="#">GitHub</a> · hello@subzerosec.com</span>
   </div>
 </footer>
-<script src="./enhance.js"></script>
 </body>
 </html>
