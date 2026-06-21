@@ -98,19 +98,31 @@
   .shead h2{font-size:clamp(2rem,4vw,2.9rem);margin-top:.7rem}
   .shead p{margin-top:1rem;color:var(--muted)}
 
-  /* SERVICE CARDS (3-col, image header, red learn more) */
-  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,24px)}
-  .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:.25s var(--ease);display:flex;flex-direction:column}
-  .card:hover{border-color:rgba(229,56,79,.45);transform:translateY(-4px)}
-  .card .head{height:120px;display:flex;align-items:center;justify-content:center;position:relative;
-    background:linear-gradient(135deg,#1d1640,#100b26)}
-  .card .head::after{content:"";position:absolute;inset:0;background:radial-gradient(120px 80px at 70% 20%,rgba(235,32,79,.24),transparent 70%)}
-  .card .head .ic{position:relative;z-index:2;width:54px;height:54px;border-radius:14px;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px -8px rgba(229,56,79,.7)}
-  .card .head .ic svg{width:28px;height:28px}
-  .card .cb{padding:24px;display:flex;flex-direction:column;flex:1}
-  .card h3{font-size:1.18rem;font-weight:700;margin-bottom:.5rem;color:#fff}
-  .card p{font-size:.92rem;color:var(--muted);flex:1}
-  .card .lm{margin-top:1.2rem;align-self:flex-start;font-weight:600;font-size:.84rem;color:var(--red);display:inline-flex;align-items:center;gap:.4em}
+  /* SERVICE CARDS — upgraded (21st.dev "Highlight Card" patterns):
+     gradient border, cursor-follow glow, icon ring, sheen sweep */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,22px)}
+  .card{position:relative;background:linear-gradient(165deg,#1a1338,#120c24);border:1px solid var(--line);border-radius:16px;
+    padding:clamp(26px,2.6vw,32px);overflow:hidden;display:flex;flex-direction:column;min-height:240px;
+    transition:transform .35s var(--ease),border-color .35s,box-shadow .35s}
+  .card::before{content:"";position:absolute;inset:0;border-radius:16px;pointer-events:none;opacity:0;transition:opacity .35s;
+    background:radial-gradient(340px 240px at var(--mx,50%) var(--my,0%),rgba(235,32,79,.18),transparent 62%)}
+  .card:hover::before{opacity:1}
+  .card::after{content:"";position:absolute;top:0;left:-65%;width:55%;height:100%;pointer-events:none;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.07),transparent);transform:skewX(-18deg);transition:left .8s var(--ease)}
+  .card:hover::after{left:135%}
+  .card:hover{transform:translateY(-6px);border-color:rgba(235,32,79,.5);
+    box-shadow:0 28px 56px -26px rgba(235,32,79,.5),inset 0 0 0 1px rgba(235,32,79,.18)}
+  .card .ic{position:relative;z-index:2;width:56px;height:56px;border-radius:15px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(160deg,var(--red),#a8123a);color:#fff;box-shadow:0 14px 28px -10px rgba(235,32,79,.85);margin-bottom:1.4rem;transition:transform .35s var(--ease)}
+  .card .ic::after{content:"";position:absolute;inset:-6px;border-radius:19px;border:1px solid rgba(235,32,79,.4);opacity:0;transition:opacity .35s}
+  .card:hover .ic{transform:scale(1.07) rotate(-5deg)}
+  .card:hover .ic::after{opacity:1}
+  .card .ic svg{width:27px;height:27px}
+  .card h3{position:relative;z-index:2;font-size:1.22rem;font-weight:700;color:#fff;margin-bottom:.5rem;letter-spacing:-.01em}
+  .card p{position:relative;z-index:2;font-size:.92rem;color:var(--muted);flex:1}
+  .card .lm{position:relative;z-index:2;margin-top:1.4rem;align-self:flex-start;font-weight:600;font-size:.84rem;color:var(--red);display:inline-flex;align-items:center;gap:.45em}
+  .card .lm svg{width:15px;height:15px;transition:transform .25s var(--ease)}
+  .card:hover .lm svg{transform:translateX(4px)}
   @media(max-width:880px){.cards{grid-template-columns:1fr 1fr}}
   @media(max-width:580px){.cards{grid-template-columns:1fr}}
 
@@ -241,18 +253,24 @@
       <h2>Turn attacker knowledge into stronger security.</h2>
       <p>Manual, exploit-driven engagements run by operators who compromise systems for a living — across web, API, network, cloud, and your people.</p></div>
     <div class="cards">
-      <div class="card"><div class="head"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="2"/></svg></span></div>
-        <div class="cb"><h3>Penetration Testing</h3><p>Web, API, network, cloud and mobile testing — every vulnerability confirmed by hand and proven with a working exploit path.</p><span class="lm">Learn more →</span></div></div>
-      <div class="card"><div class="head"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 21l7-7M21 3l-7 7M14 4l6 6M4 14l6 6M14 10l-4 4"/></svg></span></div>
-        <div class="cb"><h3>Red Teaming</h3><p>Intelligence-led adversary emulation that tests whether your people, process and detection actually stop a real intrusion.</p><span class="lm">Learn more →</span></div></div>
-      <div class="card"><div class="head"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 12l6-3M12 12V4"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg></span></div>
-        <div class="cb"><h3>Threat Hunting</h3><p>Assume-breach hunting that surfaces the threats already inside your environment before they escalate to an incident.</p><span class="lm">Learn more →</span></div></div>
-      <div class="card"><div class="head"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.5 7.5L11 15M16.5 7.5L13 15M8 6h8"/></svg></span></div>
-        <div class="cb"><h3>OSINT & Recon</h3><p>Discover exposed assets, leaked credentials and the intelligence an adversary would gather before ever touching you.</p><span class="lm">Learn more →</span></div></div>
-      <div class="card"><div class="head"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3"/><rect x="8" y="8" width="8" height="8"/></svg></span></div>
-        <div class="cb"><h3>Attack-Surface Analysis</h3><p>Continuous visibility of everything reachable from the outside — mapped, prioritised, and tracked the way an attacker sees it.</p><span class="lm">Learn more →</span></div></div>
-      <div class="card"><div class="head"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l8 4v5c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></span></div>
-        <div class="cb"><h3>Compliance Testing</h3><p>Targeted assessments mapped to ISO 27001, SOC 2 and PCI DSS — with the evidence auditors and regulators expect.</p><span class="lm">Learn more →</span></div></div>
+      <div class="card"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="2"/></svg></span>
+        <h3>Penetration Testing</h3><p>Web, API, network, cloud and mobile testing — every vulnerability confirmed by hand and proven with a working exploit path.</p>
+        <a class="lm" href="#">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      <div class="card"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 21l7-7M21 3l-7 7M14 4l6 6M4 14l6 6M14 10l-4 4"/></svg></span>
+        <h3>Red Teaming</h3><p>Intelligence-led adversary emulation that tests whether your people, process and detection actually stop a real intrusion.</p>
+        <a class="lm" href="#">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      <div class="card"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 12l6-3M12 12V4"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg></span>
+        <h3>Threat Hunting</h3><p>Assume-breach hunting that surfaces the threats already inside your environment before they escalate to an incident.</p>
+        <a class="lm" href="#">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      <div class="card"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.5 7.5L11 15M16.5 7.5L13 15M8 6h8"/></svg></span>
+        <h3>OSINT &amp; Recon</h3><p>Discover exposed assets, leaked credentials and the intelligence an adversary would gather before ever touching you.</p>
+        <a class="lm" href="#">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      <div class="card"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3"/><rect x="8" y="8" width="8" height="8"/></svg></span>
+        <h3>Attack-Surface Analysis</h3><p>Continuous visibility of everything reachable from the outside — mapped, prioritised, and tracked the way an attacker sees it.</p>
+        <a class="lm" href="#">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      <div class="card"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l8 4v5c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></span>
+        <h3>Compliance Testing</h3><p>Targeted assessments mapped to ISO 27001, SOC 2 and PCI DSS — with the evidence auditors and regulators expect.</p>
+        <a class="lm" href="#">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
     </div>
   </div>
 </section>
@@ -317,5 +335,16 @@
     <div class="fbar"><span>© 2026 SubZeroSec (Pvt) Ltd. — Islamabad, Pakistan</span><span>Privacy · Terms · Trust & Compliance</span></div>
   </div>
 </footer>
+
+<script>
+  // Cursor-following glow on service cards (21st.dev highlight-card pattern)
+  document.querySelectorAll('.card').forEach(function(c){
+    c.addEventListener('pointermove', function(e){
+      var r = c.getBoundingClientRect();
+      c.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      c.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+    });
+  });
+</script>
 </body>
 </html>
