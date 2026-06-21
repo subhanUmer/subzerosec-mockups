@@ -30,7 +30,10 @@
   :focus-visible{outline:2px solid var(--gold);outline-offset:3px}
   h1,h2,h3{font-family:"Fraunces",serif;font-weight:600;letter-spacing:-.01em;line-height:1.08}
   .lbl{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--steel)}
-  .frame{max-width:var(--maxw);margin:0 auto;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+  .frame{max-width:var(--maxw);margin:0 auto;padding:clamp(20px,3vw,40px) clamp(14px,2.5vw,28px) clamp(48px,7vw,96px);
+    display:flex;flex-direction:column;gap:clamp(40px,5.5vw,76px)}
+  .frame>*{border:1px solid var(--line);border-radius:2px;overflow:hidden}
+  .hero,.accred,.stats,.svc,.proc,.feat,.cta{border-bottom:0}
 
   .ribbon{border-bottom:1px solid var(--line);background:var(--ink-2)}
   .ribbon .in{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,4vw,56px);height:34px;display:flex;align-items:center;justify-content:space-between;
