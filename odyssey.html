@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SubZeroSec — Odyssey (Direction F · via 21st.dev)</title>
+<link rel="icon" href="./logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     SubZeroSec · Direction F — "ODYSSEY"
+     Hero adapted from the 21st.dev "Hero Odyssey" component
+     (WebGL lightning shader + glowing core), re-themed as a cold
+     detection-beam descending onto a frozen core. Boxed sections
+     below match the other directions.
+     ============================================================ */
+  :root{
+    --bg:#04060B; --bg-2:#080B12; --surface:#0C1018;
+    --fg:#EAF0FA; --muted:#7E8AA0; --faint:#465062;
+    --line:rgba(180,200,235,.10); --line-2:rgba(180,200,235,.18);
+    --accent:#5B8CFF; --accent-2:#8FB4FF; --accent-dim:rgba(91,140,255,.14);
+    --ease:cubic-bezier(.22,1,.36,1); --maxw:1280px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{background:var(--bg);color:var(--fg);font-family:"Inter",system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:var(--accent);color:#040810}
+  a{color:inherit;text-decoration:none}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  h1,h2,h3{font-family:"Outfit",sans-serif;letter-spacing:-.02em;line-height:1.04;font-weight:600}
+  .lbl{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+
+  header{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(4,6,11,.5);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .nav{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:66px;padding:0 clamp(20px,4vw,40px)}
+  .brand{display:flex;align-items:center;gap:.55rem;font-family:"Outfit";font-weight:700;font-size:1.05rem;letter-spacing:-.01em}
+  .brand .z{color:var(--accent)}
+  .nav-links{display:flex;gap:2rem;align-items:center}
+  .nav-links a{font-size:.85rem;color:var(--muted);transition:color .2s}
+  .nav-links a:hover{color:var(--fg)}
+  .btn{display:inline-flex;align-items:center;gap:.5em;font-size:.84rem;font-weight:500;padding:.66rem 1.2rem;border-radius:999px;cursor:pointer;transition:.25s var(--ease)}
+  .btn-primary{background:var(--fg);color:#05080f;border:1px solid var(--fg)}
+  .btn-primary:hover{background:#fff;box-shadow:0 0 30px rgba(143,180,255,.3)}
+  .btn-ghost{background:rgba(255,255,255,.04);color:var(--fg);border:1px solid var(--line-2)}
+  .btn-ghost:hover{border-color:var(--accent-2);color:var(--accent-2)}
+  @media(max-width:860px){.nav-links a:not(.btn){display:none}}
+
+  /* ---- HERO (shader) ---- */
+  .hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+  #fx{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.9}
+  .hero .veil{position:absolute;inset:0;z-index:1;background:
+    radial-gradient(80% 60% at 50% 8%,transparent,rgba(4,6,11,.4) 70%,var(--bg) 100%),
+    linear-gradient(180deg,rgba(4,6,11,.4),transparent 30%,transparent 70%,var(--bg))}
+  .core{position:absolute;left:50%;top:60%;transform:translate(-50%,-50%);width:min(620px,90vw);height:min(620px,90vw);
+    border-radius:50%;z-index:1;background:radial-gradient(circle at 50% 85%,#16315f 12%,#05060d 60%,transparent 72%);
+    box-shadow:0 0 120px 20px rgba(40,80,160,.18);filter:blur(2px)}
+  .hero .in{position:relative;z-index:3;padding:120px 24px 60px;max-width:60ch}
+  .hero .in .lbl{opacity:0;animation:up .9s .2s var(--ease) forwards}
+  .hero h1{font-size:clamp(3rem,8vw,6.4rem);font-weight:700;margin:1.3rem 0 0;opacity:0;transform:translateY(18px);animation:up 1s .35s var(--ease) forwards}
+  .hero h1 .a{background:linear-gradient(180deg,#fff,var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero .desc{margin:1.5rem auto 0;color:var(--muted);font-size:1.1rem;max-width:46ch;opacity:0;transform:translateY(18px);animation:up 1s .5s var(--ease) forwards}
+  .hero .desc b{color:var(--fg);font-weight:500}
+  .hero .row{margin-top:2rem;display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;opacity:0;animation:up 1s .65s var(--ease) forwards}
+  .hero .accs{margin-top:2.4rem;display:flex;gap:1.4rem;justify-content:center;flex-wrap:wrap;font-family:"JetBrains Mono";font-size:.72rem;letter-spacing:.06em;color:var(--faint);opacity:0;animation:up 1s .8s var(--ease) forwards}
+  @keyframes up{to{opacity:1;transform:translateY(0)}}
+  @media(prefers-reduced-motion:reduce){#fx{display:none}.hero .in .lbl,.hero h1,.hero .desc,.hero .row,.hero .accs{animation:none!important;opacity:1!important;transform:none!important}
+    .hero{background:radial-gradient(60% 50% at 50% 10%,rgba(91,140,255,.14),transparent 60%)}}
+
+  /* ---- BOXED SECTIONS (match other directions) ---- */
+  .frame{max-width:var(--maxw);margin:0 auto;padding:clamp(20px,3vw,40px) clamp(14px,2.5vw,28px) clamp(48px,7vw,96px);display:flex;flex-direction:column;gap:clamp(40px,5.5vw,76px)}
+  .frame>*{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg-2)}
+
+  .accred{display:flex;align-items:center;gap:clamp(18px,3.5vw,46px);flex-wrap:wrap;justify-content:center;padding:18px clamp(20px,4vw,40px)}
+  .accred .b{font-family:"JetBrains Mono";font-size:.8rem;color:var(--accent-2);letter-spacing:.04em}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr)}
+  .stat{padding:clamp(28px,4vw,42px) clamp(20px,3vw,30px);border-right:1px solid var(--line);text-align:center}
+  .stat:last-child{border-right:0}
+  .stat .v{font-family:"Outfit";font-weight:700;font-size:clamp(2.3rem,4.4vw,3.3rem);letter-spacing:-.03em}
+  .stat .v .s{color:var(--accent)}
+  .stat .l{font-family:"JetBrains Mono";font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:.5rem}
+  @media(max-width:760px){.stats{grid-template-columns:1fr 1fr}.stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+
+  .shead{text-align:center;padding:clamp(44px,5vw,72px) clamp(20px,4vw,40px) clamp(24px,3vw,32px);border-bottom:1px solid var(--line)}
+  .shead .lbl{display:block;margin-bottom:.8rem}
+  .shead h2{font-size:clamp(1.8rem,3.6vw,2.6rem)}
+
+  .svc{display:grid;grid-template-columns:repeat(3,1fr)}
+  .cell{padding:clamp(28px,3vw,40px) clamp(22px,2.5vw,32px) clamp(34px,4vw,42px);border-right:1px solid var(--line);border-bottom:1px solid var(--line);position:relative;transition:background .25s;min-height:190px;display:flex;flex-direction:column}
+  .cell:hover{background:var(--surface)}
+  .svc .cell:nth-child(3n){border-right:0}
+  .svc .cell:nth-last-child(-n+3){border-bottom:0}
+  .cell .ic{width:30px;height:30px;color:var(--accent)}
+  .cell .n{position:absolute;top:18px;right:22px;font-family:"JetBrains Mono";font-size:.68rem;color:var(--faint)}
+  .cell h3{font-family:"Outfit";font-size:1.18rem;font-weight:600;margin:1.3rem 0 .5rem}
+  .cell p{color:var(--muted);font-size:.92rem;flex:1}
+  .cell .go{margin-top:1.1rem;font-family:"JetBrains Mono";font-size:.72rem;color:var(--muted);transition:color .2s}
+  .cell:hover .go{color:var(--accent)}
+  @media(max-width:860px){.svc{grid-template-columns:1fr 1fr}.svc .cell:nth-child(3n){border-right:1px solid var(--line)}.svc .cell:nth-child(2n){border-right:0}.svc .cell:nth-last-child(-n+3){border-bottom:1px solid var(--line)}}
+  @media(max-width:520px){.svc{grid-template-columns:1fr}.cell{border-right:0!important}}
+
+  .proc{display:grid;grid-template-columns:repeat(5,1fr)}
+  .pstep{padding:clamp(26px,3vw,40px) clamp(18px,2vw,26px);border-right:1px solid var(--line);text-align:center}
+  .pstep:last-child{border-right:0}
+  .pstep::before{content:"";display:block;width:8px;height:8px;border-radius:50%;background:var(--accent);margin:0 auto .9rem;box-shadow:0 0 0 4px var(--accent-dim)}
+  .pstep .n{font-family:"JetBrains Mono";font-size:.7rem;color:var(--faint)}
+  .pstep h3{font-family:"Outfit";font-size:1.02rem;font-weight:600;margin:.5rem 0 .3rem}
+  .pstep p{color:var(--muted);font-size:.83rem}
+  @media(max-width:760px){.proc{grid-template-columns:1fr 1fr}.pstep{border-bottom:1px solid var(--line)}}
+
+  .feat{display:grid;grid-template-columns:1.4fr 1fr}
+  .feat .m{padding:clamp(40px,5vw,64px) clamp(22px,4vw,56px);border-right:1px solid var(--line)}
+  .feat .sector{font-family:"JetBrains Mono";font-size:.72rem;letter-spacing:.14em;color:var(--accent-2);text-transform:uppercase}
+  .feat h3{font-family:"Outfit";font-size:clamp(1.5rem,3vw,2.1rem);font-weight:600;margin:1rem 0;max-width:20ch}
+  .feat .outs{display:grid;grid-template-rows:repeat(3,1fr)}
+  .feat .o{padding:clamp(22px,3vw,30px) clamp(22px,3vw,32px);border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:1rem}
+  .feat .o:last-child{border-bottom:0}
+  .feat .o b{font-family:"Outfit";font-weight:700;font-size:1.8rem;letter-spacing:-.03em;min-width:3.6ch}
+  .feat .o span{font-family:"JetBrains Mono";font-size:.74rem;color:var(--muted)}
+  @media(max-width:760px){.feat{grid-template-columns:1fr}.feat .m{border-right:0;border-bottom:1px solid var(--line)}}
+
+  .cta{padding:clamp(56px,7vw,96px) clamp(20px,4vw,40px);text-align:center;background:radial-gradient(120% 150% at 50% 0%,var(--accent-dim),transparent 55%),var(--bg-2)}
+  .cta h2{font-size:clamp(2rem,4.5vw,3.4rem);font-weight:700}
+  .cta h2 .a{color:var(--accent-2)}
+  .cta .row{margin-top:2rem;display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap}
+
+  footer{max-width:var(--maxw);margin:0 auto;padding:30px clamp(20px,4vw,40px);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-family:"JetBrains Mono";font-size:.74rem;color:var(--faint)}
+  footer a:hover{color:var(--fg)}
+  .badge{position:fixed;left:14px;bottom:14px;z-index:60;font-family:"JetBrains Mono";font-size:.62rem;letter-spacing:.14em;color:var(--muted);background:var(--bg-2);border:1px solid var(--line);padding:.45rem .65rem;border-radius:999px}
+</style>
+</head>
+<body>
+<div class="badge">DIRECTION&nbsp;F · ODYSSEY · via 21st.dev</div>
+
+<header>
+  <nav class="nav">
+    <a class="brand" href="#">SubZero<span class="z">Sec</span></a>
+    <div class="nav-links">
+      <a href="#services">Services</a><a href="#method">Method</a><a href="#work">Work</a><a href="#">Insights</a>
+      <a href="#cta" class="btn btn-primary">Book assessment</a>
+    </div>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="fx" aria-hidden="true"></canvas>
+  <div class="core" aria-hidden="true"></div>
+  <div class="veil" aria-hidden="true"></div>
+  <div class="in">
+    <span class="lbl">Offensive Security · Before Zero</span>
+    <h1>Before <span class="a">Zero.</span></h1>
+    <p class="desc">We find the exploit before it has a name — manual, exploit-driven security testing for organisations that <b>can't afford to be breached.</b></p>
+    <div class="row">
+      <a href="#cta" class="btn btn-primary">Book an assessment</a>
+      <a href="#services" class="btn btn-ghost">View capabilities →</a>
+    </div>
+    <div class="accs"><span>CREST</span><span>OSCP / OSCE</span><span>ISO 27001</span><span>SOC 2 Type II</span><span>PCI DSS · QSA</span></div>
+  </div>
+</section>
+
+<div class="frame">
+  <div class="stats">
+    <div class="stat"><div class="v">340<span class="s">+</span></div><div class="l">Assessments delivered</div></div>
+    <div class="stat"><div class="v">127<span class="s">+</span></div><div class="l">Critical findings proven</div></div>
+    <div class="stat"><div class="v">98<span class="s">%</span></div><div class="l">Remediation verified</div></div>
+    <div class="stat"><div class="v">15<span class="s">+</span></div><div class="l">Industries secured</div></div>
+  </div>
+
+  <section id="services">
+    <div class="shead"><span class="lbl">Capabilities</span><h2>Five ways we reach it first.</h2></div>
+    <div class="svc">
+      <div class="cell"><span class="n">01</span>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="2"/></svg>
+        <h3>Penetration Testing</h3><p>Web, API, network, cloud & mobile — proven with working exploits.</p><div class="go">Explore →</div></div>
+      <div class="cell"><span class="n">02</span>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21l7-7M21 3l-7 7M14 4l6 6M4 14l6 6M14 10l-4 4"/></svg>
+        <h3>Red Teaming</h3><p>Intelligence-led adversary emulation against your live defences.</p><div class="go">Explore →</div></div>
+      <div class="cell"><span class="n">03</span>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 12l6-3M12 12V4"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
+        <h3>Threat Hunting</h3><p>Assume breach. Surface the threats already inside.</p><div class="go">Explore →</div></div>
+      <div class="cell"><span class="n">04</span>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.5 7.5L11 15M16.5 7.5L13 15M8 6h8"/></svg>
+        <h3>OSINT</h3><p>Exposed assets & leaked credentials, mapped before attackers use them.</p><div class="go">Explore →</div></div>
+      <div class="cell"><span class="n">05</span>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3"/><rect x="8" y="8" width="8" height="8"/></svg>
+        <h3>Attack-Surface Analysis</h3><p>Everything reachable from outside — the way an attacker sees you.</p><div class="go">Explore →</div></div>
+      <a class="cell" href="#cta" style="background:var(--accent);color:#05080f;justify-content:center">
+        <h3 style="margin-top:0;color:#05080f">See yourself the way an adversary does.</h3><p style="color:#0b1b3a">Book a scoped engagement.</p><div class="go" style="color:#05080f">Book assessment →</div></a>
+    </div>
+  </section>
+
+  <section id="method">
+    <div class="shead"><span class="lbl">Method</span><h2>From weakness to verified-gone.</h2></div>
+    <div class="proc">
+      <div class="pstep"><div class="n">01</div><h3>Discover</h3><p>Map the live attack surface.</p></div>
+      <div class="pstep"><div class="n">02</div><h3>Validate</h3><p>Prove it by exploitation.</p></div>
+      <div class="pstep"><div class="n">03</div><h3>Prioritise</h3><p>Rank by real-world impact.</p></div>
+      <div class="pstep"><div class="n">04</div><h3>Remediate</h3><p>Fix, with guidance.</p></div>
+      <div class="pstep"><div class="n">05</div><h3>Verify</h3><p>Re-attack the fix.</p></div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="shead"><span class="lbl">Proven work · Banking</span><h2>Evidence, not assurances.</h2></div>
+    <div class="feat">
+      <div class="m">
+        <div class="sector">Red Team + VAPT</div>
+        <h3>Phishing to fraudulent transfer — every path closed.</h3>
+        <a href="#" class="btn btn-ghost">Read the case study →</a>
+      </div>
+      <div class="outs">
+        <div class="o"><b>11</b><span>attack paths to payment systems closed</span></div>
+        <div class="o"><b>4 hrs</b><span>to detection after tuning, from undetected</span></div>
+        <div class="o"><b>0</b><span>fraudulent transfers possible at re-test</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cta" class="cta">
+    <span class="lbl">Get ahead of zero</span>
+    <h2 style="margin-top:.9rem">See yourself the way an<br>attacker <span class="a">already does.</span></h2>
+    <div class="row">
+      <a href="#" class="btn btn-primary">Book a security assessment</a>
+      <a href="#" class="btn btn-ghost">Talk to an operator →</a>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <span>© 2026 SUBZEROSEC — BEFORE ZERO. BEYOND BREACH.</span>
+  <span><a href="#">LinkedIn</a> · <a href="#">X</a> · <a href="#">GitHub</a> · hello@subzerosec.com</span>
+</footer>
+
+<script>
+/* WebGL lightning shader — ported from the 21st.dev "Hero Odyssey" component,
+   re-tuned to a cold blue detection beam. Plain JS, no framework. */
+(function(){
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var canvas = document.getElementById("fx");
+  var gl = canvas.getContext("webgl");
+  if (!gl) { canvas.style.display = "none"; return; }
+
+  var HUE = 214, SPEED = 1.3, INTENSITY = 0.55, SIZE = 1.9, XOFF = 0.0;
+
+  var vs = "attribute vec2 aPosition; void main(){ gl_Position = vec4(aPosition,0.0,1.0); }";
+  var fs = [
+    "precision mediump float;",
+    "uniform vec2 iResolution; uniform float iTime;",
+    "uniform float uHue,uXOffset,uSpeed,uIntensity,uSize;",
+    "#define OCTAVE_COUNT 10",
+    "vec3 hsv2rgb(vec3 c){vec3 rgb=clamp(abs(mod(c.x*6.0+vec3(0.0,4.0,2.0),6.0)-3.0)-1.0,0.0,1.0);return c.z*mix(vec3(1.0),rgb,c.y);}",
+    "float hash11(float p){p=fract(p*.1031);p*=p+33.33;p*=p+p;return fract(p);}",
+    "float hash12(vec2 p){vec3 p3=fract(vec3(p.xyx)*.1031);p3+=dot(p3,p3.yzx+33.33);return fract((p3.x+p3.y)*p3.z);}",
+    "mat2 rotate2d(float t){float c=cos(t),s=sin(t);return mat2(c,-s,s,c);}",
+    "float noise(vec2 p){vec2 ip=floor(p);vec2 fp=fract(p);float a=hash12(ip),b=hash12(ip+vec2(1.0,0.0)),c=hash12(ip+vec2(0.0,1.0)),d=hash12(ip+vec2(1.0,1.0));vec2 t=smoothstep(0.0,1.0,fp);return mix(mix(a,b,t.x),mix(c,d,t.x),t.y);}",
+    "float fbm(vec2 p){float v=0.0,a=0.5;for(int i=0;i<OCTAVE_COUNT;++i){v+=a*noise(p);p*=rotate2d(0.45);p*=2.0;a*=0.5;}return v;}",
+    "void mainImage(out vec4 o,in vec2 f){vec2 uv=f/iResolution.xy;uv=2.0*uv-1.0;uv.x*=iResolution.x/iResolution.y;uv.x+=uXOffset;",
+    "uv+=2.0*fbm(uv*uSize+0.8*iTime*uSpeed)-1.0;float d=abs(uv.x);vec3 base=hsv2rgb(vec3(uHue/360.0,0.7,0.8));",
+    "vec3 col=base*pow(mix(0.0,0.07,hash11(iTime*uSpeed))/d,1.0)*uIntensity;o=vec4(col,1.0);}",
+    "void main(){mainImage(gl_FragColor,gl_FragCoord.xy);}"
+  ].join("\n");
+
+  function sh(src,type){var s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s;}
+  var prog=gl.createProgram();
+  gl.attachShader(prog,sh(vs,gl.VERTEX_SHADER));
+  gl.attachShader(prog,sh(fs,gl.FRAGMENT_SHADER));
+  gl.linkProgram(prog);gl.useProgram(prog);
+
+  var buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
+  var aP=gl.getAttribLocation(prog,"aPosition");gl.enableVertexAttribArray(aP);gl.vertexAttribPointer(aP,2,gl.FLOAT,false,0,0);
+
+  var uRes=gl.getUniformLocation(prog,"iResolution"),uTime=gl.getUniformLocation(prog,"iTime"),
+      uHue=gl.getUniformLocation(prog,"uHue"),uX=gl.getUniformLocation(prog,"uXOffset"),
+      uSp=gl.getUniformLocation(prog,"uSpeed"),uIn=gl.getUniformLocation(prog,"uIntensity"),uSz=gl.getUniformLocation(prog,"uSize");
+
+  function resize(){var dpr=Math.min(window.devicePixelRatio||1,1.5);canvas.width=canvas.clientWidth*dpr;canvas.height=canvas.clientHeight*dpr;}
+  window.addEventListener("resize",resize,{passive:true});resize();
+  var start=performance.now();
+  (function loop(){
+    resize();gl.viewport(0,0,canvas.width,canvas.height);
+    gl.uniform2f(uRes,canvas.width,canvas.height);
+    gl.uniform1f(uTime,(performance.now()-start)/1000);
+    gl.uniform1f(uHue,HUE);gl.uniform1f(uX,XOFF);gl.uniform1f(uSp,SPEED);gl.uniform1f(uIn,INTENSITY);gl.uniform1f(uSz,SIZE);
+    gl.drawArrays(gl.TRIANGLES,0,6);requestAnimationFrame(loop);
+  })();
+})();
+</script>
+</body>
+</html>
