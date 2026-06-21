@@ -10,421 +10,285 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
 <style>
   /* ============================================================
-     SubZeroSec · Direction B — "THE AXIS"
-     Swiss-engineered. The firm operates left of zero on a number
-     line. One warm signal accent against a cold neutral world.
-     Signature: the negative-axis hero + axis-as-divider motif.
+     SubZeroSec · Direction B — "THE AXIS"  (professional rebuild)
+     Engineered spec-sheet aesthetic. Sparse copy, explicit
+     bordered grid, accreditation-forward, big stats.
      ============================================================ */
   :root{
-    --bg:#0E0E10; --bg-2:#141417; --surface:#17171B;
-    --bone:#F4F3EF; --steel:#9AA3AD; --faint:#5A5F66;
-    --line:rgba(244,243,239,.10); --line-2:rgba(244,243,239,.18);
-    --signal:#FF5E3A;            /* the zero-day / detonation point */
-    --signal-dim:rgba(255,94,58,.14);
-    --ease:cubic-bezier(.22,1,.36,1);
-    --maxw:1240px;
+    --bg:#0C0C0E; --bg-2:#121215; --surface:#16161A;
+    --bone:#F5F4F0; --steel:#9CA3AD; --faint:#5C616A;
+    --line:rgba(245,244,240,.10); --line-2:rgba(245,244,240,.16);
+    --signal:#FF5E3A; --signal-dim:rgba(255,94,58,.12);
+    --ease:cubic-bezier(.22,1,.36,1); --maxw:1280px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  body{
-    background:var(--bg);color:var(--bone);
-    font-family:"Inter",system-ui,sans-serif;
-    line-height:1.6;-webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
-  }
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{background:var(--bg);color:var(--bone);font-family:"Inter",system-ui,sans-serif;
+    line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   ::selection{background:var(--signal);color:#100503}
   a{color:inherit;text-decoration:none}
   :focus-visible{outline:2px solid var(--signal);outline-offset:3px}
-
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
   .mono{font-family:"JetBrains Mono",monospace}
-  .eyebrow{
-    font-family:"JetBrains Mono",monospace;font-size:.72rem;font-weight:500;
-    letter-spacing:.28em;text-transform:uppercase;color:var(--signal);
-    display:inline-flex;align-items:center;gap:.6em;
-  }
-  .eyebrow::before{content:"";width:26px;height:1px;background:var(--signal)}
-  h1,h2,h3{font-family:"Archivo",sans-serif;font-weight:800;letter-spacing:-.03em;line-height:1.0;text-wrap:balance}
+  h1,h2,h3{font-family:"Archivo",sans-serif;font-weight:800;letter-spacing:-.03em;line-height:1.02}
+  .lbl{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--faint)}
 
-  /* ---------- NAV ---------- */
-  header{position:fixed;top:0;left:0;right:0;z-index:50;
-    backdrop-filter:saturate(140%) blur(10px);
-    background:linear-gradient(var(--bg),rgba(14,14,16,.6));
+  /* The whole page sits inside a framed grid */
+  .frame{max-width:var(--maxw);margin:0 auto;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+  .pad{padding:0 clamp(20px,4vw,56px)}
+
+  /* ---- NAV ---- */
+  header{position:sticky;top:0;z-index:50;background:rgba(12,12,14,.82);backdrop-filter:blur(10px);
     border-bottom:1px solid var(--line)}
-  .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
-  .brand{display:flex;align-items:baseline;gap:.55rem;font-family:"Archivo";font-weight:800;
-    font-size:1.05rem;letter-spacing:-.02em}
-  .brand .sub{color:var(--bone)} .brand .zero{color:var(--steel)}
-  .brand .tag{font-family:"JetBrains Mono";font-size:.62rem;letter-spacing:.2em;color:var(--faint);
-    text-transform:uppercase;align-self:center;padding-left:.6rem;border-left:1px solid var(--line-2)}
+  .nav{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;
+    height:64px;padding:0 clamp(20px,4vw,56px)}
+  .brand{font-family:"Archivo";font-weight:800;font-size:1.02rem;letter-spacing:-.02em;display:flex;align-items:center;gap:.5rem}
+  .brand .z{color:var(--steel)}
+  .brand::before{content:"";width:9px;height:9px;background:var(--signal);display:inline-block}
   .nav-links{display:flex;gap:2rem;align-items:center}
-  .nav-links a{font-size:.86rem;color:var(--steel);transition:color .2s}
+  .nav-links a{font-size:.84rem;color:var(--steel);transition:color .2s}
   .nav-links a:hover{color:var(--bone)}
-  .btn{display:inline-flex;align-items:center;gap:.55em;font-family:"JetBrains Mono";font-size:.78rem;
-    font-weight:500;letter-spacing:.04em;padding:.7rem 1.15rem;border-radius:2px;cursor:pointer;
-    transition:.2s var(--ease)}
+  .btn{display:inline-flex;align-items:center;gap:.5em;font-family:"JetBrains Mono";font-size:.76rem;font-weight:500;
+    letter-spacing:.04em;padding:.66rem 1.1rem;cursor:pointer;transition:.2s var(--ease);border-radius:1px}
   .btn-primary{background:var(--signal);color:#140503;border:1px solid var(--signal)}
-  .btn-primary:hover{background:#ff7150;box-shadow:0 0 0 4px var(--signal-dim)}
+  .btn-primary:hover{background:#ff7150}
   .btn-ghost{background:transparent;color:var(--bone);border:1px solid var(--line-2)}
   .btn-ghost:hover{border-color:var(--bone)}
-  @media(max-width:820px){.nav-links{display:none}}
+  @media(max-width:860px){.nav-links a:not(.btn){display:none}}
 
-  /* ---------- HERO + THE AXIS ---------- */
-  .hero{padding:130px 0 70px;position:relative}
-  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:end}
-  .hero h1{font-size:clamp(3.4rem,9vw,7.4rem);font-weight:900}
-  .hero h1 .ln{display:block;overflow:hidden}
-  .hero h1 .ln span{display:block;transform:translateY(110%);animation:rise .9s var(--ease) forwards}
-  .hero h1 .ln:nth-child(2) span{animation-delay:.08s}
-  @keyframes rise{to{transform:translateY(0)}}
-  .hero .lede{margin-top:1.8rem;max-width:30ch;color:var(--steel);font-size:1.06rem}
-  .hero .lede b{color:var(--bone);font-weight:600}
-  .hero-cta{margin-top:2.2rem;display:flex;gap:.8rem;flex-wrap:wrap}
-  .hero-meta{font-family:"JetBrains Mono";font-size:.74rem;color:var(--faint);
-    border-top:1px solid var(--line);padding-top:1rem;margin-top:2.6rem;display:flex;gap:2rem;flex-wrap:wrap}
-  .hero-meta b{color:var(--steel);font-weight:500}
-
-  /* The number-line signature */
-  .axis-panel{border:1px solid var(--line);background:
-      linear-gradient(180deg,var(--bg-2),var(--bg));padding:30px 26px 24px;border-radius:3px}
-  .axis-panel .cap{font-family:"JetBrains Mono";font-size:.68rem;letter-spacing:.2em;
-    text-transform:uppercase;color:var(--faint);display:flex;justify-content:space-between}
-  .axisbox{position:relative;height:190px;margin-top:14px}
-  .axis-svg{width:100%;height:100%;overflow:visible}
-  .axis-line{stroke:var(--line-2);stroke-width:1.4;stroke-dasharray:600;stroke-dashoffset:600;
-    animation:draw 1.4s .3s var(--ease) forwards}
+  /* ---- HERO ---- */
+  .hero{display:grid;grid-template-columns:1.05fr .95fr;border-bottom:1px solid var(--line)}
+  .hero .l{padding:clamp(48px,7vw,90px) clamp(20px,4vw,56px);border-right:1px solid var(--line)}
+  .hero .r{position:relative;background:linear-gradient(180deg,var(--bg-2),var(--bg))}
+  .hero .lbl-row{display:flex;justify-content:space-between;color:var(--steel)}
+  .hero h1{font-size:clamp(3.6rem,9vw,7rem);font-weight:900;margin:1.8rem 0 0}
+  .hero h1 .o{color:var(--signal)}
+  .hero .desc{margin-top:1.6rem;color:var(--steel);font-size:1.08rem;max-width:34ch}
+  .hero .desc b{color:var(--bone);font-weight:600}
+  .hero .btnrow{margin-top:2rem;display:flex;gap:.7rem;flex-wrap:wrap}
+  .hero .r .cap{position:absolute;top:18px;left:18px;right:18px;display:flex;justify-content:space-between}
+  .axisbox{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:24px}
+  .axis-svg{width:100%;max-width:520px}
+  .axis-line{stroke:var(--line-2);stroke-width:1.4;stroke-dasharray:600;stroke-dashoffset:600;animation:draw 1.4s .3s var(--ease) forwards}
   @keyframes draw{to{stroke-dashoffset:0}}
   .tick{stroke:var(--steel);stroke-width:1.2}
-  .ticklabel{font-family:"JetBrains Mono";font-size:11px;fill:var(--faint)}
-  .zero-ring{fill:none;stroke:var(--signal);stroke-width:2;opacity:0;
-    transform-origin:center;animation:pop .5s 1.4s var(--ease) forwards}
-  .zero-dot{fill:var(--signal);opacity:0;animation:pop .5s 1.4s var(--ease) forwards}
-  .zero-label{font-family:"JetBrains Mono";font-size:11px;font-weight:700;fill:var(--signal);
-    opacity:0;animation:fade .6s 1.6s forwards}
+  .tk{font-family:"JetBrains Mono";font-size:11px;fill:var(--faint)}
+  .zr{fill:none;stroke:var(--signal);stroke-width:2;opacity:0;transform-origin:center;animation:pop .5s 1.4s var(--ease) forwards}
+  .zd{fill:var(--signal);opacity:0;animation:pop .5s 1.4s var(--ease) forwards}
+  .zl{font-family:"JetBrains Mono";font-size:11px;font-weight:700;fill:var(--signal);opacity:0;animation:fade .6s 1.6s forwards}
   @keyframes pop{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
   @keyframes fade{to{opacity:1}}
-  .marker{opacity:0;animation:fade .6s 1.9s forwards}
-  .marker-dot{fill:var(--bone)}
-  .marker-pulse{fill:none;stroke:var(--bone);stroke-width:1;opacity:.5;
-    animation:ping 2.4s 2.2s ease-out infinite}
-  @keyframes ping{from{r:5;opacity:.6}to{r:26;opacity:0}}
-  .region{fill:var(--signal-dim);opacity:0;animation:fade .8s 2s forwards}
-  .region-label{font-family:"JetBrains Mono";font-size:10.5px;fill:var(--steel);letter-spacing:.06em}
-  @media(prefers-reduced-motion:reduce){
-    .hero h1 .ln span,.axis-line,.zero-ring,.zero-dot,.zero-label,.marker,.region{animation:none!important;transform:none!important;opacity:1!important;stroke-dashoffset:0!important}
-  }
-  @media(max-width:880px){.hero-grid{grid-template-columns:1fr;gap:34px}.hero{padding:120px 0 50px}}
+  .mk{opacity:0;animation:fade .6s 1.9s forwards}
+  .mkp{fill:none;stroke:var(--bone);stroke-width:1;opacity:.5;animation:ping 2.4s 2.2s ease-out infinite}
+  @keyframes ping{from{r:5;opacity:.6}to{r:24;opacity:0}}
+  .rg{fill:var(--signal-dim);opacity:0;animation:fade .8s 2s forwards}
+  .rgl{font-family:"JetBrains Mono";font-size:10px;fill:var(--steel);letter-spacing:.05em}
+  @media(prefers-reduced-motion:reduce){.axis-line,.zr,.zd,.zl,.mk,.rg{animation:none!important;opacity:1!important;transform:none!important;stroke-dashoffset:0!important}}
+  @media(max-width:860px){.hero{grid-template-columns:1fr}.hero .l{border-right:0;border-bottom:1px solid var(--line)}.hero .r{height:300px}}
 
-  /* ---------- SECTION SHELL ---------- */
-  section{padding:96px 0;border-top:1px solid var(--line)}
-  .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:52px}
-  .sec-head h2{font-size:clamp(1.9rem,4vw,3rem)}
-  .sec-head p{color:var(--steel);max-width:42ch;font-size:1rem}
-  .idx{font-family:"JetBrains Mono";font-size:.72rem;color:var(--faint);letter-spacing:.2em}
+  /* ---- ACCREDITATION STRIP ---- */
+  .accred{display:flex;align-items:center;gap:clamp(20px,4vw,52px);flex-wrap:wrap;padding:20px clamp(20px,4vw,56px);
+    border-bottom:1px solid var(--line);background:var(--bg-2)}
+  .accred .t{color:var(--faint);font-family:"JetBrains Mono";font-size:.68rem;letter-spacing:.2em;text-transform:uppercase}
+  .accred .b{font-family:"JetBrains Mono";font-size:.82rem;color:var(--steel);letter-spacing:.04em}
 
-  /* thesis */
-  .thesis{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-  .thesis .big{font-family:"Archivo";font-weight:800;font-size:clamp(1.6rem,3.2vw,2.5rem);
-    letter-spacing:-.02em;line-height:1.15}
-  .thesis .big em{font-style:normal;color:var(--signal)}
-  .thesis p{color:var(--steel);margin-top:1.2rem}
-  .ticker{border:1px solid var(--line);border-radius:3px;padding:22px;background:var(--bg-2)}
-  .ticker .row{display:flex;justify-content:space-between;align-items:center;
-    font-family:"JetBrains Mono";font-size:.8rem;padding:.7rem 0;border-bottom:1px dashed var(--line)}
-  .ticker .row:last-child{border-bottom:0}
-  .ticker .t{color:var(--steel)} .ticker .v{color:var(--bone)}
-  .ticker .neg{color:var(--signal)}
-  @media(max-width:760px){.thesis{grid-template-columns:1fr;gap:30px}}
-
-  /* services */
-  .svc{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
-    border:1px solid var(--line);border-radius:3px;overflow:hidden}
-  .svc .cell{background:var(--bg);padding:30px 26px 34px;transition:background .25s;position:relative;min-height:230px;
-    display:flex;flex-direction:column}
-  .svc .cell:hover{background:var(--bg-2)}
-  .svc .num{font-family:"JetBrains Mono";font-size:.72rem;color:var(--faint);letter-spacing:.18em}
-  .svc h3{font-family:"Archivo";font-size:1.28rem;font-weight:700;margin:.9rem 0 .6rem;letter-spacing:-.01em}
-  .svc p{color:var(--steel);font-size:.92rem;flex:1}
-  .svc .go{margin-top:1.1rem;font-family:"JetBrains Mono";font-size:.74rem;color:var(--signal);
-    opacity:0;transform:translateX(-6px);transition:.25s var(--ease)}
-  .svc .cell:hover .go{opacity:1;transform:translateX(0)}
-  @media(max-width:880px){.svc{grid-template-columns:1fr 1fr}}
-  @media(max-width:560px){.svc{grid-template-columns:1fr}}
-
-  /* process — uses the axis motif as a horizontal spine */
-  .proc{position:relative}
-  .proc-line{height:1px;background:var(--line-2);position:relative;margin:8px 0 40px}
-  .proc-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:24px}
-  .step .dot{width:11px;height:11px;border-radius:50%;background:var(--bg);border:1.5px solid var(--steel);
-    margin-bottom:-6px;position:relative;top:-46px}
-  .step:first-child .dot{border-color:var(--signal);background:var(--signal)}
-  .step .n{font-family:"JetBrains Mono";font-size:.72rem;color:var(--faint)}
-  .step h3{font-family:"Archivo";font-size:1.1rem;font-weight:700;margin:.5rem 0}
-  .step p{color:var(--steel);font-size:.86rem}
-  @media(max-width:880px){.proc-steps{grid-template-columns:1fr 1fr}.step .dot{display:none}}
-  @media(max-width:520px){.proc-steps{grid-template-columns:1fr}}
-
-  /* stats */
-  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
-    border:1px solid var(--line)}
-  .stat{background:var(--bg);padding:34px 24px}
-  .stat .v{font-family:"Archivo";font-weight:900;font-size:clamp(2.6rem,5vw,3.6rem);letter-spacing:-.04em}
+  /* ---- STATS ---- */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}
+  .stat{padding:clamp(28px,4vw,40px) clamp(20px,3vw,32px);border-right:1px solid var(--line)}
+  .stat:last-child{border-right:0}
+  .stat .v{font-family:"Archivo";font-weight:900;font-size:clamp(2.4rem,4.5vw,3.4rem);letter-spacing:-.04em}
   .stat .v .s{color:var(--signal)}
-  .stat .l{font-family:"JetBrains Mono";font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--steel);margin-top:.4rem}
-  .stat .d{color:var(--faint);font-size:.82rem;margin-top:.7rem}
-  @media(max-width:820px){.stats{grid-template-columns:1fr 1fr}}
+  .stat .l{font-family:"JetBrains Mono";font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);margin-top:.5rem}
+  @media(max-width:760px){.stats{grid-template-columns:1fr 1fr}.stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}}
 
-  /* featured + certs */
-  .feat{display:grid;grid-template-columns:1.3fr 1fr;gap:46px;align-items:center}
-  .feat .panel{border:1px solid var(--line);border-radius:3px;background:var(--bg-2);padding:34px}
-  .feat .sector{font-family:"JetBrains Mono";font-size:.72rem;letter-spacing:.18em;color:var(--signal);text-transform:uppercase}
-  .feat h3{font-family:"Archivo";font-size:1.7rem;font-weight:800;margin:.8rem 0 1rem;letter-spacing:-.02em}
-  .feat p{color:var(--steel)}
-  .feat .outs{display:flex;gap:28px;margin-top:1.8rem;flex-wrap:wrap}
-  .feat .outs .o b{font-family:"Archivo";font-weight:900;font-size:1.8rem;display:block;letter-spacing:-.03em}
-  .feat .outs .o span{font-family:"JetBrains Mono";font-size:.7rem;color:var(--steel);max-width:16ch;display:block}
-  .certs{display:flex;flex-direction:column;gap:14px}
-  .cert{display:flex;gap:12px;align-items:baseline;font-family:"JetBrains Mono";font-size:.8rem;
-    color:var(--steel);border-bottom:1px dashed var(--line);padding-bottom:12px}
-  .cert b{color:var(--bone);font-weight:500;min-width:120px}
-  @media(max-width:880px){.feat{grid-template-columns:1fr;gap:30px}}
+  /* ---- SECTION HEAD ---- */
+  .shead{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;
+    padding:clamp(48px,6vw,76px) clamp(20px,4vw,56px) clamp(28px,3vw,36px);border-bottom:1px solid var(--line)}
+  .shead h2{font-size:clamp(1.8rem,3.6vw,2.6rem)}
+  .shead .lbl{margin-bottom:.8rem;display:block}
 
-  /* CTA */
-  .cta{text-align:center;background:
-    radial-gradient(120% 140% at 50% 0%,rgba(255,94,58,.08),transparent 55%)}
-  .cta h2{font-size:clamp(2.2rem,5vw,4rem);font-weight:900}
+  /* ---- SERVICES (boxed grid) ---- */
+  .svc{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--line)}
+  .cell{padding:clamp(28px,3vw,40px) clamp(22px,2.5vw,32px) clamp(34px,4vw,44px);border-right:1px solid var(--line);
+    border-bottom:1px solid var(--line);position:relative;transition:background .25s;min-height:200px;display:flex;flex-direction:column}
+  .cell:hover{background:var(--bg-2)}
+  .svc .cell:nth-child(3n){border-right:0}
+  .cell .ic{width:30px;height:30px;color:var(--signal)}
+  .cell .n{position:absolute;top:18px;right:22px;font-family:"JetBrains Mono";font-size:.68rem;color:var(--faint)}
+  .cell h3{font-family:"Archivo";font-size:1.22rem;font-weight:700;margin:1.4rem 0 .5rem;letter-spacing:-.01em}
+  .cell p{color:var(--steel);font-size:.92rem;flex:1}
+  .cell .go{margin-top:1.1rem;font-family:"JetBrains Mono";font-size:.72rem;color:var(--steel);transition:color .2s}
+  .cell:hover .go{color:var(--signal)}
+  .cell.cta-cell{background:var(--signal);color:#140503;justify-content:center}
+  .cell.cta-cell h3{color:#140503;margin:0 0 .4rem} .cell.cta-cell p{color:#48150b}
+  .cell.cta-cell .go{color:#140503}
+  @media(max-width:860px){.svc{grid-template-columns:1fr 1fr}.svc .cell:nth-child(3n){border-right:1px solid var(--line)}.svc .cell:nth-child(2n){border-right:0}}
+  @media(max-width:520px){.svc{grid-template-columns:1fr}.cell{border-right:0!important}}
+
+  /* ---- PROCESS ---- */
+  .proc{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid var(--line)}
+  .pstep{padding:clamp(26px,3vw,40px) clamp(18px,2vw,26px);border-right:1px solid var(--line)}
+  .pstep:last-child{border-right:0}
+  .pstep .n{font-family:"JetBrains Mono";font-size:.72rem;color:var(--signal)}
+  .pstep h3{font-family:"Archivo";font-size:1.05rem;font-weight:700;margin:.7rem 0 .3rem}
+  .pstep p{color:var(--steel);font-size:.84rem}
+  @media(max-width:760px){.proc{grid-template-columns:1fr 1fr}.pstep{border-bottom:1px solid var(--line)}}
+
+  /* ---- FEATURED ---- */
+  .feat{display:grid;grid-template-columns:1.4fr 1fr;border-bottom:1px solid var(--line)}
+  .feat .m{padding:clamp(40px,5vw,64px) clamp(22px,4vw,56px);border-right:1px solid var(--line)}
+  .feat .sector{font-family:"JetBrains Mono";font-size:.72rem;letter-spacing:.16em;color:var(--signal);text-transform:uppercase}
+  .feat h3{font-family:"Archivo";font-size:clamp(1.5rem,3vw,2.1rem);font-weight:800;margin:1rem 0;letter-spacing:-.02em;max-width:20ch}
+  .feat .outs{display:grid;grid-template-rows:repeat(3,1fr)}
+  .feat .o{padding:clamp(22px,3vw,30px) clamp(22px,3vw,32px);border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:1rem}
+  .feat .o:last-child{border-bottom:0}
+  .feat .o b{font-family:"Archivo";font-weight:900;font-size:1.9rem;letter-spacing:-.03em;min-width:3.4ch}
+  .feat .o span{font-family:"JetBrains Mono";font-size:.74rem;color:var(--steel)}
+  @media(max-width:760px){.feat{grid-template-columns:1fr}.feat .m{border-right:0;border-bottom:1px solid var(--line)}}
+
+  /* ---- CTA ---- */
+  .cta{padding:clamp(56px,7vw,96px) clamp(20px,4vw,56px);text-align:center;border-bottom:1px solid var(--line);
+    background:radial-gradient(120% 150% at 50% 0%,var(--signal-dim),transparent 55%)}
+  .cta h2{font-size:clamp(2rem,4.5vw,3.4rem);font-weight:900}
   .cta h2 .s{color:var(--signal)}
-  .cta p{color:var(--steel);max-width:48ch;margin:1.4rem auto 2.2rem}
-  .cta .row{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap}
+  .cta .row{margin-top:2rem;display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap}
 
-  /* footer */
-  footer{border-top:1px solid var(--line);padding:48px 0 60px}
-  .foot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;
-    font-family:"JetBrains Mono";font-size:.78rem;color:var(--faint)}
-  .foot a:hover{color:var(--bone)}
-  .badge{position:fixed;left:14px;bottom:14px;z-index:60;font-family:"JetBrains Mono";font-size:.66rem;
-    letter-spacing:.16em;color:var(--faint);background:var(--bg-2);border:1px solid var(--line);
-    padding:.5rem .7rem;border-radius:2px}
+  footer{max-width:var(--maxw);margin:0 auto;padding:32px clamp(20px,4vw,56px);display:flex;justify-content:space-between;
+    gap:20px;flex-wrap:wrap;font-family:"JetBrains Mono";font-size:.74rem;color:var(--faint)}
+  footer a:hover{color:var(--bone)}
+  .badge{position:fixed;left:14px;bottom:14px;z-index:60;font-family:"JetBrains Mono";font-size:.64rem;letter-spacing:.16em;
+    color:var(--faint);background:var(--bg-2);border:1px solid var(--line);padding:.45rem .65rem}
 </style>
 </head>
 <body>
 <div class="badge">DIRECTION&nbsp;B · THE AXIS</div>
 
 <header>
-  <div class="wrap nav">
-    <a class="brand" href="#"><span class="sub">SUBZERO</span><span class="zero">SEC</span>
-      <span class="tag">Offensive Security</span></a>
-    <nav class="nav-links">
-      <a href="#services">Services</a>
-      <a href="#process">Method</a>
-      <a href="#work">Work</a>
-      <a href="#">Insights</a>
+  <nav class="nav">
+    <a class="brand" href="#">SUBZERO<span class="z">SEC</span></a>
+    <div class="nav-links">
+      <a href="#services">Services</a><a href="#method">Method</a><a href="#work">Work</a><a href="#">Insights</a>
       <a href="#cta" class="btn btn-primary">Book assessment</a>
-    </nav>
-  </div>
+    </div>
+  </nav>
 </header>
 
-<!-- HERO -->
-<section class="hero" style="border-top:0">
-  <div class="wrap hero-grid">
-    <div>
-      <div class="eyebrow">We operate left of zero</div>
-      <h1 style="margin-top:1.4rem">
-        <span class="ln"><span>BEFORE</span></span>
-        <span class="ln"><span>ZERO.</span></span>
-      </h1>
-      <p class="lede">A vulnerability becomes a zero-day the moment an attacker reaches it first.
-        <b>We get there before they do</b> — and prove it with a working exploit, not a scan.</p>
-      <div class="hero-cta">
-        <a href="#cta" class="btn btn-primary">Book a security assessment →</a>
-        <a href="#services" class="btn btn-ghost">View services</a>
-      </div>
-      <div class="hero-meta">
-        <span><b>VAPT</b> · Red Team · Threat Hunting</span>
-        <span>OSINT · Attack-Surface</span>
-        <span><b>EST.</b> 2019 — Islamabad</span>
+<div class="frame">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="l">
+      <div class="lbl-row"><span class="lbl">Offensive Security</span><span class="lbl">Est. 2019 · Islamabad</span></div>
+      <h1>BEFORE<br><span class="o">ZERO.</span></h1>
+      <p class="desc">Manual, exploit-driven security testing for organisations that <b>can't afford to be breached.</b></p>
+      <div class="btnrow">
+        <a href="#cta" class="btn btn-primary">Book an assessment →</a>
+        <a href="#services" class="btn btn-ghost">View capabilities</a>
       </div>
     </div>
-
-    <!-- THE AXIS -->
-    <div class="axis-panel" aria-hidden="true">
-      <div class="cap"><span>timeline · exploit lifecycle</span><span>fig.00</span></div>
-      <div class="axisbox">
-        <svg class="axis-svg" viewBox="0 0 480 190" preserveAspectRatio="xMidYMid meet">
-          <!-- shaded region we operate in -->
-          <rect class="region" x="30" y="78" width="290" height="34" />
-          <!-- main axis -->
-          <line class="axis-line" x1="20" y1="95" x2="460" y2="95" />
-          <polygon class="axis-line" points="460,95 450,90 450,100" fill="var(--line-2)" stroke="none" style="opacity:1;animation:fade .4s 1.5s forwards"/>
-          <!-- negative ticks -->
-          <g>
-            <line class="tick" x1="70"  y1="88" x2="70"  y2="102"/><text class="ticklabel" x="62"  y="122">−3</text>
-            <line class="tick" x1="150" y1="88" x2="150" y2="102"/><text class="ticklabel" x="142" y="122">−2</text>
-            <line class="tick" x1="230" y1="88" x2="230" y2="102"/><text class="ticklabel" x="222" y="122">−1</text>
-          </g>
-          <!-- zero (the detonation point) -->
-          <circle class="zero-ring" cx="320" cy="95" r="13"/>
-          <circle class="zero-dot" cx="320" cy="95" r="4.5"/>
-          <text class="zero-label" x="305" y="138">0 · ZERO-DAY</text>
-          <!-- exploit side -->
-          <line class="tick" x1="400" y1="88" x2="400" y2="102" style="stroke:var(--faint)"/>
-          <text class="ticklabel" x="382" y="122">exploit</text>
-          <!-- our marker, in the negative region -->
-          <g class="marker">
-            <circle class="marker-pulse" cx="150" cy="95" r="5"/>
-            <circle class="marker-dot" cx="150" cy="95" r="4.5"/>
-          </g>
-          <text class="region-label" x="34" y="68">◢ SUBZEROSEC OPERATES HERE</text>
+    <div class="r">
+      <div class="cap"><span class="lbl">Exploit lifecycle</span><span class="lbl">fig.00</span></div>
+      <div class="axisbox" aria-hidden="true">
+        <svg class="axis-svg" viewBox="0 0 480 150" preserveAspectRatio="xMidYMid meet">
+          <rect class="rg" x="30" y="62" width="290" height="26"/>
+          <line class="axis-line" x1="20" y1="75" x2="458" y2="75"/>
+          <polygon points="458,75 448,70 448,80" fill="var(--line-2)" style="opacity:1;animation:fade .4s 1.5s forwards"/>
+          <line class="tick" x1="70" y1="69" x2="70" y2="81"/><text class="tk" x="62" y="100">−3</text>
+          <line class="tick" x1="150" y1="69" x2="150" y2="81"/><text class="tk" x="142" y="100">−2</text>
+          <line class="tick" x1="230" y1="69" x2="230" y2="81"/><text class="tk" x="222" y="100">−1</text>
+          <circle class="zr" cx="320" cy="75" r="12"/><circle class="zd" cx="320" cy="75" r="4"/>
+          <text class="zl" x="305" y="114">0 · ZERO-DAY</text>
+          <line class="tick" x1="400" y1="69" x2="400" y2="81" style="stroke:var(--faint)"/><text class="tk" x="382" y="100">exploit</text>
+          <g class="mk"><circle class="mkp" cx="150" cy="75" r="5"/><circle class="mkp" cx="150" cy="75" r="4" style="animation:none;opacity:1;fill:var(--bone);stroke:none"/></g>
+          <text class="rgl" x="34" y="52">◢ SUBZEROSEC OPERATES HERE</text>
         </svg>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- THESIS -->
-<section id="why">
-  <div class="wrap">
-    <div class="sec-head">
-      <div><div class="idx">01 — THE THESIS</div></div>
-    </div>
-    <div class="thesis">
-      <div>
-        <div class="big">Most security work happens at <em>zero</em> and after —
-          detection, response, cleanup. We move the work into the <em>negative</em>:
-          finding and closing the path before an exploit exists to run.</div>
-        <p>A scanner tells you a port is open. We tell you what an attacker does once they
-          walk through it — chaining a verbose error into a foothold, a foothold into credentials,
-          and credentials into your crown-jewel data. Every finding is reproduced by hand and proven
-          with a working exploit path, so you never triage false positives.</p>
-      </div>
-      <div class="ticker" aria-hidden="true">
-        <div class="row"><span class="t">t = −3 &nbsp;exposure mapped</span><span class="v neg">tracked</span></div>
-        <div class="row"><span class="t">t = −2 &nbsp;weakness found</span><span class="v neg">tracked</span></div>
-        <div class="row"><span class="t">t = −1 &nbsp;exploit proven</span><span class="v neg">contained</span></div>
-        <div class="row"><span class="t">t =  0 &nbsp;zero-day fires</span><span class="v">prevented</span></div>
-        <div class="row"><span class="t">t = +1 &nbsp;breach</span><span class="v">never reached</span></div>
-      </div>
-    </div>
+  <!-- ACCREDITATIONS -->
+  <div class="accred">
+    <span class="t">Accredited</span>
+    <span class="b">CREST</span><span class="b">OSCP / OSCE</span><span class="b">ISO 27001</span>
+    <span class="b">SOC 2 Type II</span><span class="b">PCI DSS · QSA</span><span class="b">CHECK · NCSC</span>
   </div>
-</section>
 
-<!-- SERVICES -->
-<section id="services">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <div class="idx">02 — CAPABILITIES</div>
-        <h2 style="margin-top:.8rem">Five ways we<br>reach it first.</h2>
-      </div>
-      <p>Manual, exploit-driven engagements — not a scan with a logo. Each one is run by operators
-        who compromise systems for a living.</p>
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat"><div class="v">340<span class="s">+</span></div><div class="l">Assessments delivered</div></div>
+    <div class="stat"><div class="v">127<span class="s">+</span></div><div class="l">Critical findings proven</div></div>
+    <div class="stat"><div class="v">98<span class="s">%</span></div><div class="l">Remediation verified</div></div>
+    <div class="stat"><div class="v">15<span class="s">+</span></div><div class="l">Industries secured</div></div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="shead">
+      <div><span class="lbl">01 — Capabilities</span><h2>Five ways we reach it first.</h2></div>
+      <a href="#" class="btn btn-ghost">All services →</a>
     </div>
     <div class="svc">
-      <div class="cell"><div class="num">01 / VAPT</div><h3>Penetration Testing</h3>
-        <p>Find exploitable vulnerabilities before attackers do, proven with working PoCs across web, API, network, cloud and mobile.</p><div class="go">Explore →</div></div>
-      <div class="cell"><div class="num">02 / RED</div><h3>Red Teaming</h3>
-        <p>Intelligence-led adversary emulation that tests whether your people, process and detection actually stop a real intrusion.</p><div class="go">Explore →</div></div>
-      <div class="cell"><div class="num">03 / HUNT</div><h3>Threat Hunting</h3>
-        <p>Proactively uncover the threats already inside — assuming breach and chasing the evidence scanners never raise.</p><div class="go">Explore →</div></div>
-      <div class="cell"><div class="num">04 / OSINT</div><h3>OSINT</h3>
-        <p>Discover exposed assets, leaked credentials and intelligence an adversary would gather before ever touching you.</p><div class="go">Explore →</div></div>
-      <div class="cell"><div class="num">05 / ASM</div><h3>Attack-Surface Analysis</h3>
-        <p>See your organization exactly the way an attacker sees it — every host, endpoint and trust boundary that's reachable.</p><div class="go">Explore →</div></div>
-      <div class="cell" style="background:var(--signal);color:#140503">
-        <div class="num" style="color:#5a1c0e">— / GO</div>
-        <h3 style="color:#140503">See yourself the way an adversary does.</h3>
-        <p style="color:#3d1409">Book a scoped assessment and get a concrete, exploit-proven view of where you're breakable.</p>
-        <div class="go" style="color:#140503;opacity:1;transform:none">Book assessment →</div></div>
+      <div class="cell"><span class="n">01</span>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="2"/></svg>
+        <h3>Penetration Testing</h3><p>Web, API, network, cloud & mobile — every finding proven with a working exploit.</p><div class="go">Explore →</div></div>
+      <div class="cell"><span class="n">02</span>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21l7-7M21 3l-7 7M14 4l6 6M4 14l6 6M14 10l-4 4"/></svg>
+        <h3>Red Teaming</h3><p>Intelligence-led adversary emulation against your live defences and detection.</p><div class="go">Explore →</div></div>
+      <div class="cell"><span class="n">03</span>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 12l6-3M12 12V4"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
+        <h3>Threat Hunting</h3><p>Assume breach. Surface the threats already inside before they act.</p><div class="go">Explore →</div></div>
+      <div class="cell"><span class="n">04</span>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.5 7.5L11 15M16.5 7.5L13 15M8 6h8"/></svg>
+        <h3>OSINT</h3><p>Exposed assets and leaked credentials, mapped before an attacker uses them.</p><div class="go">Explore →</div></div>
+      <div class="cell"><span class="n">05</span>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3"/><rect x="8" y="8" width="8" height="8"/></svg>
+        <h3>Attack-Surface Analysis</h3><p>Everything reachable from outside — the way an attacker sees you.</p><div class="go">Explore →</div></div>
+      <a class="cell cta-cell" href="#cta"><h3>See yourself the way an adversary does.</h3><p>Book a scoped engagement.</p><div class="go">Book assessment →</div></a>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- PROCESS -->
-<section id="process">
-  <div class="wrap proc">
-    <div class="sec-head">
-      <div>
-        <div class="idx">03 — METHOD</div>
-        <h2 style="margin-top:.8rem">From weakness to verified-gone.</h2>
-      </div>
-      <p>Every assessment runs the same disciplined path — and ends only when we've re-attacked the fix.</p>
+  <!-- METHOD -->
+  <section id="method">
+    <div class="shead"><div><span class="lbl">02 — Method</span><h2>From weakness to verified-gone.</h2></div></div>
+    <div class="proc">
+      <div class="pstep"><div class="n">01</div><h3>Discover</h3><p>Map the live attack surface.</p></div>
+      <div class="pstep"><div class="n">02</div><h3>Validate</h3><p>Prove it by exploitation.</p></div>
+      <div class="pstep"><div class="n">03</div><h3>Prioritise</h3><p>Rank by real-world impact.</p></div>
+      <div class="pstep"><div class="n">04</div><h3>Remediate</h3><p>Fix, with engineer-ready guidance.</p></div>
+      <div class="pstep"><div class="n">05</div><h3>Verify</h3><p>Re-attack the fix.</p></div>
     </div>
-    <div class="proc-line"></div>
-    <div class="proc-steps">
-      <div class="step"><div class="dot"></div><div class="n">01</div><h3>Discover</h3><p>Map weaknesses across your estate, combining tooling with manual inspection to surface what scans miss.</p></div>
-      <div class="step"><div class="dot"></div><div class="n">02</div><h3>Validate</h3><p>Confirm exploitability by hand and prove it with a working attack path. Nothing ships as a false positive.</p></div>
-      <div class="step"><div class="dot"></div><div class="n">03</div><h3>Prioritize</h3><p>Rank by real-world exploitability and the sensitivity of what sits behind it — not raw severity alone.</p></div>
-      <div class="step"><div class="dot"></div><div class="n">04</div><h3>Remediate</h3><p>Fix before exploitation with concrete, engineer-ready guidance, supporting your team through the change.</p></div>
-      <div class="step"><div class="dot"></div><div class="n">05</div><h3>Verify</h3><p>Re-attack remediated findings to confirm they're genuinely closed and no new exposure was introduced.</p></div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- STATS -->
-<section>
-  <div class="wrap">
-    <div class="stats">
-      <div class="stat"><div class="v">127<span class="s">+</span></div><div class="l">Critical Findings</div><div class="d">Confirmed critical-severity issues proven exploitable.</div></div>
-      <div class="stat"><div class="v">340<span class="s">+</span></div><div class="l">Assessments</div><div class="d">Pen tests, red-team ops and hunts delivered to date.</div></div>
-      <div class="stat"><div class="v">98<span class="s">%</span></div><div class="l">Remediation Rate</div><div class="d">High & critical findings verified closed at retest.</div></div>
-      <div class="stat"><div class="v">15<span class="s">+</span></div><div class="l">Industries</div><div class="d">Regulated, high-target sectors from banking to telecoms.</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- FEATURED + CERTS -->
-<section id="work">
-  <div class="wrap">
-    <div class="sec-head">
-      <div><div class="idx">04 — PROVEN WORK</div><h2 style="margin-top:.8rem">Evidence, not assurances.</h2></div>
-    </div>
+  <!-- FEATURED -->
+  <section id="work">
+    <div class="shead"><div><span class="lbl">03 — Proven work · Banking</span><h2>Evidence, not assurances.</h2></div></div>
     <div class="feat">
-      <div class="panel">
-        <div class="sector">Banking · Red Team + VAPT</div>
-        <h3>Closing the path from phishing to fraudulent transfer.</h3>
-        <p>An intelligence-led red team proved an external attacker could reach payment-authorization
-          systems, then helped the bank close every step of that path and tune detection for each technique used.</p>
-        <div class="outs">
-          <div class="o"><b>11</b><span>attack paths to payment systems closed</span></div>
-          <div class="o"><b>4 hrs</b><span>to detection after tuning, from undetected</span></div>
-          <div class="o"><b>0</b><span>fraudulent transfers possible at re-test</span></div>
-        </div>
+      <div class="m">
+        <div class="sector">Red Team + VAPT</div>
+        <h3>Phishing to fraudulent transfer — every path closed.</h3>
+        <a href="#" class="btn btn-ghost">Read the case study →</a>
       </div>
-      <div>
-        <div class="idx" style="margin-bottom:1.2rem">ACCREDITATIONS</div>
-        <div class="certs">
-          <div class="cert"><b>CREST</b><span>Accredited pentest & red-team delivery</span></div>
-          <div class="cert"><b>OSCP / OSCE</b><span>Exploitation-focused operator certs</span></div>
-          <div class="cert"><b>ISO 27001</b><span>Information-security management</span></div>
-          <div class="cert"><b>SOC 2 Type II</b><span>Attested security controls</span></div>
-          <div class="cert"><b>PCI DSS · QSA</b><span>Payment-environment testing</span></div>
-        </div>
+      <div class="outs">
+        <div class="o"><b>11</b><span>attack paths to payment systems closed</span></div>
+        <div class="o"><b>4 hrs</b><span>to detection after tuning, from undetected</span></div>
+        <div class="o"><b>0</b><span>fraudulent transfers possible at re-test</span></div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- CTA -->
-<section id="cta" class="cta">
-  <div class="wrap">
-    <div class="eyebrow" style="justify-content:center">Get ahead of zero</div>
-    <h2 style="margin-top:1.2rem">See yourself the way<br>an attacker <span class="s">already does.</span></h2>
-    <p>Book a scoped assessment. We'll map what's reachable, prove what's exploitable,
-      and give you a ranked path to closing it — before someone finds it first.</p>
+  <!-- CTA -->
+  <section id="cta" class="cta">
+    <span class="lbl">Get ahead of zero</span>
+    <h2 style="margin-top:1rem">See yourself the way an<br>attacker <span class="s">already does.</span></h2>
     <div class="row">
       <a href="#" class="btn btn-primary">Book a security assessment →</a>
       <a href="#" class="btn btn-ghost">Talk to an operator</a>
     </div>
-  </div>
-</section>
+  </section>
+</div>
 
 <footer>
-  <div class="wrap foot">
-    <span>© 2026 SUBZEROSEC — BEFORE ZERO. BEYOND BREACH.</span>
-    <span><a href="#">LINKEDIN</a> · <a href="#">X</a> · <a href="#">GITHUB</a> · hello@subzerosec.com</span>
-  </div>
+  <span>© 2026 SUBZEROSEC — BEFORE ZERO. BEYOND BREACH.</span>
+  <span><a href="#">LinkedIn</a> · <a href="#">X</a> · <a href="#">GitHub</a> · hello@subzerosec.com</span>
 </footer>
 </body>
 </html>
