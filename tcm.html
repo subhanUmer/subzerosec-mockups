@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SubZeroSec — TCM-style</title>
+<link rel="icon" href="./logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     SubZeroSec · "TCM-STYLE"
+     Replicated from tcm-sec.com's design language: dark navy,
+     cyan accent + warm secondary, bold geometric sans, tabbed
+     services, 3-col icon cards, testimonials, blog, CTA form.
+     ============================================================ */
+  :root{
+    --bg:#0E1320; --surface:#161C2D; --surface-2:#1B2238; --raise:#212a44;
+    --fg:#EAEEF6; --muted:#9AA6BC; --faint:#5C677D;
+    --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.15);
+    --cyan:#00D4FF; --cyan-deep:#00A6CC; --orange:#FF6B35; --orange-soft:rgba(255,107,53,.14);
+    --ease:cubic-bezier(.22,1,.36,1); --maxw:1200px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{background:var(--bg);color:var(--muted);font-family:"Inter",system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:var(--cyan);color:#04121a}
+  a{color:inherit;text-decoration:none}
+  :focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+  h1,h2,h3{font-family:"Poppins",sans-serif;color:var(--fg);line-height:1.1;letter-spacing:-.01em;font-weight:700}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,4vw,40px)}
+  .eyebrow{font-family:"Poppins";font-size:.74rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan)}
+  .btn{display:inline-flex;align-items:center;gap:.5em;font-family:"Poppins";font-weight:600;font-size:.92rem;padding:.85rem 1.6rem;border-radius:8px;cursor:pointer;transition:.2s var(--ease)}
+  .btn-cyan{background:var(--cyan);color:#04121a}
+  .btn-cyan:hover{background:#4ce0ff;box-shadow:0 0 30px -6px rgba(0,212,255,.6)}
+  .btn-out{background:transparent;color:var(--fg);box-shadow:inset 0 0 0 1.5px var(--line-2)}
+  .btn-out:hover{box-shadow:inset 0 0 0 1.5px var(--cyan);color:var(--cyan)}
+
+  /* NAV */
+  header{position:sticky;top:0;z-index:50;background:rgba(14,19,32,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .brand{display:flex;align-items:center;gap:.55rem;font-family:"Poppins";font-weight:800;font-size:1.1rem;color:var(--fg);letter-spacing:-.02em}
+  .brand img{width:26px;height:26px}
+  .brand .z{color:var(--cyan)}
+  .nav-links{display:flex;align-items:center;gap:2rem}
+  .nav-links a{font-size:.88rem;font-weight:500;color:var(--muted);transition:color .2s}
+  .nav-links a:hover{color:var(--fg)}
+  .nav-end{display:flex;align-items:center;gap:1rem}
+  @media(max-width:900px){.nav-links{display:none}.nav-end .login{display:none}}
+
+  /* HERO */
+  .hero{position:relative;text-align:center;padding:clamp(70px,10vw,120px) 0 clamp(56px,7vw,90px);overflow:hidden}
+  .hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(20px);z-index:0;pointer-events:none}
+  .hero::before{width:520px;height:520px;background:radial-gradient(circle,rgba(0,212,255,.16),transparent 70%);top:-160px;left:50%;transform:translateX(-60%)}
+  .hero::after{width:420px;height:420px;background:radial-gradient(circle,rgba(255,107,53,.12),transparent 70%);top:-60px;right:-80px}
+  .hero .in{position:relative;z-index:2;max-width:50ch;margin:0 auto}
+  .hero .tagpill{display:inline-flex;align-items:center;gap:.5em;font-family:"Poppins";font-size:.74rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--cyan);background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.25);padding:.4rem .9rem;border-radius:999px}
+  .hero h1{font-size:clamp(2.8rem,6.5vw,5rem);font-weight:800;margin:1.4rem 0 0;letter-spacing:-.02em}
+  .hero h1 .c{color:var(--cyan)}
+  .hero .sub{margin:1.4rem auto 0;font-size:1.16rem;max-width:42ch;color:var(--muted)}
+  .hero .row{margin-top:2.2rem;display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
+  .hero .trust{margin-top:2.6rem;font-size:.82rem;color:var(--faint);display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap;font-weight:500}
+
+  /* SERVICE TABS */
+  .tabs{display:flex;justify-content:center;gap:0;border-bottom:1px solid var(--line);margin-top:clamp(40px,5vw,64px);flex-wrap:wrap}
+  .tab{font-family:"Poppins";font-weight:600;font-size:.95rem;color:var(--muted);padding:1rem 1.6rem;border-bottom:2px solid transparent;cursor:pointer;transition:.2s}
+  .tab.active{color:var(--fg);border-bottom-color:var(--cyan)}
+  .tab:hover{color:var(--fg)}
+
+  section{padding:clamp(56px,7vw,100px) 0}
+  .shead{text-align:center;max-width:60ch;margin:0 auto clamp(40px,5vw,58px)}
+  .shead h2{font-size:clamp(2rem,4.2vw,3rem);font-weight:800;margin-top:.7rem}
+  .shead p{margin-top:1rem;color:var(--muted)}
+
+  /* SERVICE CARDS */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,24px)}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:clamp(26px,2.6vw,34px);transition:.25s var(--ease)}
+  .card:hover{border-color:rgba(0,212,255,.4);transform:translateY(-4px);background:var(--surface-2)}
+  .card .ic{width:50px;height:50px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:rgba(0,212,255,.1);color:var(--cyan);margin-bottom:1.2rem}
+  .card .ic svg{width:26px;height:26px}
+  .card h3{font-size:1.22rem;font-weight:700;margin-bottom:.5rem}
+  .card p{font-size:.93rem;color:var(--muted)}
+  .card .go{margin-top:1.1rem;font-family:"Poppins";font-weight:600;font-size:.82rem;color:var(--cyan)}
+  @media(max-width:860px){.cards{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.cards{grid-template-columns:1fr}}
+
+  /* STATS */
+  .statsband{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:clamp(40px,5vw,60px) 0}
+  .stat{text-align:center}
+  .stat .v{font-family:"Poppins";font-weight:800;font-size:clamp(2.4rem,4.5vw,3.4rem);color:var(--fg);letter-spacing:-.03em;line-height:1}
+  .stat .v .s{color:var(--cyan)}
+  .stat .l{margin-top:.5rem;font-size:.84rem;color:var(--muted)}
+  @media(max-width:680px){.stats{grid-template-columns:1fr 1fr;gap:34px}}
+
+  /* TESTIMONIALS */
+  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,24px)}
+  .quote{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:clamp(24px,2.4vw,32px)}
+  .quote .stars{color:var(--orange);font-size:.9rem;letter-spacing:.15em;margin-bottom:1rem}
+  .quote p{color:var(--fg);font-size:.98rem;line-height:1.6}
+  .quote .who{margin-top:1.2rem;display:flex;align-items:center;gap:.7rem}
+  .quote .av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--cyan-deep));flex:none}
+  .quote .who b{display:block;color:var(--fg);font-size:.86rem;font-weight:600;font-family:"Poppins"}
+  .quote .who span{font-size:.78rem;color:var(--faint)}
+  @media(max-width:860px){.quotes{grid-template-columns:1fr}}
+
+  /* BLOG */
+  .posts{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,24px)}
+  .post{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:.25s var(--ease)}
+  .post:hover{transform:translateY(-4px);border-color:var(--line-2)}
+  .post .thumb{height:150px;background:linear-gradient(135deg,#10243a,#161c2d);position:relative}
+  .post .thumb .cat{position:absolute;top:12px;left:12px;font-family:"Poppins";font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#04121a;background:var(--cyan);padding:.25rem .6rem;border-radius:4px}
+  .post .pb{padding:22px}
+  .post h3{font-size:1.08rem;font-weight:700;margin-bottom:.5rem}
+  .post .meta{font-size:.76rem;color:var(--faint);margin-bottom:.6rem}
+  .post p{font-size:.88rem;color:var(--muted)}
+  @media(max-width:860px){.posts{grid-template-columns:1fr}}
+
+  /* CTA */
+  .cta{background:linear-gradient(120deg,var(--surface-2),var(--surface));border-top:1px solid var(--line)}
+  .cta .in{text-align:center;padding:clamp(56px,7vw,90px) 0}
+  .cta h2{font-size:clamp(2rem,4.5vw,3.2rem);font-weight:800}
+  .cta h2 .c{color:var(--cyan)}
+  .cta p{color:var(--muted);max-width:46ch;margin:1.1rem auto 0}
+  .form{margin:2rem auto 0;max-width:520px;display:flex;gap:10px}
+  .form input{flex:1;background:var(--bg);border:1px solid var(--line-2);border-radius:8px;padding:.85rem 1rem;color:var(--fg);font-family:"Inter";font-size:.95rem}
+  .form input::placeholder{color:var(--faint)}
+  @media(max-width:520px){.form{flex-direction:column}}
+
+  /* FOOTER */
+  footer{background:var(--bg);border-top:1px solid var(--line);padding:clamp(48px,6vw,72px) 0 40px}
+  .fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:32px}
+  .fgrid .about{max-width:30ch}
+  .fgrid .about p{font-size:.88rem;color:var(--muted);margin-top:1rem}
+  .fcol h4{font-family:"Poppins";font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--fg);margin-bottom:1rem}
+  .fcol a{display:block;font-size:.88rem;color:var(--muted);padding:.32rem 0;transition:color .2s}
+  .fcol a:hover{color:var(--cyan)}
+  .fbar{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.8rem;color:var(--faint)}
+  @media(max-width:760px){.fgrid{grid-template-columns:1fr 1fr}}
+  .badge{position:fixed;left:14px;bottom:14px;z-index:60;font-family:"Poppins";font-size:.62rem;font-weight:700;letter-spacing:.1em;color:#04121a;background:var(--cyan);padding:6px 10px;border-radius:6px}
+</style>
+</head>
+<body>
+<div class="badge">TCM-STYLE replica</div>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#"><img src="./logo.png" alt="SubZeroSec logo" />SubZero<span class="z">Sec</span></a>
+    <nav class="nav-links">
+      <a href="#services">Services</a><a href="#work">Assessments</a><a href="#insights">Training</a><a href="#insights">Insights</a><a href="#">About</a>
+    </nav>
+    <div class="nav-end">
+      <a class="login" href="#" style="font-size:.88rem;font-weight:500;color:var(--fg)">Client login</a>
+      <a class="btn btn-cyan" href="#cta">Get started</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap in">
+    <span class="tagpill">● Offensive Security · Est. 2019</span>
+    <h1>Built by hackers.<br>Hired to find what <span class="c">they would.</span></h1>
+    <p class="sub">Manual, exploit-driven security testing for organisations that can't afford to be breached — we find the zero-day before they do.</p>
+    <div class="row">
+      <a href="#cta" class="btn btn-cyan">Book an assessment →</a>
+      <a href="#services" class="btn btn-out">View services</a>
+    </div>
+    <div class="trust"><span>CREST</span><span>OSCP / OSCE</span><span>ISO 27001</span><span>SOC 2 Type II</span><span>PCI DSS · QSA</span></div>
+  </div>
+  <div class="wrap">
+    <div class="tabs">
+      <div class="tab active">Penetration Testing</div>
+      <div class="tab">Red Team &amp; Assessments</div>
+      <div class="tab">Threat Intelligence</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="wrap">
+    <div class="shead"><span class="eyebrow">What we do</span><h2>Turn attacker knowledge into your defence.</h2>
+      <p>Manual, exploit-driven engagements run by operators who compromise systems for a living — not a scan with a logo.</p></div>
+    <div class="cards">
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="2"/></svg></div>
+        <h3>Penetration Testing</h3><p>Web, API, network, cloud & mobile — every finding proven with a working exploit.</p><div class="go">Learn more →</div></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 21l7-7M21 3l-7 7M14 4l6 6M4 14l6 6M14 10l-4 4"/></svg></div>
+        <h3>Red Teaming</h3><p>Intelligence-led adversary emulation against your live defences and detection.</p><div class="go">Learn more →</div></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 12l6-3M12 12V4"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg></div>
+        <h3>Threat Hunting</h3><p>Assume breach. Surface the threats already inside before they act.</p><div class="go">Learn more →</div></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.5 7.5L11 15M16.5 7.5L13 15M8 6h8"/></svg></div>
+        <h3>OSINT</h3><p>Exposed assets and leaked credentials, mapped before an attacker uses them.</p><div class="go">Learn more →</div></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3"/><rect x="8" y="8" width="8" height="8"/></svg></div>
+        <h3>Attack-Surface Analysis</h3><p>Everything reachable from outside — the way an attacker sees you.</p><div class="go">Learn more →</div></div>
+      <div class="card" style="border-color:rgba(0,212,255,.3)"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <h3>Book an assessment</h3><p>See yourself the way an adversary does. Get a scoped, exploit-proven engagement.</p><div class="go">Get started →</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="statsband">
+  <div class="wrap stats">
+    <div class="stat"><div class="v">340<span class="s">+</span></div><div class="l">Assessments delivered</div></div>
+    <div class="stat"><div class="v">127<span class="s">+</span></div><div class="l">Critical findings proven</div></div>
+    <div class="stat"><div class="v">98<span class="s">%</span></div><div class="l">Remediation verified</div></div>
+    <div class="stat"><div class="v">15<span class="s">+</span></div><div class="l">Industries secured</div></div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section id="work">
+  <div class="wrap">
+    <div class="shead"><span class="eyebrow">Trusted by teams</span><h2>What clients say.</h2></div>
+    <div class="quotes">
+      <div class="quote"><div class="stars">★★★★★</div><p>"They showed us exactly how an attacker would move through us, then stayed until our team could see it happening."</p>
+        <div class="who"><span class="av"></span><span><b>Director of Security Ops</b><span>Global Retail Bank</span></span></div></div>
+      <div class="quote"><div class="stars">★★★★★</div><p>"Every finding came with a working proof-of-concept. No false positives, no theoretical severity — just what's actually exploitable."</p>
+        <div class="who"><span class="av"></span><span><b>VP Engineering</b><span>Fintech Scale-up</span></span></div></div>
+      <div class="quote"><div class="stars">★★★★★</div><p>"The retest mattered as much as the test. They re-attacked every fix and proved it was genuinely closed."</p>
+        <div class="who"><span class="av"></span><span><b>CISO</b><span>Telecoms Operator</span></span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="insights" style="padding-top:0">
+  <div class="wrap">
+    <div class="shead"><span class="eyebrow">Insights</span><h2>From the team.</h2></div>
+    <div class="posts">
+      <a class="post" href="#"><div class="thumb"><span class="cat">Research</span></div><div class="pb"><div class="meta">12 Jun 2026 · 6 min</div><h3>Chaining a verbose error into domain admin</h3><p>How a single stack trace became a full internal compromise — and how to close it.</p></div></a>
+      <a class="post" href="#"><div class="thumb"><span class="cat">Red Team</span></div><div class="pb"><div class="meta">28 May 2026 · 9 min</div><h3>Phishing to payment authorisation, step by step</h3><p>An anonymised walk-through of a banking red-team engagement.</p></div></a>
+      <a class="post" href="#"><div class="thumb"><span class="cat">Guidance</span></div><div class="pb"><div class="meta">14 May 2026 · 5 min</div><h3>What a real VAPT report should contain</h3><p>Evidence, reproduction steps, and fixes an engineer can act on.</p></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta" id="cta">
+  <div class="wrap in">
+    <h2>Ready to see yourself the way an <span class="c">attacker does?</span></h2>
+    <p>Book a scoped assessment — map what's reachable, prove what's exploitable, close it before someone finds it first.</p>
+    <form class="form" onsubmit="return false">
+      <input type="email" placeholder="Work email" aria-label="Work email" />
+      <button class="btn btn-cyan" type="submit">Book an assessment →</button>
+    </form>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div class="about"><a class="brand" href="#"><img src="./logo.png" alt="" />SubZero<span class="z">Sec</span></a>
+        <p>Offensive security that finds exploitable weaknesses before adversaries do. Before Zero. Beyond Breach.</p></div>
+      <div class="fcol"><h4>Services</h4><a href="#">Penetration Testing</a><a href="#">Red Teaming</a><a href="#">Threat Hunting</a><a href="#">OSINT</a><a href="#">Attack-Surface</a></div>
+      <div class="fcol"><h4>Company</h4><a href="#">About</a><a href="#">Team</a><a href="#">Careers</a><a href="#">Case Studies</a><a href="#">Insights</a></div>
+      <div class="fcol"><h4>Contact</h4><a href="#">hello@subzerosec.com</a><a href="#">Book assessment</a><a href="#">LinkedIn</a><a href="#">X</a><a href="#">GitHub</a></div>
+    </div>
+    <div class="fbar"><span>© 2026 SubZeroSec (Pvt) Ltd. — Islamabad, Pakistan</span><span>Privacy · Terms · Trust & Compliance</span></div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.tab').forEach(function(t){t.addEventListener('click',function(){
+    document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});t.classList.add('active');});});
+</script>
+</body>
+</html>
