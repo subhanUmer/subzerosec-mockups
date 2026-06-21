@@ -19,7 +19,7 @@
   :root{
     --bg:#FBFCFF; --tint:#EAF0FF; --tint-2:#F0ECFF; --ink:#0E1430; --navy:#141C46;
     --brand:#1A2CC4; --brand-2:#4F63E8; --brand-soft:#DEE5FF; --muted:#5A6486; --faint:#9aa2c0;
-    --ease:cubic-bezier(.34,1.2,.4,1); --maxw:1180px;
+    --ease:cubic-bezier(.34,1.2,.4,1); --maxw:1360px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -140,7 +140,7 @@
   .foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:.85rem;color:var(--faint)}
   .foot a:hover{color:var(--ink)}
   .badge{position:fixed;left:14px;bottom:14px;z-index:70;font-size:.66rem;font-weight:600;letter-spacing:.04em;color:#fff;background:var(--brand);padding:7px 12px;border-radius:999px}
-</style>
+header{transition:box-shadow .35s ease,background-color .35s ease}header.scrolled{box-shadow:0 16px 40px -20px rgba(0,0,0,.5)}.nav{transition:height .3s ease}header.scrolled .nav{height:58px}</style>
 </head>
 <body>
 <div class="badge">FREE-FLOW · organic geometry</div>
@@ -187,10 +187,10 @@
       <span class="p">SOC 2 Type II</span><span class="p">PCI DSS · QSA</span><span class="p">CHECK · NCSC</span>
     </div>
     <div class="stats">
-      <div class="stat"><div class="v">340<span class="s">+</span></div><div class="l">Assessments delivered</div></div>
-      <div class="stat"><div class="v">127<span class="s">+</span></div><div class="l">Critical findings proven</div></div>
-      <div class="stat"><div class="v">98<span class="s">%</span></div><div class="l">Remediation verified</div></div>
-      <div class="stat"><div class="v">15<span class="s">+</span></div><div class="l">Industries secured</div></div>
+      <div class="stat"><div class="v"><span class="num" data-to="340">0</span><span class="s">+</span></div><div class="l">Assessments delivered</div></div>
+      <div class="stat"><div class="v"><span class="num" data-to="127">0</span><span class="s">+</span></div><div class="l">Critical findings proven</div></div>
+      <div class="stat"><div class="v"><span class="num" data-to="98">0</span><span class="s">%</span></div><div class="l">Remediation verified</div></div>
+      <div class="stat"><div class="v"><span class="num" data-to="15">0</span><span class="s">+</span></div><div class="l">Industries secured</div></div>
     </div>
   </div>
 </div>
@@ -267,5 +267,6 @@
     <span><a href="#">LinkedIn</a> · <a href="#">X</a> · <a href="#">GitHub</a> · hello@subzerosec.com</span>
   </div>
 </footer>
+<script src="./enhance.js"></script>
 </body>
 </html>
