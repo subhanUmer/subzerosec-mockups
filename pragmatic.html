@@ -16,7 +16,7 @@
      (Gothic A1). Stark white/black with one yellow brand surface.
      ============================================================ */
   :root{
-    --surface:#FFFFFF; --surface-2:#F5F5F4; --brand:#FFE202; --brand-strong:#E5CB00;
+    --surface:#FFFFFF; --surface-2:#F5F5F4; --brand:#1A2CC4; --brand-strong:#1320A0;
     --ink:#141414; --body:#4B4B47; --divider:#E3E3DF; --divider-ink:#141414;
     --maxw:1200px;
   }
@@ -25,7 +25,7 @@
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   body{background:var(--surface);color:var(--body);font-family:"Gothic A1",system-ui,sans-serif;line-height:1.6;
     -webkit-font-smoothing:antialiased;overflow-x:hidden}
-  ::selection{background:var(--brand);color:var(--ink)}
+  ::selection{background:var(--brand);color:#fff}
   a{color:inherit;text-decoration:none}
   :focus-visible{outline:3px solid var(--ink);outline-offset:2px}
   h1,h2,h3{font-family:"Gothic A1";color:var(--ink);line-height:1.02;letter-spacing:-.02em}
@@ -35,7 +35,7 @@
   /* square, flat buttons */
   .btn{display:inline-flex;align-items:center;gap:.5em;font-family:"Gothic A1";font-weight:800;font-size:.92rem;
     padding:16px 28px;border:0;border-radius:0;cursor:pointer;transition:background .15s ease,color .15s ease}
-  .btn-primary{background:var(--brand);color:var(--ink)}
+  .btn-primary{background:var(--brand);color:#fff}
   .btn-primary:hover{background:var(--brand-strong)}
   .btn-secondary{background:var(--ink);color:#fff}
   .btn-secondary:hover{background:#000}
@@ -46,7 +46,7 @@
   header{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--divider-ink)}
   .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
   .brand{font-family:"Gothic A1";font-weight:900;font-size:1.15rem;letter-spacing:-.02em;color:var(--ink);display:flex;align-items:center}
-  .brand .z{background:var(--brand);padding:0 .25em;margin-left:.1em}
+  .brand .z{background:var(--brand);color:#fff;padding:0 .25em;margin-left:.1em}
   .nav-links{display:flex;align-items:center;gap:2.2rem}
   .nav-links a{font-size:.9rem;font-weight:600;color:var(--ink);transition:color .15s}
   .nav-links a:hover{color:var(--body)}
@@ -56,7 +56,7 @@
   .hero{padding:clamp(64px,9vw,120px) 0 clamp(56px,7vw,96px)}
   .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(32px,5vw,72px);align-items:center}
   .hero h1{font-size:clamp(3.4rem,9vw,7rem);font-weight:900;letter-spacing:-.03em;line-height:.92}
-  .hero h1 .mk{background:var(--brand);color:var(--ink);padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+  .hero h1 .mk{background:var(--brand);color:#fff;padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
   .hero .desc{margin-top:clamp(20px,3vw,28px);font-size:1.18rem;max-width:34ch;color:var(--body);font-weight:400}
   .hero .desc b{color:var(--ink);font-weight:700}
   .hero .btnrow{margin-top:clamp(28px,4vw,40px);display:flex;gap:12px;flex-wrap:wrap}
@@ -84,10 +84,10 @@
   /* ===== STATS — the one bright yellow surface ===== */
   .stats{background:var(--brand)}
   .stats .in{display:grid;grid-template-columns:repeat(4,1fr);padding:clamp(40px,5vw,64px) 0;gap:24px}
-  .stat{padding:0 clamp(8px,2vw,20px);border-right:1px solid rgba(20,20,20,.18)}
+  .stat{padding:0 clamp(8px,2vw,20px);border-right:1px solid rgba(255,255,255,.25)}
   .stat:last-child{border-right:0}
-  .stat .v{font-size:clamp(2.8rem,5.5vw,4.2rem);font-weight:900;letter-spacing:-.04em;color:var(--ink);line-height:1}
-  .stat .l{margin-top:8px;font-size:.74rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+  .stat .v{font-size:clamp(2.8rem,5.5vw,4.2rem);font-weight:900;letter-spacing:-.04em;color:#fff;line-height:1}
+  .stat .l{margin-top:8px;font-size:.74rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#fff}
   @media(max-width:760px){.stats .in{grid-template-columns:1fr 1fr;gap:32px}.stat:nth-child(2){border-right:0}}
 
   /* ===== SECTION SHELL ===== */
@@ -110,7 +110,7 @@
   .cell .go{margin-top:1.2rem;font-size:.82rem;font-weight:800;letter-spacing:.04em;color:var(--ink)}
   .cell.brand-cell{background:var(--brand)}
   .cell.brand-cell:hover{background:var(--brand-strong)}
-  .cell.brand-cell h3,.cell.brand-cell p,.cell.brand-cell .go{color:var(--ink)}
+  .cell.brand-cell h3,.cell.brand-cell p,.cell.brand-cell .go{color:#fff}
   @media(max-width:860px){.svc-row{grid-template-columns:1fr 1fr}}
   @media(max-width:560px){.svc-row{grid-template-columns:1fr}}
 
@@ -139,7 +139,7 @@
   .cta .in{padding:clamp(56px,7vw,96px) 0;text-align:center}
   .cta .kick{color:var(--brand)}
   .cta h2{color:#fff;font-size:clamp(2.2rem,5vw,3.6rem);font-weight:900;margin-top:14px;letter-spacing:-.03em}
-  .cta h2 .mk{background:var(--brand);color:var(--ink);padding:0 .12em}
+  .cta h2 .mk{background:var(--brand);color:#fff;padding:0 .12em}
   .cta .btnrow{margin-top:32px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
   .cta .btn-line{box-shadow:inset 0 0 0 2px #fff;color:#fff}
   .cta .btn-line:hover{background:#fff;color:var(--ink)}
@@ -148,7 +148,7 @@
   .foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:28px 0;font-size:.82rem;font-weight:600}
   footer a:hover{color:#fff}
   .badge{position:fixed;left:14px;bottom:14px;z-index:60;font-size:.62rem;font-weight:800;letter-spacing:.14em;
-    color:var(--ink);background:var(--brand);padding:6px 10px}
+    color:#fff;background:var(--brand);padding:6px 10px}
 </style>
 </head>
 <body>
