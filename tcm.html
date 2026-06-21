@@ -21,7 +21,7 @@
     --fg:#F4EFFB; --muted:#AEA6C2; --faint:#766E8C;
     --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.15);
     --red:#EB204F; --red-deep:#C8113B; --red-soft:rgba(235,32,79,.14);
-    --ease:cubic-bezier(.22,1,.36,1); --maxw:1200px;
+    --ease:cubic-bezier(.22,1,.36,1); --maxw:980px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -33,7 +33,7 @@
   h1,h2,h3{font-family:"Inter",sans-serif;color:var(--fg);line-height:1.15;letter-spacing:-.015em;font-weight:800}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,4vw,40px)}
   .eyebrow{font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
-  .btn{display:inline-flex;align-items:center;gap:.5em;font-weight:600;font-size:.92rem;padding:.82rem 1.5rem;border-radius:7px;cursor:pointer;transition:.2s var(--ease)}
+  .btn{display:inline-flex;align-items:center;gap:.5em;font-weight:600;font-size:.92rem;padding:.875rem 2.25rem;border-radius:5px;cursor:pointer;transition:.2s var(--ease)}
   .btn-red{background:var(--red);color:#fff}
   .btn-red:hover{background:var(--red-deep)}
   .btn-out{background:transparent;color:var(--fg);box-shadow:inset 0 0 0 1.5px var(--line-2)}
@@ -58,7 +58,7 @@
   .hero::after{content:"";position:absolute;width:620px;height:620px;border-radius:50%;z-index:0;pointer-events:none;
     background:radial-gradient(circle,rgba(151,71,255,.18),transparent 65%);top:-160px;right:-180px}
   .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(30px,4vw,60px);align-items:center}
-  .hero h1{font-size:clamp(2.6rem,5.4vw,4.2rem);font-weight:800;margin:1rem 0 0;letter-spacing:-.02em;color:#fff}
+  .hero h1{font-size:clamp(2.4rem,5.5vw,3.95rem);font-weight:800;margin:1rem 0 0;letter-spacing:-.022em;line-height:1.08;color:#fff}
   .hero h1 .r{color:var(--red)}
   .hero .sub{margin-top:1.3rem;font-size:1.08rem;max-width:46ch;color:var(--muted)}
   .hero .ticks{margin-top:1.6rem;display:grid;gap:.6rem}
