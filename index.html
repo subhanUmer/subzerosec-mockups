@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SubZeroSec — Design Directions</title>
+<link rel="icon" href="./logo.png" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0B0B0D;color:#F2F2EE;font-family:"Archivo",system-ui,sans-serif;line-height:1.6;
+    min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px}
+  .mono{font-family:"JetBrains Mono",monospace}
+  h1{font-size:clamp(2rem,5vw,3.4rem);font-weight:900;letter-spacing:-.03em;text-align:center}
+  .sub{color:#9AA0A8;font-family:"JetBrains Mono";font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;
+    margin-top:1rem;text-align:center}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1080px;width:100%;margin-top:54px}
+  a.card{display:block;border:1px solid rgba(242,242,238,.14);border-radius:6px;padding:30px;text-decoration:none;
+    color:inherit;transition:.25s cubic-bezier(.22,1,.36,1);background:#111114}
+  a.card:hover{transform:translateY(-4px);border-color:rgba(242,242,238,.35)}
+  .tag{font-family:"JetBrains Mono";font-size:.7rem;letter-spacing:.2em;text-transform:uppercase}
+  .axis .tag{color:#FF5E3A} .cryo .tag{color:#5FB0DC} .dossier .tag{color:#C9A24B}
+  .card h2{font-size:1.6rem;font-weight:700;margin:.8rem 0 .5rem;letter-spacing:-.02em}
+  .card p{color:#9AA0A8;font-size:.9rem}
+  .swatch{display:flex;gap:6px;margin-top:18px}
+  .swatch span{width:24px;height:24px;border-radius:3px;border:1px solid rgba(255,255,255,.1)}
+  .go{margin-top:20px;font-family:"JetBrains Mono";font-size:.76rem;color:#F2F2EE}
+  .rec{display:inline-block;margin-left:.5rem;font-family:"JetBrains Mono";font-size:.6rem;letter-spacing:.12em;
+    color:#0B0B0D;background:#FF5E3A;padding:.16rem .4rem;border-radius:2px;vertical-align:middle}
+  footer{margin-top:54px;color:#54585E;font-family:"JetBrains Mono";font-size:.74rem;text-align:center}
+  @media(max-width:780px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+  <h1>SubZeroSec — three directions</h1>
+  <div class="sub">Same content · same brand · three distinct visual identities</div>
+  <div class="grid">
+    <a class="card axis" href="./axis.html">
+      <div class="tag">Direction B<span class="rec">RECOMMENDED</span></div>
+      <h2>The Axis</h2>
+      <p>Swiss-engineered. The hero is a literal negative number-line — we operate left of zero-day. Cold neutral world, one warm signal accent.</p>
+      <div class="swatch"><span style="background:#0E0E10"></span><span style="background:#F4F3EF"></span><span style="background:#9AA3AD"></span><span style="background:#FF5E3A"></span></div>
+      <div class="go">Open Direction B →</div>
+    </a>
+    <a class="card cryo" href="./cryo.html">
+      <div class="tag">Direction A</div>
+      <h2>Cryo</h2>
+      <p>Atmospheric & restrained. A threat frozen mid-flight; one orchestrated freeze on load, then stillness. Cold, premium, emotive.</p>
+      <div class="swatch"><span style="background:#06080B"></span><span style="background:#EAF1F6"></span><span style="background:#5FB0DC"></span><span style="background:#E5533C"></span></div>
+      <div class="go">Open Direction A →</div>
+    </a>
+    <a class="card dossier" href="./dossier.html">
+      <div class="tag">Direction C</div>
+      <h2>The Dossier</h2>
+      <p>Editorial authority — an elite intelligence lab. Serif + mono, declassified case-file layout, redaction reveal. Warm ink, stamp red.</p>
+      <div class="swatch"><span style="background:#0B0B0C"></span><span style="background:#E7E2D6"></span><span style="background:#C9A24B"></span><span style="background:#C2402E"></span></div>
+      <div class="go">Open Direction C →</div>
+    </a>
+  </div>
+  <footer>Open each, scroll the full page, then tell me which to develop into the production build.</footer>
+</body>
+</html>

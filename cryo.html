@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SubZeroSec — Cryo (Direction A)</title>
+<link rel="icon" href="./logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     SubZeroSec · Direction A — "CRYO"
+     Atmospheric & restrained. A threat frozen mid-flight.
+     Cold near-black + frost white; ice accent used sparingly,
+     ember used exactly once. One freeze moment, then stillness.
+     ============================================================ */
+  :root{
+    --glacier:#06080B; --surface:#0A0D12; --surface-2:#0E131A;
+    --frost:#EAF1F6; --ice:#B9D6E8; --cryo:#5FB0DC; --cryo-deep:#2E7CA6;
+    --steel:#6E7A86; --faint:#454F59;
+    --line:rgba(185,214,232,.10); --line-2:rgba(185,214,232,.20);
+    --ember:#E5533C;
+    --ease:cubic-bezier(.2,.8,.2,1);--maxw:1180px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{background:var(--glacier);color:var(--frost);font-family:"Inter",system-ui,sans-serif;
+    line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:var(--cryo);color:#03121b}
+  a{color:inherit;text-decoration:none}
+  :focus-visible{outline:2px solid var(--cryo);outline-offset:3px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 30px}
+  h1,h2,h3{font-family:"Sora",sans-serif;letter-spacing:-.02em;line-height:1.06;text-wrap:balance;font-weight:600}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--ice);display:inline-flex;gap:.7em;align-items:center}
+  .eyebrow::before,.eyebrow::after{content:"";width:18px;height:1px;background:var(--line-2)}
+  .eyebrow.solo::after{display:none}
+
+  /* atmospheric backdrop — soft cold wash, NO grid/particles */
+  body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+    background:radial-gradient(900px 620px at 50% -6%,rgba(95,176,220,.10),transparent 62%),
+              radial-gradient(700px 500px at 84% 110%,rgba(46,124,166,.07),transparent 60%)}
+
+  /* ---------- NAV ---------- */
+  header{position:fixed;top:0;left:0;right:0;z-index:50;border-bottom:1px solid var(--line);
+    background:linear-gradient(var(--glacier),rgba(6,8,11,.4));backdrop-filter:blur(12px) saturate(130%)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .brand{display:flex;align-items:center;gap:.7rem;font-family:"Sora";font-weight:700;letter-spacing:-.01em;font-size:1.04rem}
+  .brand img{width:26px;height:26px;filter:drop-shadow(0 0 10px rgba(95,176,220,.5))}
+  .brand .z{color:var(--cryo)}
+  .nav-links{display:flex;gap:2.1rem;align-items:center}
+  .nav-links a{font-size:.85rem;color:var(--steel);transition:color .2s}
+  .nav-links a:hover{color:var(--frost)}
+  .btn{display:inline-flex;align-items:center;gap:.5em;font-size:.84rem;font-weight:500;padding:.72rem 1.3rem;
+    border-radius:999px;cursor:pointer;transition:.25s var(--ease)}
+  .btn-primary{background:var(--frost);color:#06121a;border:1px solid var(--frost)}
+  .btn-primary:hover{background:#fff;box-shadow:0 0 28px rgba(185,214,232,.25)}
+  .btn-ghost{background:transparent;color:var(--frost);border:1px solid var(--line-2)}
+  .btn-ghost:hover{border-color:var(--ice);color:var(--ice)}
+  @media(max-width:820px){.nav-links{display:none}}
+
+  /* ---------- HERO (the freeze) ---------- */
+  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;
+    position:relative;padding:120px 0 80px}
+  .freeze{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:0;pointer-events:none}
+  .freeze svg{width:min(560px,82vw);height:auto;opacity:.9}
+  /* the threat shard travels in, then freezes (ember -> ice) */
+  .shard{transform-origin:center;animation:fly 1.9s var(--ease) forwards}
+  @keyframes fly{
+    0%{transform:translateX(-150px) rotate(-12deg) scale(.7)}
+    62%{transform:translateX(0) rotate(0deg) scale(1)}
+    100%{transform:translateX(0) rotate(0deg) scale(1)}
+  }
+  .shard rect{fill:var(--ember);animation:thaw 1.1s 1.55s var(--ease) forwards}
+  @keyframes thaw{to{fill:var(--ice)}}
+  /* fracture / crystal lines draw in at the freeze instant */
+  .frac{stroke:var(--cryo);stroke-width:1;opacity:0;stroke-dasharray:120;stroke-dashoffset:120;
+    animation:crack .8s 1.55s var(--ease) forwards}
+  @keyframes crack{to{opacity:.7;stroke-dashoffset:0}}
+  .sweep{fill:none;stroke:var(--frost);stroke-width:1.5;opacity:0;
+    animation:sweep 1.5s .9s ease-out forwards}
+  @keyframes sweep{0%{opacity:0}40%{opacity:.8}100%{opacity:0}}
+  .freeze-ring{fill:none;stroke:var(--cryo);stroke-width:1;opacity:0;
+    animation:ring 1s 1.7s var(--ease) forwards}
+  @keyframes ring{0%{opacity:.7;r:8}100%{opacity:0;r:120}}
+
+  .hero-inner{position:relative;z-index:2}
+  .hero h1{font-size:clamp(2.9rem,7.5vw,6rem);font-weight:700;opacity:0;transform:translateY(18px);
+    animation:up 1s 2s var(--ease) forwards}
+  .hero h1 .fz{color:var(--ice);font-weight:300;font-style:italic}
+  .hero .sub{margin-top:1.6rem;color:var(--steel);font-size:1.12rem;max-width:46ch;margin-left:auto;margin-right:auto;
+    opacity:0;transform:translateY(18px);animation:up 1s 2.18s var(--ease) forwards}
+  .hero .sub b{color:var(--frost);font-weight:500}
+  .hero .row{margin-top:2.4rem;display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap;
+    opacity:0;animation:up 1s 2.36s var(--ease) forwards}
+  .hero .kick{margin-top:2.6rem;font-family:"JetBrains Mono";font-size:.72rem;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--cryo);opacity:0;animation:up 1s 2.5s var(--ease) forwards}
+  @keyframes up{to{opacity:1;transform:translateY(0)}}
+  @media(prefers-reduced-motion:reduce){
+    .shard,.shard rect,.frac,.sweep,.freeze-ring,.hero h1,.hero .sub,.hero .row,.hero .kick{animation:none!important;opacity:1!important;transform:none!important;stroke-dashoffset:0!important}
+    .shard rect{fill:var(--ice)}
+  }
+  .scrollcue{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);font-family:"JetBrains Mono";
+    font-size:.66rem;letter-spacing:.26em;color:var(--faint);text-transform:uppercase}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:110px 0;position:relative}
+  .divider{height:1px;background:linear-gradient(90deg,transparent,var(--line-2),transparent)}
+  .sec-head{text-align:center;max-width:60ch;margin:0 auto 64px}
+  .sec-head h2{font-size:clamp(1.9rem,4.2vw,3.1rem);font-weight:600}
+  .sec-head p{color:var(--steel);margin-top:1.1rem}
+
+  /* thesis */
+  .thesis{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+  .tcard{border:1px solid var(--line);border-radius:16px;padding:30px;background:
+    linear-gradient(180deg,var(--surface),transparent)}
+  .tcard .n{font-family:"JetBrains Mono";font-size:.72rem;color:var(--cryo);letter-spacing:.2em}
+  .tcard h3{font-size:1.25rem;margin:1rem 0 .6rem;font-weight:600}
+  .tcard p{color:var(--steel);font-size:.93rem}
+  @media(max-width:820px){.thesis{grid-template-columns:1fr}}
+
+  /* services — frost cards */
+  .svc{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .scard{position:relative;border:1px solid var(--line);border-radius:18px;padding:32px;overflow:hidden;
+    background:var(--surface);transition:.3s var(--ease)}
+  .scard:hover{border-color:var(--line-2);transform:translateY(-3px);
+    box-shadow:0 24px 60px -30px rgba(95,176,220,.4)}
+  .scard::after{content:"";position:absolute;inset:0;border-radius:18px;pointer-events:none;
+    background:radial-gradient(380px 180px at var(--mx,80%) -10%,rgba(95,176,220,.12),transparent 60%);opacity:0;transition:opacity .3s}
+  .scard:hover::after{opacity:1}
+  .scard .tag{font-family:"JetBrains Mono";font-size:.7rem;letter-spacing:.18em;color:var(--ice);text-transform:uppercase}
+  .scard h3{font-size:1.45rem;margin:.9rem 0 .6rem;font-weight:600}
+  .scard p{color:var(--steel);font-size:.95rem}
+  .scard .go{margin-top:1.2rem;font-family:"JetBrains Mono";font-size:.74rem;color:var(--cryo);display:inline-flex;gap:.4em}
+  @media(max-width:760px){.svc{grid-template-columns:1fr}}
+
+  /* process strip */
+  .proc{display:grid;grid-template-columns:repeat(5,1fr);gap:24px;counter-reset:p}
+  .pstep{position:relative;padding-top:30px}
+  .pstep::before{content:"";position:absolute;top:5px;left:0;width:9px;height:9px;border-radius:50%;
+    background:var(--cryo);box-shadow:0 0 0 4px rgba(95,176,220,.16)}
+  .pstep .n{font-family:"JetBrains Mono";font-size:.72rem;color:var(--faint)}
+  .pstep h3{font-size:1.06rem;margin:.4rem 0;font-weight:600}
+  .pstep p{color:var(--steel);font-size:.84rem}
+  @media(max-width:820px){.proc{grid-template-columns:1fr 1fr}}
+  @media(max-width:520px){.proc{grid-template-columns:1fr}}
+
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center}
+  .stat .v{font-family:"Sora";font-weight:700;font-size:clamp(2.6rem,5vw,3.6rem);letter-spacing:-.03em}
+  .stat .v .s{color:var(--cryo)}
+  .stat .l{font-family:"JetBrains Mono";font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ice);margin-top:.5rem}
+  .stat .d{color:var(--faint);font-size:.82rem;margin-top:.6rem}
+  @media(max-width:760px){.stats{grid-template-columns:1fr 1fr;gap:34px}}
+
+  /* featured */
+  .feat{border:1px solid var(--line);border-radius:22px;padding:46px;background:
+    radial-gradient(120% 130% at 0% 0%,rgba(46,124,166,.12),transparent 55%),var(--surface)}
+  .feat .sector{font-family:"JetBrains Mono";font-size:.72rem;letter-spacing:.18em;color:var(--ice);text-transform:uppercase}
+  .feat h3{font-size:clamp(1.6rem,3.4vw,2.3rem);margin:1rem 0;font-weight:600;max-width:22ch}
+  .feat p{color:var(--steel);max-width:60ch}
+  .feat .outs{display:flex;gap:46px;margin-top:2.2rem;flex-wrap:wrap}
+  .feat .o b{font-family:"Sora";font-weight:700;font-size:2.2rem;display:block;letter-spacing:-.03em}
+  .feat .o span{font-family:"JetBrains Mono";font-size:.72rem;color:var(--steel);max-width:18ch;display:block;margin-top:.3rem}
+
+  /* certs row */
+  .certs{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:42px}
+  .pill{font-family:"JetBrains Mono";font-size:.74rem;letter-spacing:.1em;color:var(--ice);
+    border:1px solid var(--line-2);border-radius:999px;padding:.5rem 1rem}
+
+  /* CTA */
+  .cta{text-align:center}
+  .cta h2{font-size:clamp(2.2rem,5.5vw,4.2rem);font-weight:700}
+  .cta h2 .fz{color:var(--ice);font-weight:300;font-style:italic}
+  .cta p{color:var(--steel);max-width:48ch;margin:1.4rem auto 2.4rem}
+
+  footer{border-top:1px solid var(--line);padding:46px 0 60px;font-family:"JetBrains Mono";font-size:.78rem;color:var(--faint)}
+  .foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .foot a:hover{color:var(--ice)}
+  .badge{position:fixed;left:14px;bottom:14px;z-index:60;font-family:"JetBrains Mono";font-size:.66rem;
+    letter-spacing:.16em;color:var(--steel);background:var(--surface);border:1px solid var(--line);padding:.5rem .7rem;border-radius:999px}
+</style>
+</head>
+<body>
+<div class="badge">DIRECTION&nbsp;A · CRYO</div>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#"><img src="./logo.png" alt="SubZeroSec logo" />SubZero<span class="z">Sec</span></a>
+    <nav class="nav-links">
+      <a href="#services">Services</a><a href="#process">Method</a><a href="#work">Work</a><a href="#">Insights</a>
+      <a href="#cta" class="btn btn-primary">Book assessment</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO: the freeze -->
+<section class="hero">
+  <div class="freeze" aria-hidden="true">
+    <svg viewBox="0 0 600 360">
+      <!-- detection sweep -->
+      <line class="sweep" x1="120" y1="40" x2="120" y2="320"/>
+      <!-- frozen threat shard -->
+      <g class="shard">
+        <rect x="288" y="168" width="24" height="24" rx="2" transform="rotate(45 300 180)"/>
+        <!-- crystalline fracture lines radiating from the frozen point -->
+        <line class="frac" x1="300" y1="180" x2="300" y2="96"/>
+        <line class="frac" x1="300" y1="180" x2="372" y2="138"/>
+        <line class="frac" x1="300" y1="180" x2="378" y2="224"/>
+        <line class="frac" x1="300" y1="180" x2="300" y2="264"/>
+        <line class="frac" x1="300" y1="180" x2="224" y2="226"/>
+        <line class="frac" x1="300" y1="180" x2="228" y2="136"/>
+      </g>
+      <circle class="freeze-ring" cx="300" cy="180" r="8"/>
+    </svg>
+  </div>
+
+  <div class="wrap hero-inner">
+    <div class="eyebrow solo" style="justify-content:center">Before Zero · Beyond Breach</div>
+    <h1 style="margin-top:1.4rem">We <span class="fz">freeze</span> the zero-day<br>before it ever fires.</h1>
+    <p class="sub">Offensive security that intercepts an exploit on its path to becoming a weapon —
+      <b>found, proven, and stopped</b> while it's still just a weakness.</p>
+    <div class="row">
+      <a href="#cta" class="btn btn-primary">Book a security assessment</a>
+      <a href="#services" class="btn btn-ghost">View services →</a>
+    </div>
+    <div class="kick">VAPT · Red Team · Threat Hunting · OSINT · Attack Surface</div>
+  </div>
+  <div class="scrollcue" aria-hidden="true">scroll</div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- THESIS -->
+<section id="why">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow" style="justify-content:center">The thesis</div>
+      <h2 style="margin-top:1rem">A breach is just a zero-day no one caught in time.</h2>
+      <p>So we move upstream — to the cold, quiet window before an exploit exists to run, where a
+        vulnerability is still ours to find and close.</p>
+    </div>
+    <div class="thesis">
+      <div class="tcard"><div class="n">01 — FIND</div><h3>Reach it first</h3>
+        <p>We hunt the weakness the way an adversary would, chaining low findings into the high-impact path that actually leads to compromise.</p></div>
+      <div class="tcard"><div class="n">02 — PROVE</div><h3>Freeze it in place</h3>
+        <p>Every finding is reproduced by hand and proven with a working exploit, so it's captured and undeniable — never theoretical.</p></div>
+      <div class="tcard"><div class="n">03 — PREVENT</div><h3>Keep it from firing</h3>
+        <p>Ranked, engineer-ready remediation closes the path, and we re-attack the fix to confirm the threat stays frozen.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow" style="justify-content:center">Capabilities</div>
+      <h2 style="margin-top:1rem">Five ways we reach it first.</h2>
+      <p>Manual, exploit-driven engagements — not a scan with a logo.</p>
+    </div>
+    <div class="svc" onmousemove="for(const c of document.querySelectorAll('.scard')){const r=c.getBoundingClientRect();c.style.setProperty('--mx',((event.clientX-r.left)/r.width*100)+'%')}">
+      <div class="scard"><div class="tag">VAPT</div><h3>Penetration Testing</h3>
+        <p>Find exploitable vulnerabilities before attackers do — proven with working PoCs across web, API, network, cloud and mobile.</p><span class="go">Explore →</span></div>
+      <div class="scard"><div class="tag">Red Team</div><h3>Red Teaming</h3>
+        <p>Intelligence-led adversary emulation that tests whether your people, process and detection actually stop a real intrusion.</p><span class="go">Explore →</span></div>
+      <div class="scard"><div class="tag">Hunt</div><h3>Threat Hunting</h3>
+        <p>Proactively uncover the threats already inside — assuming breach and chasing the evidence scanners never raise.</p><span class="go">Explore →</span></div>
+      <div class="scard"><div class="tag">OSINT</div><h3>OSINT</h3>
+        <p>Discover exposed assets, leaked credentials and intelligence an adversary would gather before ever touching you.</p><span class="go">Explore →</span></div>
+      <div class="scard" style="grid-column:1/-1"><div class="tag">Attack Surface</div><h3>Attack-Surface Analysis</h3>
+        <p>See your organization exactly the way an attacker sees it — every host, endpoint and trust boundary that's reachable from the outside.</p><span class="go">Explore →</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow" style="justify-content:center">Method</div>
+      <h2 style="margin-top:1rem">From weakness to verified-gone.</h2>
+    </div>
+    <div class="proc">
+      <div class="pstep"><div class="n">01</div><h3>Discover</h3><p>Map weaknesses across your estate — tooling plus manual inspection to surface what scans miss.</p></div>
+      <div class="pstep"><div class="n">02</div><h3>Validate</h3><p>Confirm exploitability by hand and prove it with a working attack path.</p></div>
+      <div class="pstep"><div class="n">03</div><h3>Prioritize</h3><p>Rank by real exploitability and the sensitivity of what sits behind it.</p></div>
+      <div class="pstep"><div class="n">04</div><h3>Remediate</h3><p>Fix before exploitation with concrete, engineer-ready guidance.</p></div>
+      <div class="pstep"><div class="n">05</div><h3>Verify</h3><p>Re-attack the fix to confirm it's genuinely closed.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat"><div class="v">127<span class="s">+</span></div><div class="l">Critical Findings</div><div class="d">Proven exploitable across engagements.</div></div>
+      <div class="stat"><div class="v">340<span class="s">+</span></div><div class="l">Assessments</div><div class="d">Delivered to date.</div></div>
+      <div class="stat"><div class="v">98<span class="s">%</span></div><div class="l">Remediation Rate</div><div class="d">Verified closed at retest.</div></div>
+      <div class="stat"><div class="v">15<span class="s">+</span></div><div class="l">Industries</div><div class="d">Regulated, high-target sectors.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED -->
+<section id="work">
+  <div class="wrap">
+    <div class="feat">
+      <div class="sector">Banking · Red Team + VAPT</div>
+      <h3>Closing the path from phishing to fraudulent transfer.</h3>
+      <p>An intelligence-led red team proved an external attacker could reach payment-authorization systems,
+        then helped the bank close every step of that path and tune detection for each technique used.</p>
+      <div class="outs">
+        <div class="o"><b>11</b><span>attack paths to payment systems closed</span></div>
+        <div class="o"><b>4 hrs</b><span>to detection after tuning, from undetected</span></div>
+        <div class="o"><b>0</b><span>fraudulent transfers possible at re-test</span></div>
+      </div>
+    </div>
+    <div class="certs">
+      <span class="pill">CREST</span><span class="pill">OSCP / OSCE</span><span class="pill">ISO 27001</span>
+      <span class="pill">SOC 2 Type II</span><span class="pill">PCI DSS · QSA</span><span class="pill">CHECK · NCSC</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- CTA -->
+<section class="cta" id="cta">
+  <div class="wrap">
+    <div class="eyebrow solo" style="justify-content:center">Get ahead of zero</div>
+    <h2 style="margin-top:1.2rem">Let's <span class="fz">freeze</span> it<br>before it fires.</h2>
+    <p>Book a scoped assessment. We'll map what's reachable, prove what's exploitable, and give you a
+      ranked path to closing it — before someone finds it first.</p>
+    <div class="row" style="display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap">
+      <a href="#" class="btn btn-primary">Book a security assessment</a>
+      <a href="#" class="btn btn-ghost">Talk to an operator →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 SUBZEROSEC — BEFORE ZERO. BEYOND BREACH.</span>
+    <span><a href="#">LinkedIn</a> · <a href="#">X</a> · <a href="#">GitHub</a> · hello@subzerosec.com</span>
+  </div>
+</footer>
+</body>
+</html>
