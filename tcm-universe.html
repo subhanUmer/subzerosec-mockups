@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SubZeroSec — Universe (interactive node map)</title>
+<link rel="icon" href="./logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     SubZeroSec · UNIVERSE
+     One node-universe. Each node is a topic; hover (or let it
+     auto-tour) and a techy HUD popup — tethered to the star by a
+     connector line — details it. Layered stars with bloom, glint
+     and mouse-parallax depth. Royal-blue scheme.
+     ============================================================ */
+  :root{
+    --bg:#060B17; --fg:#EAF1FF; --muted:#A9B7CE; --faint:#73839B;
+    --line:rgba(255,255,255,.09); --line-2:rgba(255,255,255,.16);
+    --accent:#5A8CD8; --fill:#2759A5; --deep:#132D53; --soft:rgba(90,140,216,.18);
+    --ease:cubic-bezier(.22,1,.36,1); --maxw:1180px; --mono:"JetBrains Mono",monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--muted);font-family:"Inter",system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--accent);color:#06101f}
+  h1,h2,h3,h4{font-family:"Inter";font-weight:800;letter-spacing:-.02em;line-height:1.1;color:var(--fg)}
+  .eyebrow{font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+  .btn{display:inline-flex;align-items:center;gap:.5em;font-weight:600;font-size:.92rem;padding:.875rem 2.1rem;border-radius:7px;cursor:pointer;transition:.2s var(--ease)}
+  .btn-out{background:transparent;color:var(--fg);box-shadow:inset 0 0 0 1.5px var(--line-2)}
+  .btn-out:hover{box-shadow:inset 0 0 0 1.5px var(--accent);color:var(--accent)}
+  .txtsh{text-shadow:0 2px 30px rgba(6,11,23,.9),0 1px 3px rgba(6,11,23,.95)}
+
+  @property --ga{syntax:"<angle>";initial-value:0deg;inherits:false}
+  .shiny{position:relative;isolation:isolate;overflow:hidden;cursor:pointer;border:1px solid transparent;border-radius:9px;padding:.95rem 2.1rem;font:600 .95rem "Inter";color:#fff;
+    background:linear-gradient(var(--fill),var(--fill)) padding-box,conic-gradient(from var(--ga),transparent,var(--accent) 8%,#cfe0ff 14%,var(--accent) 20%,transparent 28%) border-box;
+    box-shadow:0 14px 30px -12px rgba(39,89,165,.7);animation:spin 4s linear infinite}
+  .shiny::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:linear-gradient(-50deg,transparent,rgba(207,224,255,.5),transparent);mask:radial-gradient(circle at bottom,transparent 42%,#000);opacity:.5;animation:spin 6s linear infinite reverse}
+  @keyframes spin{to{--ga:360deg}}
+  @media(prefers-reduced-motion:reduce){.shiny,.shiny::after{animation:none}}
+
+  /* header + underline navbar */
+  header{position:fixed;top:0;left:0;right:0;z-index:80;background:rgba(6,11,22,.5);backdrop-filter:saturate(150%) blur(14px);border-bottom:1px solid rgba(255,255,255,.07);transition:background .3s var(--ease)}
+  header.scrolled{background:rgba(5,10,20,.9);box-shadow:0 14px 36px -18px rgba(0,0,0,.7)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:70px;gap:20px;max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,4vw,40px)}
+  .brand{display:flex;align-items:center;gap:.55rem;font-weight:800;font-size:1.08rem;color:#fff}
+  .brand img{width:26px;height:26px}.brand .z{color:var(--accent)}
+  .nav-links{position:relative;display:flex;align-items:center;gap:.4rem}
+  .nav-links a{position:relative;font-size:.88rem;font-weight:500;color:#C4CEDE;padding:.5rem .7rem;transition:color .2s;cursor:pointer}
+  .nav-links a:hover{color:#fff}
+  .nav-links .uline{position:absolute;bottom:.34rem;height:2px;border-radius:2px;background:var(--accent);box-shadow:0 0 8px rgba(90,140,216,.8);opacity:0;transition:left .3s var(--ease),width .3s var(--ease),opacity .25s;pointer-events:none}
+  .nav-end{display:flex;align-items:center;gap:1rem}
+  .nav-end .login{font-size:.86rem;font-weight:500;color:var(--fg)}
+  .nav-cta{font:600 .86rem "Inter";color:#fff;background:var(--fill);padding:.55rem 1.1rem;border-radius:7px;transition:.2s}.nav-cta:hover{background:var(--deep)}
+  @media(max-width:980px){.nav-links{display:none}.nav-end .login{display:none}}
+
+  /* UNIVERSE */
+  .universe{position:relative;height:100vh;min-height:680px;overflow:hidden}
+  #sky{position:absolute;inset:0;z-index:0;display:block}
+  .uhud{position:absolute;left:0;right:0;top:0;z-index:3;padding:clamp(96px,15vh,150px) clamp(20px,5vw,60px) 0;pointer-events:none}
+  .uhud .in{max-width:var(--maxw);margin:0 auto}
+  .uhud h1{font-size:clamp(2.3rem,5vw,3.6rem);color:#fff;line-height:1.05;letter-spacing:-.025em;max-width:16ch}
+  .uhud h1 .r{color:var(--accent)}
+  .uhud .sub{margin-top:1rem;font-size:1.04rem;max-width:44ch;color:#cdd8ea}
+  .uhud .row{margin-top:1.6rem;display:flex;gap:.7rem;flex-wrap:wrap;pointer-events:auto}
+  .uhud .hint{margin-top:1.8rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);display:flex;align-items:center;gap:.55rem}
+  .uhud .hint .d{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(90,140,216,.18);animation:blip 2s ease-in-out infinite}
+  @keyframes blip{0%,100%{opacity:.4}50%{opacity:1}}
+
+  /* techy HUD popup, tethered to a star */
+  .pop{position:absolute;z-index:5;width:300px;pointer-events:none;opacity:0;transform:translateY(6px) scale(.98);
+    transition:opacity .3s var(--ease),transform .3s var(--ease);will-change:left,top,opacity}
+  .pop.on{opacity:1;transform:none}
+  .pop .card{position:relative;background:linear-gradient(165deg,rgba(18,32,60,.82),rgba(9,16,34,.88));backdrop-filter:blur(10px);
+    border:1px solid rgba(90,140,216,.4);border-radius:12px;padding:18px 18px 16px;box-shadow:0 26px 60px -26px rgba(0,0,0,.85),0 0 0 1px rgba(90,140,216,.06)}
+  .pop .lab{font-family:var(--mono);font-size:.66rem;letter-spacing:.18em;color:var(--accent);text-transform:uppercase}
+  .pop h3{font-size:1.14rem;color:#fff;margin:.3rem 0 .4rem}
+  .pop p{font-size:.86rem;color:var(--muted)}
+  .pop .chips{margin-top:.8rem;display:flex;gap:6px;flex-wrap:wrap}
+  .pop .chip{font-family:var(--mono);font-size:.64rem;font-weight:500;color:var(--accent);background:var(--soft);border:1px solid rgba(90,140,216,.25);padding:.18rem .5rem;border-radius:5px}
+  /* HUD corner brackets */
+  .pop .br{position:absolute;width:11px;height:11px;border:1.5px solid var(--accent);opacity:.85}
+  .pop .tl{top:-1px;left:-1px;border-right:0;border-bottom:0;border-radius:3px 0 0 0}
+  .pop .tr{top:-1px;right:-1px;border-left:0;border-bottom:0;border-radius:0 3px 0 0}
+  .pop .bl{bottom:-1px;left:-1px;border-right:0;border-top:0;border-radius:0 0 0 3px}
+  .pop .brr{bottom:-1px;right:-1px;border-left:0;border-top:0;border-radius:0 0 3px 0}
+
+  /* dotted starfield texture for the lower (non-canvas) sections */
+  .stardust{background:
+    radial-gradient(1px 1px at 12% 30%,rgba(200,222,255,.5),transparent),
+    radial-gradient(1px 1px at 32% 70%,rgba(150,185,235,.4),transparent),
+    radial-gradient(1.4px 1.4px at 64% 24%,rgba(200,222,255,.5),transparent),
+    radial-gradient(1px 1px at 82% 60%,rgba(150,185,235,.4),transparent),
+    radial-gradient(1px 1px at 48% 48%,rgba(200,222,255,.4),transparent),
+    var(--bg)}
+
+  .cta{position:relative;z-index:2;text-align:center;padding:clamp(72px,10vh,120px) 0;border-top:1px solid var(--line)}
+  .cta .in{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,4vw,40px)}
+  .cta h2{font-size:clamp(2rem,4.4vw,3.1rem)}.cta h2 .r{color:var(--accent)}
+  .cta p{color:var(--muted);max-width:48ch;margin:1rem auto 1.9rem}
+
+  footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:clamp(48px,6vh,70px) 0 38px;background:rgba(5,10,20,.6)}
+  .fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:32px;max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,4vw,40px)}
+  .fgrid .about p{font-size:.88rem;color:#9aa8bf;margin-top:1rem;max-width:30ch}
+  .fcol h4{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;margin-bottom:1rem}
+  .fcol a{display:block;font-size:.88rem;color:#9aa8bf;padding:.3rem 0;transition:color .2s}.fcol a:hover{color:var(--accent)}
+  .fbar{margin:30px auto 0;padding-top:20px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.8rem;color:var(--faint);max-width:var(--maxw);padding-left:clamp(20px,4vw,40px);padding-right:clamp(20px,4vw,40px)}
+  @media(max-width:760px){.fgrid{grid-template-columns:1fr 1fr}}
+  .badge{position:fixed;left:14px;bottom:14px;z-index:90;font-size:.62rem;font-weight:700;letter-spacing:.1em;color:#fff;background:var(--fill);padding:6px 10px;border-radius:6px}
+  @media(max-width:760px){.uhud h1{font-size:2rem}.pop{width:240px}}
+</style>
+</head>
+<body>
+<div class="badge">UNIVERSE · hover a node · auto-tours</div>
+
+<header>
+  <div class="nav">
+    <a class="brand" href="#"><img src="./logo.png" alt="SubZeroSec logo" />SubZero<span class="z">Sec</span></a>
+    <nav class="nav-links" id="navlinks"><span class="uline"></span>
+      <a class="active">Home</a><a>Capabilities</a><a>Training</a><a>Resources</a><a>About</a>
+    </nav>
+    <div class="nav-end"><a class="login">Login</a><a class="nav-cta" href="#cta">Get a Free Consultation</a></div>
+  </div>
+</header>
+
+<section class="universe" id="uni">
+  <canvas id="sky"></canvas>
+  <div class="uhud">
+    <div class="in">
+      <span class="eyebrow txtsh">Offensive Security · Attack-Surface Intelligence</span>
+      <h1 class="txtsh">Your environment is a <span class="r">universe of nodes.</span></h1>
+      <p class="sub txtsh">Every host, identity and trust relationship is a star. We map them, walk the path between them, and prove what an attacker reaches — before they do.</p>
+      <div class="row"><a href="#cta" class="shiny">Get a Free Consultation →</a></div>
+      <div class="hint"><span class="d"></span> Hover a node — or watch it tour the graph</div>
+    </div>
+  </div>
+  <!-- tethered HUD popup -->
+  <div class="pop" id="pop">
+    <div class="card">
+      <span class="br tl"></span><span class="br tr"></span><span class="br bl"></span><span class="br brr"></span>
+      <div class="lab" id="pop-lab">NODE // 01</div>
+      <h3 id="pop-title">—</h3>
+      <p id="pop-desc">—</p>
+      <div class="chips" id="pop-chips"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta stardust" id="cta">
+  <div class="in">
+    <span class="eyebrow">Get ahead of zero</span>
+    <h2 style="margin-top:.5rem">Ready to map your <span class="r">universe?</span></h2>
+    <p>Book a scoped assessment — we'll chart every reachable node, prove the exploitable paths, and rank the route to closing them before someone finds it first.</p>
+    <a href="#" class="shiny">Book a free pentest scoping call →</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="stardust">
+  <div class="fgrid">
+    <div class="about"><a class="brand" href="#"><img src="./logo.png" alt="" />SubZero<span class="z">Sec</span></a>
+      <p>Offensive security that finds exploitable weaknesses before adversaries do. Before Zero. Beyond Breach.</p></div>
+    <div class="fcol"><h4>Services</h4><a>Penetration Testing</a><a>Red Teaming</a><a>Threat Hunting</a><a>OSINT</a><a>Attack-Surface</a></div>
+    <div class="fcol"><h4>Company</h4><a>About</a><a>Team</a><a>Careers</a><a>Case Studies</a></div>
+    <div class="fcol"><h4>Contact</h4><a>hello@subzerosec.com</a><a>LinkedIn</a><a>X</a><a>GitHub</a></div>
+  </div>
+  <div class="fbar"><span>© 2026 SubZeroSec (Pvt) Ltd. — Islamabad, Pakistan</span><span>Privacy · Terms · Trust &amp; Compliance</span></div>
+</footer>
+
+<script>
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* node data — each star is a topic */
+  var NODES=[
+    {x:50,y:50,core:true,depth:6, lab:"CORE",   t:"SubZeroSec",        d:"Offensive security that maps your attack graph and proves the path before an adversary walks it.", c:["Before Zero","Beyond Breach"]},
+    {x:24,y:30,depth:18, lab:"NODE // 01", t:"Penetration Testing", d:"Web, API, network, cloud and mobile — every vulnerability confirmed by hand with a working exploit path.", c:["Web · API","Cloud","Internal"]},
+    {x:52,y:21,depth:14, lab:"NODE // 02", t:"Red Teaming",         d:"Intelligence-led adversary emulation that tests whether your people, process and detection stop a real intrusion.", c:["TTP-led","Assumed breach"]},
+    {x:78,y:29,depth:20, lab:"NODE // 03", t:"Threat Hunting",      d:"Assume-breach hunting that surfaces threats already inside before they escalate to an incident.", c:["Telemetry","IOC"]},
+    {x:80,y:62,depth:16, lab:"NODE // 04", t:"OSINT & Recon",       d:"Exposed assets, leaked credentials and the intelligence an adversary gathers before ever touching you.", c:["Exposure","Footprint"]},
+    {x:55,y:76,depth:22, lab:"NODE // 05", t:"Attack-Surface",      d:"Continuous visibility of everything reachable from outside — mapped, prioritised and ranked the way an attacker sees it.", c:["External","Ranked"]},
+    {x:25,y:64,depth:15, lab:"NODE // 06", t:"Compliance Testing",  d:"Targeted assessments mapped to ISO 27001, SOC 2 and PCI DSS — with the evidence auditors expect.", c:["ISO 27001","SOC 2","PCI DSS"]}
+  ];
+  var EDGES=[[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[1,2],[2,3],[3,4],[4,5],[5,6],[6,1]];
+
+  /* underline navbar */
+  (function(){
+    var box=document.getElementById('navlinks'), u=box.querySelector('.uline'), links=[].slice.call(box.querySelectorAll('a'));
+    function move(el){var b=box.getBoundingClientRect(),r=el.getBoundingClientRect();u.style.left=(r.left-b.left)+'px';u.style.width=r.width+'px';u.style.opacity=1;}
+    function rest(){var a=box.querySelector('a.active')||links[0];if(a)move(a);}
+    links.forEach(function(a){a.addEventListener('mouseenter',function(){move(a);});});
+    box.addEventListener('mouseleave',rest);addEventListener('resize',rest);rest();
+  })();
+  addEventListener('scroll',function(){document.querySelector('header').classList.toggle('scrolled',scrollY>24);},{passive:true});
+
+  /* ---------- the universe ---------- */
+  (function(){
+    var sec=document.getElementById('uni'), c=document.getElementById('sky'), x=c.getContext('2d');
+    var pop=document.getElementById('pop'), DPR=Math.min(devicePixelRatio||1,2);
+    var W,H,cssW,cssH, layers=[], mnx=0,mny=0, tmnx=0,tmny=0;
+    function size(){ cssW=sec.clientWidth; cssH=sec.clientHeight; W=c.width=cssW*DPR; H=c.height=cssH*DPR; c.style.width=cssW+'px'; c.style.height=cssH+'px'; build(); }
+    // layered stars: far(dim,many) -> near(bright,glint)
+    function build(){
+      layers=[];
+      var defs=[{n:Math.round(cssW*cssH/5200),rmin:.4,rmax:1.0,par:6, glint:false,a:.5},
+                {n:Math.round(cssW*cssH/9000),rmin:.9,rmax:1.7,par:14,glint:false,a:.7},
+                {n:Math.round(cssW*cssH/26000),rmin:1.6,rmax:2.8,par:26,glint:true, a:.95}];
+      defs.forEach(function(D){ var arr=[]; for(var i=0;i<D.n;i++){ var warm=Math.random()<0.12;
+        arr.push({x:Math.random()*cssW,y:Math.random()*cssH,r:D.rmin+Math.random()*(D.rmax-D.rmin),
+          ph:Math.random()*6.28,sp:.4+Math.random()*1.3,par:D.par,glint:D.glint,a:D.a,
+          col: warm?[210,200,170]:[Math.random()<.4?150:200, Math.random()<.4?185:222, 255]}); }
+        layers.push(arr); });
+    }
+    size(); addEventListener('resize',size);
+    sec.addEventListener('pointermove',function(e){ var r=sec.getBoundingClientRect();
+      pointer.x=e.clientX-r.left; pointer.y=e.clientY-r.top; pointer.on=true;
+      tmnx=(pointer.x/cssW*2-1); tmny=(pointer.y/cssH*2-1); });
+    sec.addEventListener('pointerleave',function(){pointer.on=false;});
+    var pointer={x:-999,y:-999,on:false};
+
+    function nodePos(nd){ // css px, with parallax
+      return [ nd.x/100*cssW - mnx*nd.depth, nd.y/100*cssH - mny*nd.depth ];
+    }
+
+    // active node: hover wins, else auto-tour
+    var active=-1, tourI=0, lastTour=performance.now(), DWELL=2600, hovering=-1;
+    function pickHover(){
+      if(!pointer.on) return -1;
+      var best=-1,bd=1e9;
+      for(var i=0;i<NODES.length;i++){ var p=nodePos(NODES[i]); var dx=p[0]-pointer.x,dy=p[1]-pointer.y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<bd){bd=d;best=i;} }
+      return bd<42?best:-1;
+    }
+    function setActive(i){ if(i===active) return; active=i; var nd=NODES[i];
+      document.getElementById('pop-lab').textContent=nd.lab;
+      document.getElementById('pop-title').textContent=nd.t;
+      document.getElementById('pop-desc').textContent=nd.d;
+      document.getElementById('pop-chips').innerHTML=nd.c.map(function(s){return '<span class="chip">'+s+'</span>';}).join('');
+    }
+    setActive(0);
+
+    var t0=performance.now();
+    function frame(now){
+      var t=(now-t0)/1000;
+      mnx=mnx+(tmnx-mnx)*0.06; mny=mny+(tmny-mny)*0.06;
+      // determine active
+      var hv=pickHover(); hovering=hv;
+      if(hv>=0){ setActive(hv); lastTour=now; }
+      else if(now-lastTour>DWELL){ tourI=(tourI+1)%NODES.length; setActive(tourI); lastTour=now; }
+
+      x.clearRect(0,0,W,H);
+      // stars
+      for(var L=0;L<layers.length;L++){ var arr=layers[L];
+        for(var i=0;i<arr.length;i++){ var s=arr[i];
+          var px=(s.x - mnx*s.par)*DPR, py=(s.y - mny*s.par)*DPR, rr=s.r*DPR;
+          var tw=0.6+0.4*Math.sin(t*s.sp+s.ph), al=s.a*tw;
+          var col=s.col;
+          if(s.glint){ // bloom halo
+            var g=x.createRadialGradient(px,py,0,px,py,rr*7);
+            g.addColorStop(0,'rgba('+col[0]+','+col[1]+','+col[2]+','+(0.18*tw)+')'); g.addColorStop(1,'rgba('+col[0]+','+col[1]+','+col[2]+',0)');
+            x.fillStyle=g; x.beginPath(); x.arc(px,py,rr*7,0,6.283); x.fill();
+            // cross glint
+            x.strokeStyle='rgba('+col[0]+','+col[1]+','+col[2]+','+(0.5*tw)+')'; x.lineWidth=DPR*0.6;
+            x.beginPath(); x.moveTo(px-rr*3,py); x.lineTo(px+rr*3,py); x.moveTo(px,py-rr*3); x.lineTo(px,py+rr*3); x.stroke();
+          }
+          x.beginPath(); x.fillStyle='rgba('+col[0]+','+col[1]+','+col[2]+','+al+')'; x.arc(px,py,rr,0,6.283); x.fill();
+        }
+      }
+      // node edges (constellation web)
+      for(var e=0;e<EDGES.length;e++){ var a=nodePos(NODES[EDGES[e][0]]),b=nodePos(NODES[EDGES[e][1]]);
+        var lit=(EDGES[e][0]===active||EDGES[e][1]===active);
+        x.strokeStyle='rgba(90,140,216,'+(lit?0.55:0.18)+')'; x.lineWidth=DPR*(lit?1.4:0.7);
+        x.beginPath(); x.moveTo(a[0]*DPR,a[1]*DPR); x.lineTo(b[0]*DPR,b[1]*DPR); x.stroke(); }
+      // nodes
+      var ap=null;
+      for(var i=0;i<NODES.length;i++){ var nd=NODES[i],p=nodePos(NODES[i]),px=p[0]*DPR,py=p[1]*DPR;
+        var on=(i===active), base=(nd.core?5:3.4), rr=DPR*(base+(on?3:0));
+        // halo
+        var g=x.createRadialGradient(px,py,0,px,py,rr*(on?6:3.4));
+        g.addColorStop(0,'rgba(120,170,240,'+(on?.55:.28)+')'); g.addColorStop(1,'rgba(90,140,216,0)');
+        x.fillStyle=g; x.beginPath(); x.arc(px,py,rr*(on?6:3.4),0,6.283); x.fill();
+        // core dot
+        x.beginPath(); x.fillStyle=nd.core?'#cfe0ff':'rgba(210,228,255,'+(on?1:.85)+')'; x.arc(px,py,rr,0,6.283); x.fill();
+        // active ring (pulsing)
+        if(on){ var pr=rr+DPR*(8+5*Math.sin(t*3)); x.strokeStyle='rgba(150,190,245,.7)'; x.lineWidth=DPR*1.2; x.beginPath(); x.arc(px,py,pr,0,6.283); x.stroke(); ap=p; }
+        // faint label under non-active nodes
+        if(!on){ x.font=(11*DPR)+'px Inter, sans-serif'; x.fillStyle='rgba(180,200,228,.55)'; x.textAlign='center'; x.fillText(nd.t, px, py+rr+15*DPR); }
+      }
+      // popup + connector to the active node
+      if(ap){
+        var nx=ap[0], ny=ap[1], pw=pop.offsetWidth||300, ph=pop.offsetHeight||140;
+        var right = nx < cssW*0.56;                    // place popup on the side with room
+        var px2 = right ? nx+46 : nx-pw-46;
+        px2=Math.max(14,Math.min(px2,cssW-pw-14));
+        var py2=Math.max(86,Math.min(ny-ph/2,cssH-ph-16));
+        pop.style.left=px2+'px'; pop.style.top=py2+'px'; pop.classList.add('on');
+        // connector on canvas
+        var ax=(right?px2:px2+pw), ay=py2+28;
+        x.strokeStyle='rgba(90,140,216,.85)'; x.lineWidth=DPR*1.1;
+        x.beginPath(); x.moveTo(nx*DPR,ny*DPR); x.lineTo(ax*DPR,ay*DPR); x.stroke();
+        x.beginPath(); x.fillStyle='#9cc0ff'; x.arc(ax*DPR,ay*DPR,DPR*2.4,0,6.283); x.fill();
+        x.beginPath(); x.strokeStyle='rgba(150,190,245,.9)'; x.lineWidth=DPR*1.2; x.arc(nx*DPR,ny*DPR,DPR*5,0,6.283); x.stroke();
+      } else pop.classList.remove('on');
+
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  })();
+</script>
+</body>
+</html>
