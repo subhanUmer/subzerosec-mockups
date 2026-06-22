@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SubZeroSec — TCM-style (faithful)</title>
+<title>SubZeroSec — TCM (Royal blue)</title>
 <link rel="icon" href="./logo.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,10 +17,10 @@
      testimonials, image-thumb blog, red CTA. Corporate-dense.
      ============================================================ */
   :root{
-    --bg:#0C081E; --bg-2:#12162D; --surface:#17122E; --surface-2:#1F1840;
+    --bg:#08101F; --bg-2:#0D1A30; --surface:#101C36; --surface-2:#18274A;
     --fg:#F4EFFB; --muted:#AEA6C2; --faint:#766E8C;
     --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.15);
-    --red:#EB204F; --red-deep:#C8113B; --red-soft:rgba(235,32,79,.14);
+    --red:#2759A5; --red-deep:#132D53; --red-soft:rgba(39,89,165,.14);
     --ease:cubic-bezier(.22,1,.36,1); --maxw:1200px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -35,14 +35,14 @@
   .eyebrow{font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red)}
   .btn{display:inline-flex;align-items:center;gap:.5em;font-weight:600;font-size:.92rem;padding:.875rem 2.25rem;border-radius:5px;cursor:pointer;transition:.2s var(--ease)}
   .btn-red{background:var(--red);color:#fff}
-  .btn-red:hover{background:var(--red-deep);transform:translateY(-1px);box-shadow:0 12px 28px -10px rgba(235,32,79,.65)}
+  .btn-red:hover{background:var(--red-deep);transform:translateY(-1px);box-shadow:0 12px 28px -10px rgba(39,89,165,.65)}
   .btn-out{background:transparent;color:var(--fg);box-shadow:inset 0 0 0 1.5px var(--line-2)}
   .btn-out:hover{box-shadow:inset 0 0 0 1.5px var(--red);color:#fff}
 
   /* NAV */
-  header{position:sticky;top:0;z-index:50;background:rgba(12,8,30,.78);backdrop-filter:saturate(150%) blur(14px);border-bottom:1px solid var(--line);
+  header{position:sticky;top:0;z-index:50;background:rgba(8,16,31,.78);backdrop-filter:saturate(150%) blur(14px);border-bottom:1px solid var(--line);
     transition:background .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease)}
-  header.scrolled{background:rgba(11,7,26,.97);box-shadow:0 16px 40px -18px rgba(0,0,0,.75);border-color:rgba(255,255,255,.12)}
+  header.scrolled{background:rgba(6,13,27,.97);box-shadow:0 16px 40px -18px rgba(0,0,0,.75);border-color:rgba(255,255,255,.12)}
   .nav{display:flex;align-items:center;justify-content:space-between;height:74px;gap:20px;transition:height .3s var(--ease)}
   header.scrolled .nav{height:60px}
   .brand{display:flex;align-items:center;gap:.55rem;font-weight:800;font-size:1.08rem;color:var(--fg);letter-spacing:-.02em}
@@ -63,14 +63,14 @@
   .sheet{position:relative;z-index:5;margin-top:-34px;border-radius:32px 32px 0 0;overflow:hidden;background:var(--bg);
     box-shadow:0 -24px 60px -14px rgba(0,0,0,.65)}
   /* animated technical grid + sweeping scan beam (21st.dev "Grid Beam" pattern, re-themed) */
-  .hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:radial-gradient(85% 80% at 50% -5%,rgba(151,71,255,.14),transparent 60%)}
+  .hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:radial-gradient(85% 80% at 50% -5%,rgba(90,140,216,.14),transparent 60%)}
   .hero-bg::before{content:"";position:absolute;inset:0;
-    background-image:linear-gradient(rgba(235,32,79,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(235,32,79,.12) 1px,transparent 1px);
+    background-image:linear-gradient(rgba(39,89,165,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(39,89,165,.12) 1px,transparent 1px);
     background-size:42px 42px;
     -webkit-mask-image:radial-gradient(ellipse 100% 95% at 50% 35%,#000 42%,transparent 88%);
     mask-image:radial-gradient(ellipse 100% 95% at 50% 35%,#000 42%,transparent 88%)}
-  .hero-bg .glow{position:absolute;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(235,32,79,.34),transparent 64%);top:-250px;left:-140px;filter:blur(38px)}
-  .hero-bg .scan{position:absolute;top:0;bottom:0;width:42%;background:linear-gradient(90deg,transparent,rgba(235,32,79,.18),transparent);filter:blur(8px);animation:scanx 7.5s ease-in-out infinite}
+  .hero-bg .glow{position:absolute;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(39,89,165,.34),transparent 64%);top:-250px;left:-140px;filter:blur(38px)}
+  .hero-bg .scan{position:absolute;top:0;bottom:0;width:42%;background:linear-gradient(90deg,transparent,rgba(39,89,165,.18),transparent);filter:blur(8px);animation:scanx 7.5s ease-in-out infinite}
   @keyframes scanx{0%{transform:translateX(-130%)}100%{transform:translateX(330%)}}
   @media(prefers-reduced-motion:reduce){.hero-bg .scan{animation:none!important}}
   .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(30px,4vw,60px);align-items:center}
@@ -99,7 +99,7 @@
   .why{position:relative;background:#fff}
   .why .in{position:relative;z-index:1;padding:clamp(60px,8vw,104px) 0 clamp(48px,6vw,82px);text-align:center;max-width:64ch;margin:0 auto}
   .why .eyebrow{color:var(--red)}
-  .why h2{color:#0C081E;font-size:clamp(2rem,4.6vw,3.2rem);font-weight:800;margin:.8rem 0 0;letter-spacing:-.02em}
+  .why h2{color:#08101F;font-size:clamp(2rem,4.6vw,3.2rem);font-weight:800;margin:.8rem 0 0;letter-spacing:-.02em}
   .why p{margin-top:1.1rem;color:#56506C;font-size:1.05rem}
   .why .cols{margin:2.4rem auto 0;display:grid;grid-template-columns:1fr 1fr;gap:14px 28px;text-align:left;max-width:760px}
   .why .item{display:flex;gap:.7rem;align-items:flex-start;font-size:.95rem;color:#231E20;font-weight:500}
@@ -115,20 +115,20 @@
   /* SERVICE CARDS — upgraded (21st.dev "Highlight Card" patterns):
      gradient border, cursor-follow glow, icon ring, sheen sweep */
   .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,22px)}
-  .card{position:relative;background:linear-gradient(165deg,#1a1338,#120c24);border:1px solid var(--line);border-radius:16px;
+  .card{position:relative;background:linear-gradient(165deg,#14223D,#0B1526);border:1px solid var(--line);border-radius:16px;
     padding:clamp(26px,2.6vw,32px);overflow:hidden;display:flex;flex-direction:column;min-height:240px;
     transition:transform .35s var(--ease),border-color .35s,box-shadow .35s}
   .card::before{content:"";position:absolute;inset:0;border-radius:16px;pointer-events:none;opacity:0;transition:opacity .35s;
-    background:radial-gradient(340px 240px at var(--mx,50%) var(--my,0%),rgba(235,32,79,.18),transparent 62%)}
+    background:radial-gradient(340px 240px at var(--mx,50%) var(--my,0%),rgba(39,89,165,.18),transparent 62%)}
   .card:hover::before{opacity:1}
   .card::after{content:"";position:absolute;top:0;left:-65%;width:55%;height:100%;pointer-events:none;
     background:linear-gradient(100deg,transparent,rgba(255,255,255,.07),transparent);transform:skewX(-18deg);transition:left .8s var(--ease)}
   .card:hover::after{left:135%}
-  .card:hover{transform:translateY(-6px);border-color:rgba(235,32,79,.5);
-    box-shadow:0 28px 56px -26px rgba(235,32,79,.5),inset 0 0 0 1px rgba(235,32,79,.18)}
+  .card:hover{transform:translateY(-6px);border-color:rgba(39,89,165,.5);
+    box-shadow:0 28px 56px -26px rgba(39,89,165,.5),inset 0 0 0 1px rgba(39,89,165,.18)}
   .card .ic{position:relative;z-index:2;width:56px;height:56px;border-radius:15px;display:flex;align-items:center;justify-content:center;
-    background:linear-gradient(160deg,var(--red),#a8123a);color:#fff;box-shadow:0 14px 28px -10px rgba(235,32,79,.85);margin-bottom:1.4rem;transition:transform .35s var(--ease)}
-  .card .ic::after{content:"";position:absolute;inset:-6px;border-radius:19px;border:1px solid rgba(235,32,79,.4);opacity:0;transition:opacity .35s}
+    background:linear-gradient(160deg,var(--red),#132D53);color:#fff;box-shadow:0 14px 28px -10px rgba(39,89,165,.85);margin-bottom:1.4rem;transition:transform .35s var(--ease)}
+  .card .ic::after{content:"";position:absolute;inset:-6px;border-radius:19px;border:1px solid rgba(39,89,165,.4);opacity:0;transition:opacity .35s}
   .card:hover .ic{transform:scale(1.07) rotate(-5deg)}
   .card:hover .ic::after{opacity:1}
   .card .ic svg{width:27px;height:27px}
@@ -163,7 +163,7 @@
   .quote .stars{color:var(--red);letter-spacing:.15em;font-size:.9rem;margin-bottom:.7rem}
   .quote p{color:var(--fg);font-size:.96rem}
   .quote .who{margin-top:1rem;display:flex;align-items:center;gap:.7rem}
-  .quote .av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--red),#9747FF);flex:none}
+  .quote .av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--red),#5A8CD8);flex:none}
   .quote .who b{display:block;color:#fff;font-size:.84rem;font-weight:600}
   .quote .who span{font-size:.76rem;color:var(--faint)}
   @media(max-width:860px){.tgrid{grid-template-columns:1fr}}
@@ -172,7 +172,7 @@
   .posts{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,24px)}
   .post{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:.25s var(--ease)}
   .post:hover{transform:translateY(-4px);border-color:var(--line-2)}
-  .post .thumb{height:160px;background:linear-gradient(135deg,#2a1340,#100b26);position:relative}
+  .post .thumb{height:160px;background:linear-gradient(135deg,#19294A,#0A1426);position:relative}
   .post .thumb .cat{position:absolute;top:12px;left:12px;font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--red);padding:.25rem .6rem;border-radius:4px}
   .post .pb{padding:20px}
   .post .meta{font-size:.74rem;color:var(--faint);margin-bottom:.5rem}
@@ -182,7 +182,7 @@
 
   /* CTA */
   .cta{position:relative;overflow:hidden;background:var(--bg-2);border-top:1px solid var(--line)}
-  .cta::before{content:"";position:absolute;width:720px;height:720px;border-radius:50%;background:radial-gradient(circle,rgba(235,32,79,.2),transparent 65%);top:-300px;left:50%;transform:translateX(-50%);pointer-events:none}
+  .cta::before{content:"";position:absolute;width:720px;height:720px;border-radius:50%;background:radial-gradient(circle,rgba(39,89,165,.2),transparent 65%);top:-300px;left:50%;transform:translateX(-50%);pointer-events:none}
   .cta .in{position:relative;z-index:2;text-align:center;padding:clamp(56px,7vw,90px) 0}
   .cta h2{font-size:clamp(2rem,4.4vw,3.2rem)}
   .cta h2 .r{color:var(--red)}
@@ -201,7 +201,7 @@
 </style>
 </head>
 <body>
-<div class="badge">TCM-STYLE · rebuilt from screenshots</div>
+<div class="badge">BLUE · Royal (#2759A5)</div>
 
 <header>
   <div class="wrap nav">
