@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SubZeroSec — TCM (Light blue)</title>
+<link rel="icon" href="./logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     SubZeroSec · "TCM-STYLE" — LIGHT BLUE variant.
+     Powder-blue hero (#ACC6EC → #D6E2F5) with a white sheet
+     rising over it, navy text, white service cards, blue CTA
+     band, deep-navy footer. Same layout/content as tcm.html.
+     ============================================================ */
+  :root{
+    --bg:#FFFFFF; --bg-2:#EAF1FB; --surface:#FFFFFF; --surface-2:#F2F7FD;
+    --fg:#102B4F; --muted:#4C5C73; --faint:#8392A8;
+    --line:rgba(19,45,83,.10); --line-2:rgba(19,45,83,.20);
+    --blue:#2759A5; --blue-deep:#132D53; --blue-soft:rgba(39,89,165,.10);
+    --sky:#5A8CD8; --tint:#D6E2F5; --tint-2:#ACC6EC;
+    --ease:cubic-bezier(.22,1,.36,1); --maxw:1200px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{background:var(--bg);color:var(--muted);font-family:"Inter",system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:var(--blue);color:#fff}
+  a{color:inherit;text-decoration:none}
+  :focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+  h1,h2,h3{font-family:"Inter",sans-serif;color:var(--fg);line-height:1.15;letter-spacing:-.015em;font-weight:800}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,4vw,40px)}
+  .eyebrow{font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+  .btn{display:inline-flex;align-items:center;gap:.5em;font-weight:600;font-size:.92rem;padding:.875rem 2.25rem;border-radius:5px;cursor:pointer;transition:.2s var(--ease)}
+  .btn-red{background:var(--blue);color:#fff}
+  .btn-red:hover{background:var(--blue-deep);transform:translateY(-1px);box-shadow:0 12px 28px -10px rgba(39,89,165,.5)}
+  .btn-out{background:transparent;color:var(--fg);box-shadow:inset 0 0 0 1.5px var(--line-2)}
+  .btn-out:hover{box-shadow:inset 0 0 0 1.5px var(--blue);color:var(--blue)}
+
+  /* NAV */
+  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.78);backdrop-filter:saturate(150%) blur(14px);border-bottom:1px solid var(--line);
+    transition:background .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease)}
+  header.scrolled{background:rgba(255,255,255,.95);box-shadow:0 16px 40px -22px rgba(19,45,83,.35);border-color:var(--line-2)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:74px;gap:20px;transition:height .3s var(--ease)}
+  header.scrolled .nav{height:60px}
+  .brand{display:flex;align-items:center;gap:.55rem;font-weight:800;font-size:1.08rem;color:var(--fg);letter-spacing:-.02em}
+  .brand img{width:26px;height:26px}
+  .brand .z{color:var(--blue)}
+  .nav-links{display:flex;align-items:center;gap:.3rem}
+  .nav-links a{position:relative;font-size:.88rem;font-weight:500;color:var(--muted);padding:.5rem .85rem;border-radius:8px;transition:color .2s,background .2s}
+  .nav-links a:hover{color:var(--fg);background:rgba(19,45,83,.05)}
+  .nav-links a::after{content:"";position:absolute;left:.85rem;right:.85rem;bottom:.32rem;height:2px;background:var(--blue);border-radius:2px;
+    transform:scaleX(0);transform-origin:left;transition:transform .28s var(--ease)}
+  .nav-links a:hover::after{transform:scaleX(1)}
+  .nav-end{display:flex;align-items:center;gap:1rem}
+  @media(max-width:980px){.nav-links{display:none}.nav-end .login{display:none}}
+
+  /* HERO: left text + right form */
+  /* sticky powder-blue hero backdrop — white content sheet scrolls OVER it */
+  .hero{position:sticky;top:0;z-index:0;min-height:100vh;display:flex;align-items:center;overflow:hidden;padding:clamp(48px,6vw,84px) 0 clamp(52px,6vw,84px)}
+  .sheet{position:relative;z-index:5;margin-top:-34px;border-radius:32px 32px 0 0;overflow:hidden;background:var(--bg);
+    box-shadow:0 -24px 60px -14px rgba(19,45,83,.22)}
+  /* powder-blue wash + faint navy grid + soft scan beam */
+  .hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+    background:radial-gradient(96% 100% at 50% 0%,var(--tint-2) 0%,var(--tint) 52%,#C9DAF2 100%)}
+  .hero-bg::before{content:"";position:absolute;inset:0;
+    background-image:linear-gradient(rgba(19,45,83,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(19,45,83,.07) 1px,transparent 1px);
+    background-size:42px 42px;
+    -webkit-mask-image:radial-gradient(ellipse 100% 95% at 50% 35%,#000 42%,transparent 88%);
+    mask-image:radial-gradient(ellipse 100% 95% at 50% 35%,#000 42%,transparent 88%)}
+  .hero-bg .glow{position:absolute;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(90,140,216,.34),transparent 64%);top:-250px;left:-140px;filter:blur(38px)}
+  .hero-bg .scan{position:absolute;top:0;bottom:0;width:42%;background:linear-gradient(90deg,transparent,rgba(90,140,216,.22),transparent);filter:blur(8px);animation:scanx 7.5s ease-in-out infinite}
+  @keyframes scanx{0%{transform:translateX(-130%)}100%{transform:translateX(330%)}}
+  @media(prefers-reduced-motion:reduce){.hero-bg .scan{animation:none!important}}
+  .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(30px,4vw,60px);align-items:center}
+  .hero h1{font-size:clamp(2.4rem,5.5vw,3.95rem);font-weight:800;margin:1rem 0 0;letter-spacing:-.022em;line-height:1.08;color:var(--fg)}
+  .hero h1 .r{color:var(--blue)}
+  .hero .sub{margin-top:1.3rem;font-size:1.08rem;max-width:46ch;color:var(--muted)}
+  .hero .ticks{margin-top:1.6rem;display:grid;gap:.6rem}
+  .hero .ticks li{list-style:none;display:flex;align-items:center;gap:.6rem;font-size:.95rem;color:var(--fg)}
+  .hero .ticks .ck{width:20px;height:20px;flex:none;border-radius:50%;background:var(--blue-soft);color:var(--blue);display:flex;align-items:center;justify-content:center}
+  .hero .ticks .ck svg{width:12px;height:12px}
+  .hero .row{margin-top:1.8rem;display:flex;gap:.7rem;flex-wrap:wrap}
+  /* contact form card */
+  .formcard{background:#fff;border:1px solid var(--line);border-radius:14px;padding:clamp(22px,2.6vw,30px);box-shadow:0 30px 70px -30px rgba(19,45,83,.32)}
+  .formcard h3{color:var(--fg);font-size:1.2rem;font-weight:800;margin-bottom:.3rem}
+  .formcard .fsub{color:#5b6880;font-size:.86rem;margin-bottom:1.2rem}
+  .formcard .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .formcard label{display:block;font-size:.72rem;font-weight:600;color:#46506a;margin:0 0 5px}
+  .formcard input,.formcard textarea{width:100%;background:#F1F5FB;border:1px solid #E2E8F1;border-radius:8px;padding:.7rem .85rem;
+    font-family:"Inter";font-size:.9rem;color:var(--fg);margin-bottom:12px}
+  .formcard input::placeholder,.formcard textarea::placeholder{color:#9aa6b8}
+  .formcard textarea{min-height:84px;resize:vertical}
+  .formcard .btn-red{width:100%;justify-content:center;margin-top:4px}
+  @media(max-width:880px){.hero-grid{grid-template-columns:1fr}}
+
+  /* LIGHT "REVEAL RISK" BAND — white section riding over the powder-blue hero */
+  .why{position:relative;background:#fff}
+  .why .in{position:relative;z-index:1;padding:clamp(60px,8vw,104px) 0 clamp(48px,6vw,82px);text-align:center;max-width:64ch;margin:0 auto}
+  .why .eyebrow{color:var(--blue)}
+  .why h2{color:var(--fg);font-size:clamp(2rem,4.6vw,3.2rem);font-weight:800;margin:.8rem 0 0;letter-spacing:-.02em}
+  .why p{margin-top:1.1rem;color:var(--muted);font-size:1.05rem}
+  .why .cols{margin:2.4rem auto 0;display:grid;grid-template-columns:1fr 1fr;gap:14px 28px;text-align:left;max-width:760px}
+  .why .item{display:flex;gap:.7rem;align-items:flex-start;font-size:.95rem;color:#1f2a3a;font-weight:500}
+  .why .item .ck{width:22px;height:22px;flex:none;border-radius:6px;background:var(--blue-soft);color:var(--blue);display:flex;align-items:center;justify-content:center}
+  .why .item .ck svg{width:13px;height:13px}
+  @media(max-width:880px){.why .cols{grid-template-columns:1fr;max-width:440px}}
+
+  section{padding:clamp(56px,7vw,96px) 0}
+  .shead{text-align:center;max-width:62ch;margin:0 auto clamp(36px,4vw,52px)}
+  .shead h2{font-size:clamp(2rem,4vw,2.9rem);margin-top:.7rem}
+  .shead p{margin-top:1rem;color:var(--muted)}
+
+  /* SERVICE CARDS — light: white cards, soft blue cursor glow, sheen */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,22px)}
+  .card{position:relative;background:#FFFFFF;border:1px solid var(--line);border-radius:16px;
+    padding:clamp(26px,2.6vw,32px);overflow:hidden;display:flex;flex-direction:column;min-height:240px;
+    box-shadow:0 1px 2px rgba(19,45,83,.05);transition:transform .35s var(--ease),border-color .35s,box-shadow .35s}
+  .card::before{content:"";position:absolute;inset:0;border-radius:16px;pointer-events:none;opacity:0;transition:opacity .35s;
+    background:radial-gradient(340px 240px at var(--mx,50%) var(--my,0%),rgba(39,89,165,.12),transparent 62%)}
+  .card:hover::before{opacity:1}
+  .card::after{content:"";position:absolute;top:0;left:-65%;width:55%;height:100%;pointer-events:none;
+    background:linear-gradient(100deg,transparent,rgba(39,89,165,.06),transparent);transform:skewX(-18deg);transition:left .8s var(--ease)}
+  .card:hover::after{left:135%}
+  .card:hover{transform:translateY(-6px);border-color:rgba(39,89,165,.4);
+    box-shadow:0 28px 56px -26px rgba(39,89,165,.35),inset 0 0 0 1px rgba(39,89,165,.10)}
+  .card .ic{position:relative;z-index:2;width:56px;height:56px;border-radius:15px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(160deg,var(--blue),var(--blue-deep));color:#fff;box-shadow:0 14px 28px -10px rgba(39,89,165,.55);margin-bottom:1.4rem;transition:transform .35s var(--ease)}
+  .card .ic::after{content:"";position:absolute;inset:-6px;border-radius:19px;border:1px solid rgba(39,89,165,.4);opacity:0;transition:opacity .35s}
+  .card:hover .ic{transform:scale(1.07) rotate(-5deg)}
+  .card:hover .ic::after{opacity:1}
+  .card .ic svg{width:27px;height:27px}
+  .card h3{position:relative;z-index:2;font-size:1.22rem;font-weight:700;color:var(--fg);margin-bottom:.5rem;letter-spacing:-.01em}
+  .card p{position:relative;z-index:2;font-size:.92rem;color:var(--muted);flex:1}
+  .card .lm{position:relative;z-index:2;margin-top:1.4rem;align-self:flex-start;font-weight:600;font-size:.84rem;color:var(--blue);display:inline-flex;align-items:center;gap:.45em}
+  .card .lm svg{width:15px;height:15px;transition:transform .25s var(--ease)}
+  .card:hover .lm svg{transform:translateX(4px)}
+  @media(max-width:880px){.cards{grid-template-columns:1fr 1fr}}
+  @media(max-width:580px){.cards{grid-template-columns:1fr}}
+
+  /* STATS strip */
+  .statsband{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);padding:clamp(42px,5vw,66px) 0;text-align:center}
+  .stat{position:relative;padding:0 16px;opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+  .stat + .stat::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);height:56px;width:1px;background:linear-gradient(transparent,rgba(19,45,83,.16),transparent)}
+  .statsband.in .stat{opacity:1;transform:none}
+  .statsband.in .stat:nth-child(2){transition-delay:.08s}
+  .statsband.in .stat:nth-child(3){transition-delay:.16s}
+  .statsband.in .stat:nth-child(4){transition-delay:.24s}
+  .stat .v{font-weight:800;font-size:clamp(2.6rem,4.6vw,3.7rem);color:var(--fg);letter-spacing:-.035em;line-height:1;font-variant-numeric:tabular-nums}
+  .stat .v .s{color:var(--blue)}
+  .stat .l{margin-top:.7rem;font-size:.84rem;color:var(--muted)}
+  @media(max-width:680px){.stats{grid-template-columns:1fr 1fr;gap:36px 0}.stat:nth-child(3)::before,.stat:nth-child(2)::before{content:none}}
+
+  /* TESTIMONIALS */
+  .tgrid{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(28px,4vw,56px);align-items:center}
+  .tgrid .lead h2{font-size:clamp(1.9rem,3.6vw,2.6rem)}
+  .tgrid .lead p{margin-top:1rem;color:var(--muted)}
+  .qcards{display:grid;gap:16px}
+  .quote{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:24px;box-shadow:0 1px 2px rgba(19,45,83,.05)}
+  .quote .stars{color:var(--blue);letter-spacing:.15em;font-size:.9rem;margin-bottom:.7rem}
+  .quote p{color:var(--fg);font-size:.96rem}
+  .quote .who{margin-top:1rem;display:flex;align-items:center;gap:.7rem}
+  .quote .av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--sky));flex:none}
+  .quote .who b{display:block;color:var(--fg);font-size:.84rem;font-weight:600}
+  .quote .who span{font-size:.76rem;color:var(--faint)}
+  @media(max-width:860px){.tgrid{grid-template-columns:1fr}}
+
+  /* INSIGHTS */
+  .posts{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,24px)}
+  .post{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 1px 2px rgba(19,45,83,.05);transition:.25s var(--ease)}
+  .post:hover{transform:translateY(-4px);border-color:var(--line-2);box-shadow:0 18px 40px -24px rgba(19,45,83,.30)}
+  .post .thumb{height:160px;background:linear-gradient(135deg,#5A8CD8,#2759A5);position:relative}
+  .post .thumb .cat{position:absolute;top:12px;left:12px;font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:rgba(19,45,83,.55);padding:.25rem .6rem;border-radius:4px}
+  .post .pb{padding:20px}
+  .post .meta{font-size:.74rem;color:var(--faint);margin-bottom:.5rem}
+  .post h3{font-size:1.06rem;font-weight:700;color:var(--fg);margin-bottom:.4rem}
+  .post p{font-size:.86rem;color:var(--muted)}
+  @media(max-width:860px){.posts{grid-template-columns:1fr}}
+
+  /* CTA — colored blue band */
+  .cta{position:relative;overflow:hidden;background:linear-gradient(135deg,#2759A5,#1C4488 55%,#163A74)}
+  .cta::before{content:"";position:absolute;width:720px;height:720px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.16),transparent 65%);top:-300px;left:50%;transform:translateX(-50%);pointer-events:none}
+  .cta .in{position:relative;z-index:2;text-align:center;padding:clamp(56px,7vw,90px) 0}
+  .cta .eyebrow{color:var(--tint)}
+  .cta h2{color:#fff;font-size:clamp(2rem,4.4vw,3.2rem)}
+  .cta h2 .r{color:var(--tint)}
+  .cta p{color:rgba(255,255,255,.85);max-width:48ch;margin:1.1rem auto 1.8rem}
+  .cta .btn-red{background:#fff;color:var(--blue-deep)}
+  .cta .btn-red:hover{background:var(--tint);color:var(--blue-deep);box-shadow:0 12px 28px -10px rgba(0,0,0,.35)}
+
+  /* FOOTER — deep-navy anchor */
+  footer{background:var(--blue-deep);padding:clamp(48px,6vw,70px) 0 38px}
+  footer .brand{color:#fff}
+  footer .brand .z{color:var(--sky)}
+  .fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:32px}
+  .fgrid .about p{font-size:.88rem;color:rgba(255,255,255,.66);margin-top:1rem;max-width:30ch}
+  .fcol h4{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;margin-bottom:1rem}
+  .fcol a{display:block;font-size:.88rem;color:rgba(255,255,255,.66);padding:.3rem 0;transition:color .2s}
+  .fcol a:hover{color:var(--tint-2)}
+  .fbar{margin-top:38px;padding-top:22px;border-top:1px solid rgba(255,255,255,.14);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.8rem;color:rgba(255,255,255,.5)}
+  @media(max-width:760px){.fgrid{grid-template-columns:1fr 1fr}}
+  .badge{position:fixed;left:14px;bottom:14px;z-index:60;font-size:.62rem;font-weight:700;letter-spacing:.1em;color:#fff;background:var(--blue);padding:6px 10px;border-radius:6px}
+</style>
+</head>
+<body>
+<div class="badge">BLUE · Light (#D6E2F5)</div>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#"><img src="./logo.png" alt="SubZeroSec logo" />SubZero<span class="z">Sec</span></a>
+    <nav class="nav-links">
+      <a href="#">Home</a><a href="#services">Our Services</a><a href="#">Training</a><a href="#insights">Resources</a><a href="#">About Us</a><a href="#cta">Contact Sales</a>
+    </nav>
+    <div class="nav-end">
+      <a class="login" href="#" style="font-size:.86rem;font-weight:500;color:var(--fg)">Login</a>
+      <a class="btn btn-red" href="#cta">Get a Free Consultation</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO: left text + right form -->
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true"><span class="glow"></span><span class="scan"></span></div>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Offensive Security · Est. 2019</span>
+      <h1>Built by Hackers.<br>Hired to Find What <span class="r">They Would.</span></h1>
+      <p class="sub">SubZeroSec delivers manual, exploit-driven security testing and hands-on adversary simulation — so you find the zero-day before an attacker weaponises it.</p>
+      <ul class="ticks">
+        <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span> Every finding proven with a working exploit — zero false positives</li>
+        <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span> Reporting your board and your engineers can both act on</li>
+        <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span> Free retest of remediated findings, included</li>
+      </ul>
+      <div class="row">
+        <a href="#cta" class="btn btn-red">Get a Free Consultation →</a>
+        <a href="#services" class="btn btn-out">Explore services</a>
+      </div>
+    </div>
+    <form class="formcard" onsubmit="return false">
+      <h3>Talk to our team</h3>
+      <div class="fsub">Tell us about your environment and we'll scope an assessment.</div>
+      <div class="two">
+        <div><label>First name*</label><input placeholder="First name" /></div>
+        <div><label>Last name*</label><input placeholder="Last name" /></div>
+      </div>
+      <label>Work email*</label><input type="email" placeholder="you@company.com" />
+      <label>Phone</label><input placeholder="+92 …" />
+      <label>Message</label><textarea placeholder="What would you like tested?"></textarea>
+      <button class="btn btn-red" type="submit">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<div class="sheet"><!-- white content sheet that scrolls over the sticky powder-blue hero -->
+<!-- LIGHT "REVEAL RISK" BAND -->
+<div class="why">
+  <div class="wrap in">
+    <span class="eyebrow">Offensive Security · Services &amp; Training</span>
+    <h2>Reduce risk. Prove compliance. Strengthen security.</h2>
+    <p>From rigorous penetration testing to compliance-ready assessments, we partner with your team at every stage of the security lifecycle — identifying risk, validating controls, supporting remediation, and proving every fix holds.</p>
+    <div class="cols">
+      <div class="item"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span> Exploit-proven, manual penetration testing</div>
+      <div class="item"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span> CREST-accredited, OSCP/OSCE operators</div>
+      <div class="item"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span> Evidence for auditors and regulators</div>
+      <div class="item"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span> Ranked by real business impact</div>
+      <div class="item"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span> ISO 27001 · SOC 2 · PCI DSS coverage</div>
+      <div class="item"><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></span> Free retest within the engagement window</div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="wrap">
+    <div class="shead"><span class="eyebrow">Penetration Testing & Offensive Services</span>
+      <h2>Turn attacker knowledge into stronger security.</h2>
+      <p>Manual, exploit-driven engagements run by operators who compromise systems for a living — across web, API, network, cloud, and your people.</p></div>
+    <div class="cards">
+      <div class="card"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="2"/></svg></span>
+        <h3>Penetration Testing</h3><p>Web, API, network, cloud and mobile testing — every vulnerability confirmed by hand and proven with a working exploit path.</p>
+        <a class="lm" href="#">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      <div class="card"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 21l7-7M21 3l-7 7M14 4l6 6M4 14l6 6M14 10l-4 4"/></svg></span>
+        <h3>Red Teaming</h3><p>Intelligence-led adversary emulation that tests whether your people, process and detection actually stop a real intrusion.</p>
+        <a class="lm" href="#">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      <div class="card"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 12l6-3M12 12V4"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg></span>
+        <h3>Threat Hunting</h3><p>Assume-breach hunting that surfaces the threats already inside your environment before they escalate to an incident.</p>
+        <a class="lm" href="#">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      <div class="card"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.5 7.5L11 15M16.5 7.5L13 15M8 6h8"/></svg></span>
+        <h3>OSINT &amp; Recon</h3><p>Discover exposed assets, leaked credentials and the intelligence an adversary would gather before ever touching you.</p>
+        <a class="lm" href="#">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      <div class="card"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3"/><rect x="8" y="8" width="8" height="8"/></svg></span>
+        <h3>Attack-Surface Analysis</h3><p>Continuous visibility of everything reachable from the outside — mapped, prioritised, and tracked the way an attacker sees it.</p>
+        <a class="lm" href="#">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      <div class="card"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l8 4v5c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></span>
+        <h3>Compliance Testing</h3><p>Targeted assessments mapped to ISO 27001, SOC 2 and PCI DSS — with the evidence auditors and regulators expect.</p>
+        <a class="lm" href="#">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="statsband">
+  <div class="wrap stats">
+    <div class="stat"><div class="v"><span class="num" data-to="340">0</span><span class="s">+</span></div><div class="l">Assessments delivered</div></div>
+    <div class="stat"><div class="v"><span class="num" data-to="127">0</span><span class="s">+</span></div><div class="l">Critical findings proven</div></div>
+    <div class="stat"><div class="v"><span class="num" data-to="98">0</span><span class="s">%</span></div><div class="l">Remediation verified</div></div>
+    <div class="stat"><div class="v"><span class="num" data-to="15">0</span><span class="s">+</span></div><div class="l">Industries secured</div></div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section>
+  <div class="wrap tgrid">
+    <div class="lead"><span class="eyebrow">Trusted by teams</span><h2>What clients say about us.</h2>
+      <p>From banks to telecoms, security leaders rely on SubZeroSec to show them exactly how an attacker would get in — and to prove the fix.</p>
+      <a href="#" class="btn btn-out" style="margin-top:1.4rem">Read case studies →</a></div>
+    <div class="qcards">
+      <div class="quote"><div class="stars">★★★★★</div><p>"They showed us exactly how an attacker would move through us, then stayed until our team could see it happening."</p>
+        <div class="who"><span class="av"></span><span><b>Director of Security Ops</b><span>Global Retail Bank</span></span></div></div>
+      <div class="quote"><div class="stars">★★★★★</div><p>"Every finding came with a working proof-of-concept. No false positives, no theoretical severity — just what's actually exploitable."</p>
+        <div class="who"><span class="av"></span><span><b>VP Engineering</b><span>Fintech Scale-up</span></span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section id="insights" style="padding-top:0">
+  <div class="wrap">
+    <div class="shead"><span class="eyebrow">Resources</span><h2>Explore our latest insights.</h2></div>
+    <div class="posts">
+      <a class="post" href="#"><div class="thumb"><span class="cat">Research</span></div><div class="pb"><div class="meta">12 Jun 2026 · 6 min read</div><h3>Chaining a verbose error into domain admin</h3><p>How a single stack trace became a full internal compromise — and how to close it.</p></div></a>
+      <a class="post" href="#"><div class="thumb"><span class="cat">Red Team</span></div><div class="pb"><div class="meta">28 May 2026 · 9 min read</div><h3>Phishing to payment authorisation, step by step</h3><p>An anonymised walk-through of a banking red-team engagement.</p></div></a>
+      <a class="post" href="#"><div class="thumb"><span class="cat">Guidance</span></div><div class="pb"><div class="meta">14 May 2026 · 5 min read</div><h3>What a real VAPT report should contain</h3><p>Evidence, reproduction steps, and fixes an engineer can act on.</p></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta" id="cta">
+  <div class="wrap in">
+    <span class="eyebrow">Get ahead of zero</span>
+    <h2 style="margin-top:.6rem">Ready to transform your <span class="r">cybersecurity strategy?</span></h2>
+    <p>Book a scoped assessment — we'll map what's reachable, prove what's exploitable, and give you a ranked path to closing it before someone finds it first.</p>
+    <a href="#" class="btn btn-red">Book a free pentest scoping call →</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div class="about"><a class="brand" href="#"><img src="./logo.png" alt="" />SubZero<span class="z">Sec</span></a>
+        <p>Offensive security that finds exploitable weaknesses before adversaries do. Before Zero. Beyond Breach.</p></div>
+      <div class="fcol"><h4>Services</h4><a href="#">Penetration Testing</a><a href="#">Red Teaming</a><a href="#">Threat Hunting</a><a href="#">OSINT</a><a href="#">Attack-Surface</a></div>
+      <div class="fcol"><h4>Company</h4><a href="#">About</a><a href="#">Team</a><a href="#">Careers</a><a href="#">Case Studies</a><a href="#">Insights</a></div>
+      <div class="fcol"><h4>Contact</h4><a href="#">hello@subzerosec.com</a><a href="#">Get a consultation</a><a href="#">LinkedIn</a><a href="#">X</a><a href="#">GitHub</a></div>
+    </div>
+    <div class="fbar"><span>© 2026 SubZeroSec (Pvt) Ltd. — Islamabad, Pakistan</span><span>Privacy · Terms · Trust & Compliance</span></div>
+  </div>
+</footer>
+</div><!-- /sheet -->
+
+<script>
+  // Cursor-following glow on service cards (21st.dev highlight-card pattern)
+  document.querySelectorAll('.card').forEach(function(c){
+    c.addEventListener('pointermove', function(e){
+      var r = c.getBoundingClientRect();
+      c.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      c.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+    });
+  });
+
+  // Smooth scroll-shrink navbar
+  var hdr = document.querySelector('header');
+  function onScroll(){ hdr.classList.toggle('scrolled', window.scrollY > 24); }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  // Animated stat counters (21st.dev "Animated Counter" pattern) — count up on scroll in
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var band = document.querySelector('.statsband');
+  function runCounters(){
+    document.querySelectorAll('.statsband .num').forEach(function(el){
+      var to = +el.getAttribute('data-to'), dur = 1700, t0 = null;
+      if (reduce){ el.textContent = to; return; }
+      function step(ts){
+        if(!t0) t0 = ts;
+        var p = Math.min((ts - t0)/dur, 1);
+        var e = 1 - Math.pow(1 - p, 3);           // easeOutCubic
+        el.textContent = Math.round(to * e);
+        if(p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }
+  if (band){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ band.classList.add('in'); runCounters(); io.disconnect(); }
+      });
+    }, {threshold:.4});
+    io.observe(band);
+  }
+</script>
+</body>
+</html>
