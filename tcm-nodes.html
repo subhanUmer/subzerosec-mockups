@@ -3,25 +3,22 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SubZeroSec — Attack-Graph (node network)</title>
+<title>SubZeroSec — Constellation (camera zoom graph)</title>
 <link rel="icon" href="./logo.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <style>
   /* ============================================================
-     SubZeroSec · ATTACK-GRAPH
-     A live network-of-nodes runs behind the whole site. Scroll
-     into Capabilities and a background node is promoted to the
-     foreground — it grows, glows, wires reconnect, and its detail
-     panel resolves. Royal-blue scheme from the earlier set.
-     Upgraded components (21st.dev-derived, re-themed):
-       · sliding-pill navbar indicator (Resizable Navbar)
-       · shiny conic-border CTA (Shiny CTA)
-       · spotlight glow cards (Spotlight Card)
+     SubZeroSec · CONSTELLATION
+     One pure starry-constellation graph spans the whole page.
+     Scroll through Capabilities and a CAMERA glides across the
+     graph, zooming into each real node — the node smoothly
+     expands, brightens and reveals its label. Navbar = underline
+     cursor. Royal-blue scheme.
      ============================================================ */
   :root{
-    --bg:#08101F; --bg-2:#0C1730; --fg:#EAF1FF; --muted:#A9B7CE; --faint:#73839B;
+    --bg:#070D1B; --fg:#EAF1FF; --muted:#A9B7CE; --faint:#73839B;
     --line:rgba(255,255,255,.09); --line-2:rgba(255,255,255,.16);
     --accent:#5A8CD8; --fill:#2759A5; --deep:#132D53; --soft:rgba(90,140,216,.18);
     --ease:cubic-bezier(.22,1,.36,1); --maxw:1200px;
@@ -40,50 +37,45 @@
   .btn-out{background:transparent;color:var(--fg);box-shadow:inset 0 0 0 1.5px var(--line-2)}
   .btn-out:hover{box-shadow:inset 0 0 0 1.5px var(--accent);color:var(--accent)}
 
-  /* ---------- live node-graph canvas (fixed backdrop) ---------- */
-  #graph{position:fixed;inset:0;z-index:0;display:block;pointer-events:none}
+  /* constellation + veil */
+  #sky{position:fixed;inset:0;z-index:0;display:block;pointer-events:none}
   .veil{position:fixed;inset:0;z-index:1;pointer-events:none;
-    background:radial-gradient(120% 80% at 50% 0%,transparent 40%,rgba(8,16,31,.55) 100%),
-               radial-gradient(80% 60% at 50% 50%,transparent 55%,rgba(8,16,31,.45))}
+    background:radial-gradient(120% 85% at 50% 0%,transparent 38%,rgba(7,13,27,.6) 100%)}
   .page{position:relative;z-index:2}
 
-  /* ---------- SHINY conic-border CTA (21st.dev Shiny CTA, re-themed) ---------- */
+  /* SHINY conic-border CTA */
   @property --ga{syntax:"<angle>";initial-value:0deg;inherits:false}
   .shiny{position:relative;isolation:isolate;overflow:hidden;cursor:pointer;border:1px solid transparent;border-radius:9px;
     padding:.95rem 2.1rem;font:600 .95rem "Inter";color:#fff;
     background:linear-gradient(var(--fill),var(--fill)) padding-box,
       conic-gradient(from var(--ga),transparent,var(--accent) 8%,#cfe0ff 14%,var(--accent) 20%,transparent 28%) border-box;
-    box-shadow:0 14px 30px -12px rgba(39,89,165,.7),inset 0 0 0 1px rgba(255,255,255,.06);
-    animation:spin 4s linear infinite}
+    box-shadow:0 14px 30px -12px rgba(39,89,165,.7);animation:spin 4s linear infinite}
   .shiny::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;
     background:linear-gradient(-50deg,transparent,rgba(207,224,255,.5),transparent);
     mask:radial-gradient(circle at bottom,transparent 42%,#000);opacity:.5;animation:spin 6s linear infinite reverse}
-  .shiny:hover{background:linear-gradient(var(--deep),var(--deep)) padding-box,
-      conic-gradient(from var(--ga),transparent,#cfe0ff 10%,#fff 16%,#cfe0ff 22%,transparent 32%) border-box}
   @keyframes spin{to{--ga:360deg}}
   @media(prefers-reduced-motion:reduce){.shiny,.shiny::after{animation:none}}
 
-  /* ---------- HEADER + sliding-pill navbar ---------- */
-  header{position:fixed;top:0;left:0;right:0;z-index:80;background:rgba(8,14,28,.55);backdrop-filter:saturate(150%) blur(14px);
+  /* HEADER + underline-cursor navbar */
+  header{position:fixed;top:0;left:0;right:0;z-index:80;background:rgba(7,12,24,.55);backdrop-filter:saturate(150%) blur(14px);
     border-bottom:1px solid rgba(255,255,255,.07);transition:background .3s var(--ease),border-color .3s}
-  header.scrolled{background:rgba(7,13,27,.92);box-shadow:0 14px 36px -18px rgba(0,0,0,.7);border-color:rgba(255,255,255,.12)}
+  header.scrolled{background:rgba(6,11,22,.92);box-shadow:0 14px 36px -18px rgba(0,0,0,.7);border-color:rgba(255,255,255,.12)}
   .nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:20px;transition:height .3s var(--ease)}
   header.scrolled .nav{height:60px}
   .brand{display:flex;align-items:center;gap:.55rem;font-weight:800;font-size:1.08rem;color:#fff;letter-spacing:-.02em}
   .brand img{width:26px;height:26px}.brand .z{color:var(--accent)}
-  .nav-links{position:relative;display:flex;align-items:center;gap:.15rem}
-  .nav-links .pill{position:absolute;top:50%;height:34px;border-radius:8px;background:rgba(90,140,216,.16);
-    box-shadow:inset 0 0 0 1px rgba(90,140,216,.3);transform:translateY(-50%);opacity:0;
-    transition:left .32s var(--ease),width .32s var(--ease),opacity .25s;pointer-events:none}
-  .nav-links a{position:relative;z-index:1;font-size:.88rem;font-weight:500;color:#C4CEDE;padding:.5rem .85rem;border-radius:8px;transition:color .2s}
+  .nav-links{position:relative;display:flex;align-items:center;gap:.4rem}
+  .nav-links a{position:relative;font-size:.88rem;font-weight:500;color:#C4CEDE;padding:.5rem .7rem;transition:color .2s}
   .nav-links a:hover{color:#fff}
+  .nav-links .uline{position:absolute;bottom:.34rem;height:2px;border-radius:2px;background:var(--accent);
+    box-shadow:0 0 8px rgba(90,140,216,.8);opacity:0;transition:left .3s var(--ease),width .3s var(--ease),opacity .25s;pointer-events:none}
   .nav-end{display:flex;align-items:center;gap:1rem}
   .nav-end .login{font-size:.86rem;font-weight:500;color:var(--fg)}
   .nav-cta{font:600 .86rem "Inter";color:#fff;background:var(--fill);padding:.55rem 1.1rem;border-radius:7px;transition:.2s}
   .nav-cta:hover{background:var(--deep);transform:translateY(-1px)}
   @media(max-width:980px){.nav-links{display:none}.nav-end .login{display:none}}
 
-  /* ---------- HERO ---------- */
+  /* HERO */
   .hero{min-height:100vh;display:flex;align-items:center;padding:clamp(96px,12vh,128px) 0 clamp(64px,8vh,96px)}
   .hero .in{max-width:760px}
   .hero h1{font-size:clamp(2.5rem,5.6vw,4rem);margin:1rem 0 0;color:#fff;line-height:1.06;letter-spacing:-.025em}
@@ -98,60 +90,37 @@
   .shead h2{font-size:clamp(2rem,4vw,2.9rem);margin-top:.6rem}
   .shead p{margin-top:.9rem;color:var(--muted)}
 
-  /* ---------- CAPABILITIES : scroll-driven node focus ---------- */
-  .cap{position:relative;height:560vh}              /* tall scroll track: 6 nodes */
-  .cap .stage{position:sticky;top:0;height:100vh;overflow:hidden}
-  .cap .stage .wrap{height:100%;display:flex;flex-direction:column;justify-content:center}
-  .cap .head{text-align:center;margin-bottom:2vh}
-  .cap .head h2{font-size:clamp(1.8rem,3.6vw,2.6rem)}
-  .cap .head p{margin-top:.5rem;color:var(--muted);font-size:.96rem}
-  .field{position:relative;flex:1;max-height:64vh}
-  .wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-  .wires .edge{stroke:rgba(90,140,216,.22);stroke-width:.18}
-  .wires .live{stroke:var(--accent);stroke-width:.35;filter:drop-shadow(0 0 4px rgba(90,140,216,.7));
-    stroke-dasharray:1.5 1.5;animation:dash 1.2s linear infinite}
-  @keyframes dash{to{stroke-dashoffset:-3}}
-  /* nodes */
-  .node{position:absolute;transform:translate(-50%,-50%) scale(1);transition:transform .5s var(--ease),opacity .5s;cursor:default}
-  .node .core{width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#bcd4ff,var(--accent));
-    box-shadow:0 0 0 4px rgba(90,140,216,.18),0 0 16px rgba(90,140,216,.5);position:relative}
-  .node .ring{position:absolute;inset:-10px;border-radius:50%;border:1px solid rgba(90,140,216,.4);opacity:0;transition:.5s}
-  .node .tag{position:absolute;left:50%;top:calc(100% + 8px);transform:translateX(-50%);white-space:nowrap;
-    font-size:.72rem;font-weight:600;color:var(--faint);letter-spacing:.02em;transition:.4s}
-  .node{opacity:.45}
-  .node.on{opacity:1;transform:translate(-50%,-50%) scale(2.1);z-index:3}
-  .node.on .ring{opacity:1;animation:pulse 2.4s ease-out infinite}
-  .node.on .core{box-shadow:0 0 0 5px rgba(90,140,216,.28),0 0 26px rgba(90,140,216,.9)}
-  .node.on .tag{color:var(--fg);font-weight:700}
-  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(90,140,216,.5)}100%{box-shadow:0 0 0 26px rgba(90,140,216,0)}}
-  /* detail panel */
-  .detail{position:absolute;right:3%;top:50%;transform:translateY(-50%);width:min(34%,420px);
-    background:linear-gradient(165deg,rgba(20,34,63,.92),rgba(12,20,40,.92));backdrop-filter:blur(8px);
-    border:1px solid var(--line-2);border-radius:16px;padding:28px;box-shadow:0 30px 70px -30px rgba(0,0,0,.7)}
-  .detail .ic{width:54px;height:54px;border-radius:14px;display:flex;align-items:center;justify-content:center;
-    background:linear-gradient(160deg,var(--fill),var(--deep));color:#fff;box-shadow:0 12px 26px -10px rgba(39,89,165,.7);margin-bottom:1rem}
-  .detail .ic svg{width:26px;height:26px}
-  .detail .step{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
-  .detail h3{font-size:1.35rem;color:#fff;margin:.5rem 0 .5rem}
-  .detail p{font-size:.94rem;color:var(--muted)}
-  .detail .meta{margin-top:1.1rem;display:flex;gap:8px;flex-wrap:wrap}
-  .detail .chip{font-size:.72rem;font-weight:600;color:var(--accent);background:var(--soft);border:1px solid rgba(90,140,216,.25);padding:.25rem .6rem;border-radius:999px}
-  .detail.swap{opacity:0;transform:translateY(-50%) translateX(10px)}
-  .detail{transition:opacity .35s var(--ease),transform .35s var(--ease)}
-  .progress{position:absolute;left:3%;bottom:6%;display:flex;gap:7px}
-  .progress i{width:26px;height:3px;border-radius:2px;background:rgba(255,255,255,.16);transition:.3s}
-  .progress i.on{background:var(--accent);box-shadow:0 0 10px rgba(90,140,216,.7)}
+  /* CAPABILITIES scroll track — the camera flies the graph here */
+  .cap{position:relative;height:640vh}
+  .cap .pin{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:flex-start;pointer-events:none}
+  .cap .pin .head{text-align:center;padding-top:clamp(96px,13vh,140px)}
+  .cap .pin .head h2{font-size:clamp(1.8rem,3.6vw,2.5rem)}
+  .cap .pin .head p{margin-top:.4rem;color:var(--muted);font-size:.95rem}
+  /* floating label that attaches to the focused node */
+  .nlabel{position:fixed;z-index:6;width:min(360px,80vw);pointer-events:none;opacity:0;transform:translateY(6px);transition:opacity .35s var(--ease),transform .35s var(--ease)}
+  .nlabel.on{opacity:1;transform:none}
+  .nlabel .box{background:linear-gradient(165deg,rgba(20,34,63,.86),rgba(10,18,38,.9));backdrop-filter:blur(8px);
+    border:1px solid var(--line-2);border-radius:14px;padding:20px 22px;box-shadow:0 28px 64px -28px rgba(0,0,0,.8)}
+  .nlabel .step{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+  .nlabel h3{font-size:1.2rem;color:#fff;margin:.35rem 0 .4rem}
+  .nlabel p{font-size:.9rem;color:var(--muted)}
+  .nlabel .chips{margin-top:.9rem;display:flex;gap:7px;flex-wrap:wrap}
+  .nlabel .chip{font-size:.7rem;font-weight:600;color:var(--accent);background:var(--soft);border:1px solid rgba(90,140,216,.25);padding:.2rem .55rem;border-radius:999px}
+  .progress{position:fixed;left:50%;bottom:30px;transform:translateX(-50%);z-index:6;display:flex;gap:8px;opacity:0;transition:opacity .3s}
+  .progress.on{opacity:1}
+  .progress i{width:24px;height:3px;border-radius:2px;background:rgba(255,255,255,.18);transition:.3s}
+  .progress i.on{background:var(--accent);box-shadow:0 0 10px rgba(90,140,216,.8)}
   @media(max-width:880px){
-    .cap{height:auto}.cap .stage{position:static;height:auto}
-    .field{max-height:none;display:grid;gap:14px;margin-top:18px}
-    .wires{display:none}.node{position:relative;left:auto!important;top:auto!important;transform:none;opacity:1;
-      display:flex;align-items:center;gap:14px;background:rgba(20,34,63,.6);border:1px solid var(--line);border-radius:12px;padding:14px}
-    .node.on{transform:none}.node .core{flex:none}.node .tag{position:static;transform:none;color:var(--fg)}
-    .detail{position:static;width:auto;transform:none;margin-top:14px}.progress{display:none}
+    .cap{height:auto}.cap .pin{position:static;height:auto;pointer-events:auto}
+    .nlabel{position:static;width:auto;opacity:1;transform:none;margin-top:14px}
+    .mob{display:block}.progress{display:none}
   }
+  .mob{display:none}
+  .mob .row{display:flex;gap:12px;align-items:flex-start;background:rgba(20,34,63,.6);border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:12px}
+  .mob .row .b{width:12px;height:12px;border-radius:50%;background:var(--accent);flex:none;margin-top:5px;box-shadow:0 0 12px rgba(90,140,216,.8)}
 
-  /* ---------- spotlight stat strip ---------- */
-  .band{position:relative;z-index:2;background:rgba(12,23,48,.66);backdrop-filter:blur(6px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  /* STATS */
+  .band{position:relative;z-index:2;background:rgba(11,20,42,.66);backdrop-filter:blur(6px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
   .stats{display:grid;grid-template-columns:repeat(4,1fr);text-align:center;padding:clamp(40px,5vw,62px) 0}
   .stat{position:relative;padding:0 16px}
   .stat+.stat::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);height:54px;width:1px;background:var(--line-2)}
@@ -160,27 +129,26 @@
   .stat .l{margin-top:.55rem;font-size:.83rem;color:var(--muted)}
   @media(max-width:680px){.stats{grid-template-columns:1fr 1fr;gap:32px 0}.stat:nth-child(2)::before,.stat:nth-child(3)::before{content:none}}
 
-  /* spotlight cards row */
+  /* WHY — numbered editorial cards (new methodology, not the glow family) */
   .feat{padding:clamp(64px,8vh,104px) 0}
-  .scards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-  .sc{position:relative;border-radius:16px;padding:28px;background:rgba(16,28,54,.7);border:1px solid var(--line);overflow:hidden;transition:transform .35s var(--ease),border-color .35s}
-  .sc::before{content:"";position:absolute;inset:0;border-radius:16px;opacity:0;transition:opacity .35s;pointer-events:none;
-    background:radial-gradient(280px 200px at var(--mx,50%) var(--my,50%),rgba(90,140,216,.22),transparent 60%)}
-  .sc:hover::before{opacity:1}
-  .sc:hover{transform:translateY(-5px);border-color:rgba(90,140,216,.45)}
-  .sc h3{color:#fff;font-size:1.12rem;margin:.2rem 0 .4rem}
-  .sc p{font-size:.9rem;color:var(--muted)}
-  .sc .k{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
-  @media(max-width:860px){.scards{grid-template-columns:1fr}}
+  .ncards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .ncard{position:relative;background:rgba(13,23,46,.6);border:1px solid var(--line);border-radius:14px;padding:30px 26px 28px;overflow:hidden;transition:transform .3s var(--ease),border-color .3s}
+  .ncard::before{content:"";position:absolute;left:0;top:0;height:2px;width:38px;background:var(--accent);box-shadow:0 0 12px rgba(90,140,216,.7);transition:width .35s var(--ease)}
+  .ncard:hover{transform:translateY(-4px);border-color:rgba(90,140,216,.4)}
+  .ncard:hover::before{width:100%}
+  .ncard .no{font-size:2.4rem;font-weight:800;letter-spacing:-.04em;color:rgba(90,140,216,.32);line-height:1}
+  .ncard h3{color:#fff;font-size:1.12rem;margin:.7rem 0 .4rem}
+  .ncard p{font-size:.9rem;color:var(--muted)}
+  .ncard .tag{margin-top:1rem;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+  @media(max-width:860px){.ncards{grid-template-columns:1fr}}
 
-  /* ---------- CTA ---------- */
+  /* CTA */
   .cta{position:relative;z-index:2;text-align:center;padding:clamp(70px,9vh,120px) 0}
-  .cta h2{font-size:clamp(2rem,4.4vw,3.1rem)}
-  .cta h2 .r{color:var(--accent)}
+  .cta h2{font-size:clamp(2rem,4.4vw,3.1rem)}.cta h2 .r{color:var(--accent)}
   .cta p{color:var(--muted);max-width:48ch;margin:1rem auto 1.9rem}
 
-  /* ---------- FOOTER ---------- */
-  footer{position:relative;z-index:2;background:rgba(7,13,27,.85);border-top:1px solid var(--line);padding:clamp(48px,6vh,70px) 0 38px}
+  /* FOOTER */
+  footer{position:relative;z-index:2;background:rgba(6,11,22,.85);border-top:1px solid var(--line);padding:clamp(48px,6vh,70px) 0 38px}
   .fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:32px}
   .fgrid .about p{font-size:.88rem;color:#9aa8bf;margin-top:1rem;max-width:30ch}
   .fcol h4{font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;margin-bottom:1rem}
@@ -191,16 +159,16 @@
 </style>
 </head>
 <body>
-<canvas id="graph"></canvas>
+<canvas id="sky"></canvas>
 <div class="veil"></div>
-<div class="badge">ATTACK-GRAPH · scroll to focus a node</div>
+<div class="badge">CONSTELLATION · scroll to fly the graph</div>
 
 <header>
   <div class="wrap nav">
     <a class="brand" href="#"><img src="./logo.png" alt="SubZeroSec logo" />SubZero<span class="z">Sec</span></a>
     <nav class="nav-links" id="navlinks">
-      <span class="pill" id="pill"></span>
-      <a href="#" class="active">Home</a><a href="#cap">Capabilities</a><a href="#">Training</a><a href="#">Resources</a><a href="#">About</a>
+      <span class="uline"></span>
+      <a class="active" href="#">Home</a><a href="#cap">Capabilities</a><a href="#">Training</a><a href="#">Resources</a><a href="#">About</a>
     </nav>
     <div class="nav-end">
       <a class="login" href="#">Login</a>
@@ -208,6 +176,15 @@
     </div>
   </div>
 </header>
+
+<!-- floating node label (attaches to focused node) -->
+<div class="nlabel" id="nlabel"><div class="box">
+  <div class="step" id="nl-step">Node 01 / 06</div>
+  <h3 id="nl-title">Penetration Testing</h3>
+  <p id="nl-desc">—</p>
+  <div class="chips" id="nl-chips"></div>
+</div></div>
+<div class="progress" id="progress"></div>
 
 <div class="page">
 
@@ -219,45 +196,23 @@
       <p class="sub">SubZeroSec models your environment as a living attack graph — every host, identity and trust relationship a node — then proves the path an adversary takes before they ever find it.</p>
       <div class="row">
         <a href="#cta" class="shiny">Get a Free Consultation →</a>
-        <a href="#cap" class="btn btn-out">See the graph</a>
+        <a href="#cap" class="btn btn-out">Fly the graph</a>
       </div>
-      <div class="hint"><span class="dot"></span> Scroll to traverse the graph</div>
+      <div class="hint"><span class="dot"></span> Scroll to traverse the constellation</div>
     </div>
   </section>
 
-  <!-- CAPABILITIES : scroll-driven node focus -->
+  <!-- CAPABILITIES : camera flies + zooms the constellation -->
   <section class="cap" id="cap">
-    <div class="stage">
-      <div class="wrap">
-        <div class="head">
-          <span class="eyebrow">Capabilities</span>
-          <h2>One node at a time.</h2>
-          <p>As you scroll, the graph promotes the next capability into focus.</p>
-        </div>
-        <div class="field" id="field">
-          <svg class="wires" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-            <g id="edges"></g>
-            <line id="livewire" class="live" x1="0" y1="0" x2="0" y2="0" />
-          </svg>
-          <!-- nodes positioned in % -->
-          <div class="node" style="left:22%;top:30%"><span class="core"></span><span class="ring"></span><span class="tag">Penetration Testing</span></div>
-          <div class="node" style="left:41%;top:18%"><span class="core"></span><span class="ring"></span><span class="tag">Red Teaming</span></div>
-          <div class="node" style="left:14%;top:58%"><span class="core"></span><span class="ring"></span><span class="tag">Threat Hunting</span></div>
-          <div class="node" style="left:35%;top:50%"><span class="core"></span><span class="ring"></span><span class="tag">OSINT &amp; Recon</span></div>
-          <div class="node" style="left:50%;top:38%"><span class="core"></span><span class="ring"></span><span class="tag">Attack-Surface</span></div>
-          <div class="node" style="left:27%;top:80%"><span class="core"></span><span class="ring"></span><span class="tag">Compliance</span></div>
-
-          <aside class="detail" id="detail">
-            <span class="ic" id="d-ic"></span>
-            <div class="step" id="d-step">Node 01 / 06</div>
-            <h3 id="d-title">Penetration Testing</h3>
-            <p id="d-desc">Web, API, network, cloud and mobile testing — every vulnerability confirmed by hand and proven with a working exploit path.</p>
-            <div class="meta" id="d-meta"></div>
-          </aside>
-          <div class="progress" id="progress"></div>
-        </div>
+    <div class="pin">
+      <div class="head">
+        <span class="eyebrow">Capabilities</span>
+        <h2>The camera flies the graph.</h2>
+        <p>Scroll — each capability node zooms in, expands and resolves.</p>
       </div>
     </div>
+    <!-- mobile fallback list (graph zoom disabled on small screens) -->
+    <div class="wrap mob" id="mob"></div>
   </section>
 
   <!-- STATS -->
@@ -270,14 +225,14 @@
     </div>
   </div>
 
-  <!-- SPOTLIGHT CARDS -->
+  <!-- WHY (numbered editorial cards) -->
   <section class="feat">
     <div class="wrap">
       <div class="shead"><span class="eyebrow">Why SubZeroSec</span><h2>Proof, not noise.</h2></div>
-      <div class="scards">
-        <div class="sc"><div class="k">01 · Exploit-proven</div><h3>Zero false positives</h3><p>Every finding ships with a working proof-of-concept and a reproducible path — nothing theoretical.</p></div>
-        <div class="sc"><div class="k">02 · Dual-audience</div><h3>Board and engineers</h3><p>Reporting your executives can act on and your engineers can fix, mapped to real business impact.</p></div>
-        <div class="sc"><div class="k">03 · Verified</div><h3>Free retest included</h3><p>We re-test every remediated finding within the engagement window and prove the fix holds.</p></div>
+      <div class="ncards">
+        <div class="ncard"><div class="no">01</div><h3>Zero false positives</h3><p>Every finding ships with a working proof-of-concept and a reproducible path — nothing theoretical.</p><div class="tag">Exploit-proven</div></div>
+        <div class="ncard"><div class="no">02</div><h3>Board and engineers</h3><p>Reporting your executives can act on and your engineers can fix, mapped to real business impact.</p><div class="tag">Dual-audience</div></div>
+        <div class="ncard"><div class="no">03</div><h3>Free retest included</h3><p>We re-test every remediated finding within the engagement window and prove the fix holds.</p><div class="tag">Verified</div></div>
       </div>
     </div>
   </section>
@@ -310,118 +265,148 @@
 
 <script>
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var DATA = [
+    {t:"Penetration Testing",d:"Web, API, network, cloud and mobile testing — every vulnerability confirmed by hand and proven with a working exploit path.",c:["Web · API","Cloud","Internal"]},
+    {t:"Red Teaming",d:"Intelligence-led adversary emulation that tests whether your people, process and detection actually stop a real intrusion.",c:["TTP-led","Assumed breach","Detection"]},
+    {t:"Threat Hunting",d:"Assume-breach hunting that surfaces threats already inside your environment before they escalate to an incident.",c:["Hypothesis","Telemetry","IOC"]},
+    {t:"OSINT & Recon",d:"Discover exposed assets, leaked credentials and the intelligence an adversary would gather before ever touching you.",c:["Exposure","Credentials","Footprint"]},
+    {t:"Attack-Surface",d:"Continuous visibility of everything reachable from the outside — mapped, prioritised and tracked the way an attacker sees it.",c:["External","Continuous","Ranked"]},
+    {t:"Compliance Testing",d:"Targeted assessments mapped to ISO 27001, SOC 2 and PCI DSS — with the evidence auditors and regulators expect.",c:["ISO 27001","SOC 2","PCI DSS"]}
+  ];
 
-  /* ---------- live constellation graph ---------- */
+  /* ---------- underline-cursor navbar ---------- */
   (function(){
-    var c = document.getElementById('graph'), x = c.getContext('2d'), W, H, pts = [], mouse = {x:-999,y:-999};
-    function size(){ W = c.width = innerWidth*devicePixelRatio; H = c.height = innerHeight*devicePixelRatio;
-      c.style.width = innerWidth+'px'; c.style.height = innerHeight+'px'; build(); }
-    function build(){ var n = Math.min(90, Math.round(innerWidth*innerHeight/16000)); pts = [];
-      for(var i=0;i<n;i++) pts.push({x:Math.random()*W,y:Math.random()*H,
-        vx:(Math.random()-.5)*0.18*devicePixelRatio,vy:(Math.random()-.5)*0.18*devicePixelRatio,r:(Math.random()*1.6+0.8)*devicePixelRatio}); }
-    addEventListener('mousemove',function(e){ mouse.x=e.clientX*devicePixelRatio; mouse.y=e.clientY*devicePixelRatio; });
-    var MAX = 150*devicePixelRatio;
-    function frame(){
-      x.clearRect(0,0,W,H);
-      for(var i=0;i<pts.length;i++){ var p=pts[i];
-        p.x+=p.vx; p.y+=p.vy;
-        if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1;
-        // links
-        for(var j=i+1;j<pts.length;j++){ var q=pts[j],dx=p.x-q.x,dy=p.y-q.y,d=Math.sqrt(dx*dx+dy*dy);
-          if(d<MAX){ var a=(1-d/MAX)*0.5; x.strokeStyle='rgba(90,140,216,'+a+')'; x.lineWidth=devicePixelRatio*0.6;
-            x.beginPath(); x.moveTo(p.x,p.y); x.lineTo(q.x,q.y); x.stroke(); } }
-        // mouse link
-        var mdx=p.x-mouse.x,mdy=p.y-mouse.y,md=Math.sqrt(mdx*mdx+mdy*mdy);
-        if(md<MAX*1.4){ x.strokeStyle='rgba(120,170,235,'+(1-md/(MAX*1.4))*0.6+')'; x.lineWidth=devicePixelRatio*0.7;
-          x.beginPath(); x.moveTo(p.x,p.y); x.lineTo(mouse.x,mouse.y); x.stroke(); }
-        x.beginPath(); x.fillStyle='rgba(140,180,235,.9)'; x.arc(p.x,p.y,p.r,0,6.283); x.fill();
-      }
-      if(!reduce) requestAnimationFrame(frame);
-    }
-    size(); addEventListener('resize',size); frame(); if(reduce) frame();
+    var box=document.getElementById('navlinks'), u=box.querySelector('.uline'), links=[].slice.call(box.querySelectorAll('a'));
+    function move(el){var b=box.getBoundingClientRect(),r=el.getBoundingClientRect();u.style.left=(r.left-b.left)+'px';u.style.width=r.width+'px';u.style.opacity=1;}
+    function rest(){var a=box.querySelector('a.active')||links[0];if(a)move(a);}
+    links.forEach(function(a){a.addEventListener('mouseenter',function(){move(a);});
+      a.addEventListener('click',function(){links.forEach(function(l){l.classList.remove('active');});a.classList.add('active');});});
+    box.addEventListener('mouseleave',rest);addEventListener('resize',rest);rest();
   })();
-
-  /* ---------- sliding-pill navbar indicator ---------- */
-  (function(){
-    var box=document.getElementById('navlinks'), pill=document.getElementById('pill'),
-        links=[].slice.call(box.querySelectorAll('a'));
-    function move(el){ var b=box.getBoundingClientRect(), r=el.getBoundingClientRect();
-      pill.style.left=(r.left-b.left)+'px'; pill.style.width=r.width+'px'; pill.style.opacity=1; }
-    function rest(){ var a=box.querySelector('a.active')||links[0]; if(a) move(a); }
-    links.forEach(function(a){ a.addEventListener('mouseenter',function(){move(a);});
-      a.addEventListener('click',function(){ links.forEach(function(l){l.classList.remove('active');}); a.classList.add('active'); }); });
-    box.addEventListener('mouseleave',rest); addEventListener('resize',rest); rest();
-  })();
-
-  /* ---------- scroll-shrink header ---------- */
   var hdr=document.querySelector('header');
-  addEventListener('scroll',function(){ hdr.classList.toggle('scrolled',scrollY>24); },{passive:true});
+  addEventListener('scroll',function(){hdr.classList.toggle('scrolled',scrollY>24);},{passive:true});
 
-  /* ---------- capabilities: scroll-driven node focus ---------- */
+  /* ---------- constellation with a scroll-driven camera ---------- */
   (function(){
-    var sec=document.getElementById('cap'), nodes=[].slice.call(document.querySelectorAll('.cap .node')),
-        live=document.getElementById('livewire'), detail=document.getElementById('detail'),
-        prog=document.getElementById('progress');
-    var pos=[[22,30],[41,18],[14,58],[35,50],[50,38],[27,80]];
-    var edges=[[0,1],[0,3],[1,4],[2,3],[3,4],[3,5],[0,2],[4,5]];
-    var data=[
-      {t:"Penetration Testing",d:"Web, API, network, cloud and mobile testing — every vulnerability confirmed by hand and proven with a working exploit path.",c:["Web · API","Cloud","Internal"],i:'<circle cx="12" cy="12" r="8"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="2"/>'},
-      {t:"Red Teaming",d:"Intelligence-led adversary emulation that tests whether your people, process and detection actually stop a real intrusion.",c:["TTP-led","Assumed breach","Detection"],i:'<path d="M3 21l7-7M21 3l-7 7M14 4l6 6M4 14l6 6M14 10l-4 4"/>'},
-      {t:"Threat Hunting",d:"Assume-breach hunting that surfaces the threats already inside your environment before they escalate to an incident.",c:["Hypothesis","Telemetry","IOC"],i:'<circle cx="12" cy="12" r="9"/><path d="M12 12l6-3M12 12V4"/>'},
-      {t:"OSINT & Recon",d:"Discover exposed assets, leaked credentials and the intelligence an adversary would gather before ever touching you.",c:["Exposure","Credentials","Footprint"],i:'<circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.5 7.5L11 15M16.5 7.5L13 15M8 6h8"/>'},
-      {t:"Attack-Surface",d:"Continuous visibility of everything reachable from the outside — mapped, prioritised and tracked the way an attacker sees it.",c:["External","Continuous","Ranked"],i:'<path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3"/><rect x="8" y="8" width="8" height="8"/>'},
-      {t:"Compliance Testing",d:"Targeted assessments mapped to ISO 27001, SOC 2 and PCI DSS — with the evidence auditors and regulators expect.",c:["ISO 27001","SOC 2","PCI DSS"],i:'<path d="M12 3l8 4v5c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/>'}
-    ];
-    // build static edges + progress ticks
-    var g=document.getElementById('edges');
-    edges.forEach(function(e){ var l=document.createElementNS('http://www.w3.org/2000/svg','line');
-      l.setAttribute('class','edge'); l.setAttribute('x1',pos[e[0]][0]); l.setAttribute('y1',pos[e[0]][1]);
-      l.setAttribute('x2',pos[e[1]][0]); l.setAttribute('y2',pos[e[1]][1]); g.appendChild(l); });
-    data.forEach(function(){ prog.appendChild(document.createElement('i')); });
-    var ticks=[].slice.call(prog.children);
-    var cur=-1;
-    function set(i){
-      if(i===cur) return; cur=i;
-      nodes.forEach(function(n,k){ n.classList.toggle('on',k===i); });
-      ticks.forEach(function(t,k){ t.classList.toggle('on',k<=i); });
-      // live wire from active node to detail panel anchor (~80,50)
-      live.setAttribute('x1',pos[i][0]); live.setAttribute('y1',pos[i][1]);
-      live.setAttribute('x2',80); live.setAttribute('y2',50);
-      // swap detail content with a quick fade
-      detail.classList.add('swap');
-      setTimeout(function(){
-        document.getElementById('d-step').textContent='Node 0'+(i+1)+' / 06';
-        document.getElementById('d-title').textContent=data[i].t;
-        document.getElementById('d-desc').textContent=data[i].d;
-        document.getElementById('d-ic').innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">'+data[i].i+'</svg>';
-        document.getElementById('d-meta').innerHTML=data[i].c.map(function(s){return '<span class="chip">'+s+'</span>';}).join('');
-        detail.classList.remove('swap');
-      },180);
+    var c=document.getElementById('sky'), x=c.getContext('2d'), W,H,DPR=Math.min(devicePixelRatio||1,2);
+    // world coordinate space
+    var WW=1600, WH=1000;
+    var stars=[], FEAT=[[250,300],[560,170],[840,440],[1130,250],[1340,560],[770,780]];
+    var edges=[[0,1],[0,2],[1,3],[2,3],[2,5],[3,4],[4,5],[0,5]];
+    var feat=FEAT.map(function(p,i){return {x:p[0],y:p[1],glow:0,data:DATA[i]};});
+    function build(){
+      stars=[];
+      var n=Math.round(WW*WH/13000); // ~123 ambient stars
+      for(var i=0;i<n;i++) stars.push({x:Math.random()*WW,y:Math.random()*WH,
+        r:Math.random()*1.4+0.5, ph:Math.random()*6.28, sp:Math.random()*1.2+0.4,
+        vx:(Math.random()-.5)*0.05, vy:(Math.random()-.5)*0.05});
     }
-    function onScroll(){
-      var r=sec.getBoundingClientRect(), total=sec.offsetHeight-innerHeight;
-      var p=Math.min(Math.max(-r.top/total,0),0.9999);
-      set(Math.floor(p*data.length));
-    }
-    set(0); addEventListener('scroll',onScroll,{passive:true}); addEventListener('resize',onScroll);
-  })();
+    function size(){ W=c.width=innerWidth*DPR; H=c.height=innerHeight*DPR; c.style.width=innerWidth+'px'; c.style.height=innerHeight+'px'; }
+    build(); size(); addEventListener('resize',function(){size();onScroll();});
 
-  /* ---------- spotlight cards pointer glow ---------- */
-  document.querySelectorAll('.sc').forEach(function(c){
-    c.addEventListener('pointermove',function(e){ var r=c.getBoundingClientRect();
-      c.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
-      c.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%'); });
-  });
+    // camera
+    var os=function(){return Math.min(W/WW,H/WH)*0.92;};          // overview scale
+    var cam={x:WW/2,y:WH/2,s:os()}, tgt={x:WW/2,y:WH/2,s:os()};
+    function proj(wx,wy){ return [ (wx-cam.x)*cam.s + W/2, (wy-cam.y)*cam.s + H/2 ]; }
+
+    // scroll -> camera target + active feature
+    var cap=document.getElementById('cap'), nlabel=document.getElementById('nlabel'), prog=document.getElementById('progress');
+    DATA.forEach(function(){prog.appendChild(document.createElement('i'));});
+    var ticks=[].slice.call(prog.children), active=-1, labelOn=false, curFrac=0, inCap=false;
+    function lerp(a,b,t){return a+(b-a)*t;}
+    function onScroll(){
+      var r=cap.getBoundingClientRect(), total=cap.offsetHeight-innerHeight;
+      var p=Math.min(Math.max(-r.top/total,0),1);
+      inCap = r.top<=innerHeight*0.5 && r.bottom>=innerHeight*0.5;
+      if(inCap){
+        var f=p*(feat.length-1);          // 0..5 glide along nodes
+        var i0=Math.floor(f), frac=f-i0, i1=Math.min(i0+1,feat.length-1);
+        // camera target glides between consecutive nodes, zoomed in
+        tgt.x=lerp(feat[i0].x,feat[i1].x,frac); tgt.y=lerp(feat[i0].y,feat[i1].y,frac);
+        tgt.s=os()*2.7;
+        var near=Math.round(f); curFrac=Math.abs(f-near);  // 0 at a node, .5 mid-travel
+        if(near!==active){ active=near; setLabel(active); }
+        labelOn=true;
+      } else {
+        tgt.x=WW/2; tgt.y=WH/2; tgt.s=os(); labelOn=false; active=-1;
+      }
+    }
+    function setLabel(i){
+      document.getElementById('nl-step').textContent='Node 0'+(i+1)+' / 0'+feat.length;
+      document.getElementById('nl-title').textContent=feat[i].data.t;
+      document.getElementById('nl-desc').textContent=feat[i].data.d;
+      document.getElementById('nl-chips').innerHTML=feat[i].data.c.map(function(s){return '<span class="chip">'+s+'</span>';}).join('');
+      ticks.forEach(function(t,k){t.classList.toggle('on',k<=i);});
+    }
+    addEventListener('scroll',onScroll,{passive:true});
+
+    var t0=performance.now();
+    function frame(now){
+      var t=(now-t0)/1000;
+      // ease camera toward target
+      cam.x=lerp(cam.x,tgt.x,0.075); cam.y=lerp(cam.y,tgt.y,0.075); cam.s=lerp(cam.s,tgt.s,0.075);
+      // feature glow toward active
+      for(var i=0;i<feat.length;i++){ var want=(i===active && inCap)?1:0; feat[i].glow=lerp(feat[i].glow,want,0.12); }
+
+      x.clearRect(0,0,W,H);
+      // links among ambient stars (proximity) — faint
+      var MAX=120*DPR;
+      for(var a=0;a<stars.length;a++){ var s=stars[a];
+        s.x+=s.vx; s.y+=s.vy; if(s.x<0||s.x>WW)s.vx*=-1; if(s.y<0||s.y>WH)s.vy*=-1;
+        var pa=proj(s.x,s.y);
+        for(var b=a+1;b<stars.length;b++){ var q=stars[b],dx=(s.x-q.x)*cam.s,dy=(s.y-q.y)*cam.s,d=Math.sqrt(dx*dx+dy*dy);
+          if(d<MAX){ var pb=proj(q.x,q.y); x.strokeStyle='rgba(90,140,216,'+(1-d/MAX)*0.22+')'; x.lineWidth=DPR*0.5;
+            x.beginPath(); x.moveTo(pa[0],pa[1]); x.lineTo(pb[0],pb[1]); x.stroke(); } }
+        var tw=0.55+0.45*Math.sin(t*s.sp+s.ph);
+        x.beginPath(); x.fillStyle='rgba(150,185,235,'+tw*0.9+')'; x.arc(pa[0],pa[1],s.r*DPR,0,6.283); x.fill();
+      }
+      // feature edges (the "graph") — brighter
+      for(var e=0;e<edges.length;e++){ var n1=feat[edges[e][0]],n2=feat[edges[e][1]];
+        var g=Math.max(n1.glow,n2.glow); var p1=proj(n1.x,n1.y),p2=proj(n2.x,n2.y);
+        x.strokeStyle='rgba(90,140,216,'+(0.16+g*0.5)+')'; x.lineWidth=DPR*(0.7+g*0.8);
+        x.beginPath(); x.moveTo(p1[0],p1[1]); x.lineTo(p2[0],p2[1]); x.stroke(); }
+      // feature nodes
+      var activeScreen=null;
+      for(var i=0;i<feat.length;i++){ var f=feat[i],pp=proj(f.x,f.y),g=f.glow;
+        var rad=DPR*(3.2+g*9);
+        if(g>0.02){ var grd=x.createRadialGradient(pp[0],pp[1],0,pp[0],pp[1],rad*4.5);
+          grd.addColorStop(0,'rgba(120,170,240,'+(0.5*g)+')'); grd.addColorStop(1,'rgba(90,140,216,0)');
+          x.fillStyle=grd; x.beginPath(); x.arc(pp[0],pp[1],rad*4.5,0,6.283); x.fill(); }
+        x.beginPath(); x.fillStyle='rgba(200,222,255,'+(0.7+0.3*g)+')'; x.arc(pp[0],pp[1],rad,0,6.283); x.fill();
+        if(g>0.3){ x.beginPath(); x.strokeStyle='rgba(150,190,245,'+(g-0.3)+')'; x.lineWidth=DPR*1; x.arc(pp[0],pp[1],rad+DPR*(6+8*g),0,6.283); x.stroke(); }
+        if(i===active) activeScreen=pp;
+      }
+      // position the floating label next to the active node
+      if(labelOn && activeScreen){
+        var op=Math.max(0,1-curFrac*2.4);    // fade out mid-travel, sharp at nodes
+        nlabel.classList.toggle('on',op>0.15); prog.classList.add('on');
+        nlabel.style.opacity=op;
+        var lx=activeScreen[0]/DPR, ly=activeScreen[1]/DPR, lw=Math.min(360,innerWidth*0.8);
+        var left = lx > innerWidth*0.55 ? lx-lw-40 : lx+40;
+        left=Math.max(16,Math.min(left,innerWidth-lw-16));
+        var top=Math.max(90,Math.min(ly-60,innerHeight-220));
+        nlabel.style.left=left+'px'; nlabel.style.top=top+'px';
+      } else { nlabel.classList.remove('on'); prog.classList.remove('on'); }
+
+      requestAnimationFrame(frame);
+    }
+    onScroll(); requestAnimationFrame(frame);
+
+    // mobile fallback list
+    var mob=document.getElementById('mob');
+    if(mob){ mob.innerHTML='<div class="shead" style="margin-bottom:8px"><span class="eyebrow">Capabilities</span></div>'+
+      DATA.map(function(d){return '<div class="row"><span class="b"></span><div><h3 style="color:#fff;font-size:1.05rem">'+d.t+'</h3><p style="font-size:.9rem;color:var(--muted)">'+d.d+'</p></div></div>';}).join(''); }
+  })();
 
   /* ---------- stat counters ---------- */
   (function(){
     var band=document.querySelector('.band'); if(!band) return;
-    var io=new IntersectionObserver(function(es){ es.forEach(function(en){ if(en.isIntersecting){
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){ if(en.isIntersecting){
       document.querySelectorAll('.num').forEach(function(el){ var to=+el.getAttribute('data-to'),t0=null;
         if(reduce){el.textContent=to;return;}
         function step(ts){ if(!t0)t0=ts; var p=Math.min((ts-t0)/1700,1);
-          el.textContent=Math.round(to*(1-Math.pow(1-p,3))); if(p<1)requestAnimationFrame(step); } requestAnimationFrame(step); });
-      io.disconnect(); } }); },{threshold:.4}); io.observe(band);
+          el.textContent=Math.round(to*(1-Math.pow(1-p,3))); if(p<1)requestAnimationFrame(step);} requestAnimationFrame(step); });
+      io.disconnect(); }});},{threshold:.4}); io.observe(band);
   })();
 </script>
 </body>
