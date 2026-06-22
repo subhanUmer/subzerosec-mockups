@@ -3,18 +3,19 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SubZeroSec — TCM (Stacked sliding panels)</title>
+<title>SubZeroSec — TCM (Sliding shaped sheets)</title>
 <link rel="icon" href="./logo.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <style>
   /* ============================================================
-     SubZeroSec · TCM — STACKED SLIDING PANELS
-     Alternating Royal-dark and Light-white panels. Each panel
-     is position:sticky; top:0 — so as you scroll, the next panel
-     slides up and COVERS the previous one like a sheet of paper.
-     Dual theme driven by --p-* vars on .dark / .light panels.
+     SubZeroSec · TCM — SLIDING SHAPED SHEETS
+     Dark sections are plain static backdrops (sticky, they just
+     stay). White "paper" sheets are the only things that move —
+     each slides UP and covers the dark behind it, with a distinct
+     GEOMETRIC clip-path leading edge (blade / peak / step) plus
+     subtle geometric accents. Built as scenes: 1 dark + 1 sheet.
      ============================================================ */
   :root{--ease:cubic-bezier(.22,1,.36,1);--maxw:1200px}
   *{box-sizing:border-box;margin:0;padding:0}
@@ -40,17 +41,27 @@
     --p-surface:#101C36;--p-accent:#5A8CD8;--p-fill:#2759A5;--p-fill-deep:#132D53;--p-soft:rgba(90,140,216,.18)}
   .light{--p-bg:#FFFFFF;--p-fg:#102B4F;--p-muted:#4C5C73;--p-faint:#8392A8;
     --p-line:rgba(19,45,83,.10);--p-line2:rgba(19,45,83,.20);
-    --p-surface:#FFFFFF;--p-accent:#2759A5;--p-fill:#2759A5;--p-fill-deep:#132D53;--p-soft:rgba(39,89,165,.12)}
+    --p-surface:#FFFFFF;--p-accent:#2759A5;--p-fill:#2759A5;--p-fill-deep:#132D53;--p-soft:rgba(39,89,165,.12);
+    --p-line-accent:rgba(39,89,165,.16)}
 
-  /* ---------- the sliding stack ---------- */
-  .stack{position:relative}
-  .panel{position:sticky;top:0;min-height:100vh;display:flex;flex-direction:column;justify-content:center;
-    overflow:hidden;background:var(--p-bg);color:var(--p-muted);padding:clamp(86px,11vh,120px) 0 clamp(64px,8vh,96px)}
-  .panel.round{border-radius:34px 34px 0 0}
-  .panel.dark.round{box-shadow:0 -28px 64px -10px rgba(0,0,0,.6)}
-  .panel.light.round{box-shadow:0 -28px 60px -16px rgba(19,45,83,.32)}
-  /* footer rides last, in normal flow, sliding over the pinned CTA */
-  .closer{position:relative;z-index:2}
+  /* ---------- scenes: dark backdrop (stays) + white sheet (slides over) ---------- */
+  .scene{position:relative}
+  .back{position:sticky;top:0;min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+    overflow:hidden;background:var(--p-bg);color:var(--p-muted);padding:clamp(92px,12vh,124px) 0 clamp(64px,8vh,96px)}
+  .sheet{position:relative;z-index:3;min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+    background:var(--p-bg);color:var(--p-muted);padding:clamp(96px,12vh,128px) 0 clamp(64px,8vh,96px)}
+  /* geometric leading edges — white sheet cuts over the dark as it rises */
+  .sheet.cutA{clip-path:polygon(0 0,100% 88px,100% 100%,0 100%)}        /* diagonal blade */
+  .sheet.cutB{clip-path:polygon(0 92px,50% 0,100% 92px,100% 100%,0 100%)} /* centre peak */
+  .sheet.cutC{clip-path:polygon(0 0,58% 0,58% 64px,100% 64px,100% 100%,0 100%)} /* stepped notch */
+  /* bluish depth seam that follows the cut edge */
+  .sheet::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    background:linear-gradient(180deg,rgba(39,89,165,.12),transparent 170px)}
+  /* subtle geometric accents inside each sheet */
+  .geo{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .geo::before{content:"";position:absolute;width:440px;height:440px;border:1.5px solid var(--p-line-accent);border-radius:50%;top:-150px;right:-130px}
+  .geo::after{content:"";position:absolute;width:240px;height:240px;border:1.5px solid var(--p-line-accent);border-radius:26px;transform:rotate(18deg);bottom:-86px;left:-72px}
+  .scene .wrap{position:relative;z-index:1}
 
   .shead{text-align:center;max-width:62ch;margin:0 auto clamp(30px,4vh,46px)}
   .shead h2{font-size:clamp(1.9rem,4vw,2.8rem);margin-top:.6rem}
@@ -58,7 +69,7 @@
 
   /* ---------- HEADER (fixed glass) ---------- */
   header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,14,28,.72);backdrop-filter:saturate(150%) blur(14px);
-    border-bottom:1px solid rgba(255,255,255,.08);transition:background .3s var(--ease),height .3s var(--ease)}
+    border-bottom:1px solid rgba(255,255,255,.08);transition:background .3s var(--ease)}
   header.scrolled{background:rgba(8,14,28,.95);box-shadow:0 14px 36px -18px rgba(0,0,0,.7)}
   .nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:20px;transition:height .3s var(--ease)}
   header.scrolled .nav{height:58px}
@@ -75,7 +86,7 @@
   .nav-end .btn{background:#2759A5;color:#fff}.nav-end .btn:hover{background:#132D53}
   @media(max-width:980px){.nav-links{display:none}.nav-end .login{display:none}}
 
-  /* ---------- HERO (dark) ---------- */
+  /* ---------- HERO (dark backdrop) ---------- */
   .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(30px,4vw,60px);align-items:center}
   .hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:radial-gradient(85% 80% at 50% -5%,rgba(90,140,216,.16),transparent 60%)}
   .hero-bg::before{content:"";position:absolute;inset:0;
@@ -105,7 +116,7 @@
   .formcard .btn:hover{background:#132D53}
   @media(max-width:880px){.hero-grid{grid-template-columns:1fr}.formcard{display:none}}
 
-  /* ---------- REVEAL band (light) ---------- */
+  /* ---------- REVEAL sheet (white) ---------- */
   .why{text-align:center;max-width:64ch;margin:0 auto}
   .why h2{font-size:clamp(2rem,4.6vw,3rem);margin:.7rem 0 0}
   .why p{margin-top:1rem;color:var(--p-muted);font-size:1.04rem}
@@ -175,14 +186,14 @@
   .post p{font-size:.85rem;color:var(--p-muted)}
   @media(max-width:860px){.posts{grid-template-columns:1fr}}
 
-  /* ---------- CTA (light) ---------- */
+  /* ---------- CTA sheet (white) ---------- */
   .cta-in{text-align:center;max-width:60ch;margin:0 auto}
   .cta-in h2{font-size:clamp(2rem,4.4vw,3.1rem);margin-top:.5rem}
   .cta-in h2 .r{color:var(--p-accent)}
   .cta-in p{color:var(--p-muted);margin:1rem auto 1.7rem}
 
-  /* ---------- FOOTER (dark closer) ---------- */
-  .closer{background:#0A1326;color:#A9B7CE;padding:clamp(54px,7vh,84px) 0 38px}
+  /* ---------- FOOTER (plain dark) ---------- */
+  .closer{position:relative;z-index:4;background:#0A1326;color:#A9B7CE;padding:clamp(54px,7vh,84px) 0 38px}
   .closer .brand{color:#fff}.closer .brand .z{color:#5A8CD8}
   .fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:32px}
   .fgrid .about p{font-size:.88rem;color:#9aa8bf;margin-top:1rem;max-width:30ch}
@@ -194,14 +205,16 @@
 
   .badge{position:fixed;left:14px;bottom:14px;z-index:120;font-size:.62rem;font-weight:700;letter-spacing:.1em;color:#fff;background:#2759A5;padding:6px 10px;border-radius:6px}
 
-  /* ---------- MOBILE: disable the sticky stack, fall back to normal scroll ---------- */
+  /* ---------- MOBILE: drop sticky + clip, normal scroll ---------- */
   @media(max-width:880px){
-    .panel{position:static;min-height:0;border-radius:0!important;box-shadow:none!important}
+    .back{position:static;min-height:0}
+    .sheet{min-height:0;clip-path:none!important}
+    .geo{display:none}
   }
 </style>
 </head>
 <body>
-<div class="badge">STACK · papers sliding over</div>
+<div class="badge">SHEETS · white slides over dark</div>
 
 <header>
   <div class="wrap nav">
@@ -216,10 +229,9 @@
   </div>
 </header>
 
-<div class="stack">
-
-  <!-- 1 · HERO (dark) -->
-  <section class="panel dark">
+<!-- ===== SCENE 1 : dark hero  →  white reveal sheet (diagonal blade) ===== -->
+<div class="scene">
+  <section class="back dark">
     <div class="hero-bg" aria-hidden="true"><span class="glow"></span><span class="scan"></span></div>
     <div class="wrap hero-grid">
       <div>
@@ -250,8 +262,8 @@
     </div>
   </section>
 
-  <!-- 2 · REVEAL (light) -->
-  <section class="panel light round">
+  <section class="sheet light cutA">
+    <div class="geo" aria-hidden="true"></div>
     <div class="wrap why">
       <span class="eyebrow">Offensive Security · Services &amp; Training</span>
       <h2>Reduce risk. Prove compliance. Strengthen security.</h2>
@@ -266,9 +278,11 @@
       </div>
     </div>
   </section>
+</div>
 
-  <!-- 3 · SERVICES (dark) -->
-  <section class="panel dark round" id="services">
+<!-- ===== SCENE 2 : dark services  →  white proof sheet (centre peak) ===== -->
+<div class="scene">
+  <section class="back dark" id="services">
     <div class="wrap">
       <div class="shead"><span class="eyebrow">Penetration Testing &amp; Offensive Services</span>
         <h2>Turn attacker knowledge into stronger security.</h2>
@@ -296,8 +310,8 @@
     </div>
   </section>
 
-  <!-- 4 · PROOF: stats + testimonials (light) -->
-  <section class="panel light round">
+  <section class="sheet light cutB">
+    <div class="geo" aria-hidden="true"></div>
     <div class="wrap">
       <div class="stats">
         <div class="stat"><div class="v"><span class="num" data-to="340">0</span><span class="s">+</span></div><div class="l">Assessments delivered</div></div>
@@ -318,9 +332,11 @@
       </div>
     </div>
   </section>
+</div>
 
-  <!-- 5 · INSIGHTS (dark) -->
-  <section class="panel dark round" id="insights">
+<!-- ===== SCENE 3 : dark insights  →  white CTA sheet (stepped notch) ===== -->
+<div class="scene">
+  <section class="back dark" id="insights">
     <div class="wrap">
       <div class="shead"><span class="eyebrow">Resources</span><h2>Explore our latest insights.</h2></div>
       <div class="posts">
@@ -331,8 +347,8 @@
     </div>
   </section>
 
-  <!-- 6 · CTA (light) -->
-  <section class="panel light round" id="cta">
+  <section class="sheet light cutC" id="cta">
+    <div class="geo" aria-hidden="true"></div>
     <div class="wrap cta-in">
       <span class="eyebrow">Get ahead of zero</span>
       <h2>Ready to transform your <span class="r">cybersecurity strategy?</span></h2>
@@ -340,22 +356,21 @@
       <a href="#" class="btn btn-fill">Book a free pentest scoping call →</a>
     </div>
   </section>
+</div>
 
-  <!-- 7 · FOOTER (dark closer, slides over CTA) -->
-  <footer class="closer round dark">
-    <div class="wrap">
-      <div class="fgrid">
-        <div class="about"><a class="brand" href="#"><img src="./logo.png" alt="" />SubZero<span class="z">Sec</span></a>
-          <p>Offensive security that finds exploitable weaknesses before adversaries do. Before Zero. Beyond Breach.</p></div>
-        <div class="fcol"><h4>Services</h4><a href="#">Penetration Testing</a><a href="#">Red Teaming</a><a href="#">Threat Hunting</a><a href="#">OSINT</a><a href="#">Attack-Surface</a></div>
-        <div class="fcol"><h4>Company</h4><a href="#">About</a><a href="#">Team</a><a href="#">Careers</a><a href="#">Case Studies</a><a href="#">Insights</a></div>
-        <div class="fcol"><h4>Contact</h4><a href="#">hello@subzerosec.com</a><a href="#">Get a consultation</a><a href="#">LinkedIn</a><a href="#">X</a><a href="#">GitHub</a></div>
-      </div>
-      <div class="fbar"><span>© 2026 SubZeroSec (Pvt) Ltd. — Islamabad, Pakistan</span><span>Privacy · Terms · Trust &amp; Compliance</span></div>
+<!-- ===== FOOTER (plain dark) ===== -->
+<footer class="closer">
+  <div class="wrap">
+    <div class="fgrid">
+      <div class="about"><a class="brand" href="#"><img src="./logo.png" alt="" />SubZero<span class="z">Sec</span></a>
+        <p>Offensive security that finds exploitable weaknesses before adversaries do. Before Zero. Beyond Breach.</p></div>
+      <div class="fcol"><h4>Services</h4><a href="#">Penetration Testing</a><a href="#">Red Teaming</a><a href="#">Threat Hunting</a><a href="#">OSINT</a><a href="#">Attack-Surface</a></div>
+      <div class="fcol"><h4>Company</h4><a href="#">About</a><a href="#">Team</a><a href="#">Careers</a><a href="#">Case Studies</a><a href="#">Insights</a></div>
+      <div class="fcol"><h4>Contact</h4><a href="#">hello@subzerosec.com</a><a href="#">Get a consultation</a><a href="#">LinkedIn</a><a href="#">X</a><a href="#">GitHub</a></div>
     </div>
-  </footer>
-
-</div><!-- /stack -->
+    <div class="fbar"><span>© 2026 SubZeroSec (Pvt) Ltd. — Islamabad, Pakistan</span><span>Privacy · Terms · Trust &amp; Compliance</span></div>
+  </div>
+</footer>
 
 <script>
   // Cursor-following glow on service cards
@@ -372,7 +387,7 @@
   function onScroll(){ hdr.classList.toggle('scrolled', window.scrollY > 24); }
   window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
 
-  // Animated stat counters — count up when the proof panel scrolls in
+  // Animated stat counters — count up when the proof sheet scrolls in
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var statsEl = document.querySelector('.stats');
   function runCounters(){
