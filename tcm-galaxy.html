@@ -20,7 +20,7 @@
     --bg:#05090F; --fg:#EAF1FF; --muted:#A9B7CE; --faint:#73839B;
     --line:rgba(255,255,255,.09); --line-2:rgba(255,255,255,.16);
     --accent:#5A8CD8; --fill:#2759A5; --deep:#132D53; --soft:rgba(90,140,216,.18);
-    --ease:cubic-bezier(.22,1,.36,1); --maxw:1180px; --mono:"JetBrains Mono",monospace; --cardw:264px;
+    --ease:cubic-bezier(.22,1,.36,1); --maxw:1180px; --mono:"JetBrains Mono",monospace; --cardw:330px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--muted);font-family:"Inter",system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -68,16 +68,16 @@
   /* callout cards layer */
   #cards{position:absolute;inset:0;z-index:5;pointer-events:none}
   .cl{position:absolute;width:var(--cardw);opacity:0;transition:opacity .3s var(--ease);will-change:left,top,opacity}
-  .cl .card{position:relative;cursor:pointer;background:linear-gradient(165deg,rgba(18,32,60,.86),rgba(8,15,32,.92));backdrop-filter:blur(10px);border:1px solid rgba(90,140,216,.42);border-radius:11px;padding:14px 15px 12px;box-shadow:0 22px 52px -26px rgba(0,0,0,.85);transition:border-color .25s,box-shadow .25s,transform .2s var(--ease)}
+  .cl .card{position:relative;cursor:pointer;background:linear-gradient(165deg,rgba(18,32,60,.88),rgba(8,15,32,.93));backdrop-filter:blur(10px);border:1px solid rgba(90,140,216,.42);border-radius:13px;padding:19px 20px 17px;box-shadow:0 24px 56px -26px rgba(0,0,0,.85);transition:border-color .25s,box-shadow .25s,transform .2s var(--ease)}
   .cl.hl .card{border-color:rgba(120,170,235,.75);transform:translateY(-2px)}
   .cl.sel .card{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 22px 52px -26px rgba(0,0,0,.85),0 0 0 1px var(--accent),0 0 26px -2px rgba(90,140,216,.55)}
   .cl .card::after{content:"";position:absolute;right:12px;top:13px;width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.18);transition:.25s}
   .cl.sel .card::after{background:var(--accent);box-shadow:0 0 10px rgba(90,140,216,.9)}
-  .cl .lab{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;color:var(--accent);text-transform:uppercase}
-  .cl h3{font-size:1.02rem;color:#fff;margin:.25rem 0 .3rem}
-  .cl p{font-size:.81rem;color:var(--muted)}
-  .cl .chips{margin-top:.6rem;display:flex;gap:5px;flex-wrap:wrap}
-  .cl .chip{font-family:var(--mono);font-size:.6rem;color:var(--accent);background:var(--soft);border:1px solid rgba(90,140,216,.25);padding:.14rem .44rem;border-radius:5px}
+  .cl .lab{font-family:var(--mono);font-size:.68rem;letter-spacing:.16em;color:var(--accent);text-transform:uppercase}
+  .cl h3{font-size:1.2rem;color:#fff;margin:.4rem 0 .45rem}
+  .cl p{font-size:.92rem;color:var(--muted);line-height:1.55}
+  .cl .chips{margin-top:.9rem;display:flex;gap:6px;flex-wrap:wrap}
+  .cl .chip{font-family:var(--mono);font-size:.66rem;color:var(--accent);background:var(--soft);border:1px solid rgba(90,140,216,.25);padding:.18rem .5rem;border-radius:6px}
   .cl .br{position:absolute;width:10px;height:10px;border:1.5px solid var(--accent);opacity:.85}
   .cl .tl{top:-1px;left:-1px;border-right:0;border-bottom:0;border-radius:3px 0 0 0}
   .cl .tr{top:-1px;right:-1px;border-left:0;border-bottom:0;border-radius:0 3px 0 0}
@@ -195,7 +195,7 @@
   navLinks.forEach(function(a){a.addEventListener('mouseenter',function(){moveU(a);});});
   nav.addEventListener('mouseleave',function(){var a=nav.querySelector('a.active');if(a)moveU(a);});
 
-  var S=SYSTEMS.length, SEG=1.15;   // viewport-heights of scroll per system
+  var S=SYSTEMS.length, SEG=1.35;   // viewport-heights of scroll per system
   var journey=document.getElementById('journey');
   function layout(){ journey.style.height=((S-1)*SEG*100+100)+'vh'; var a=nav.querySelector('a.active'); if(a)moveU(a); }
   layout(); addEventListener('resize',layout);
@@ -223,16 +223,16 @@
     function sstep(a,b,v){var t=Math.min(Math.max((v-a)/(b-a),0),1);return t*t*(3-2*t);}
     function proj(wx,wy){return [(wx-cam.x)*cam.s+W/2 - pt.mx*14*DPR,(wy-cam.y)*cam.s+H/2 - pt.my*14*DPR];}
 
-    var sf=0, shown=-1, TOPM=150, BOTM=22, GAP=14, CARDW=264;
+    var sf=0, shown=-1, TOPM=150, BOTM=22, GAP=16, CARDW=330;
     function onScroll(){
       var top=journey.offsetTop, segPx=SEG*innerHeight;
       var f=Math.min(Math.max((scrollY-top)/segPx,0),S-1); sf=f;
       var i0=Math.floor(f),s=f-i0,i1=Math.min(i0+1,S-1);
-      var warp=sstep(0.42,0.58,s);
+      var warp=sstep(0.26,0.74,s);                  // wide, eased travel between systems
       tgt.x=lerp(SYSTEMS[i0].c[0],SYSTEMS[i1].c[0],warp);
       tgt.y=lerp(SYSTEMS[i0].c[1],SYSTEMS[i1].c[1],warp);
-      var wAmt=(s>0.42&&s<0.58)?Math.sin(Math.PI*(s-0.42)/0.16):0;
-      tgt.s=SZ*(1-0.5*wAmt);
+      var wAmt=(s>0.26&&s<0.74)?Math.sin(Math.PI*(s-0.26)/0.48):0;
+      tgt.s=SZ*(1-0.42*wAmt);
       var sh=(s<0.5)?i0:i1;
       if(sh!==shown){ swapSystem(sh); }
       navLinks.forEach(function(l,k){l.classList.toggle('active',k===sh);});
@@ -263,7 +263,7 @@
     function frame(now){
       var t=(now-t0)/1000;
       pt.mx=lerp(pt.mx,pt.tmx,0.06); pt.my=lerp(pt.my,pt.tmy,0.06);
-      cam.x=lerp(cam.x,tgt.x,0.07); cam.y=lerp(cam.y,tgt.y,0.07); cam.s=lerp(cam.s,tgt.s,0.07);
+      cam.x=lerp(cam.x,tgt.x,0.055); cam.y=lerp(cam.y,tgt.y,0.055); cam.s=lerp(cam.s,tgt.s,0.055);
 
       x.clearRect(0,0,W,H);
       for(var i=0;i<stars.length;i++){ var s=stars[i];
@@ -293,7 +293,7 @@
       }
       // layout + draw connectors for the shown system's cards
       var i0=Math.floor(sf), s=sf-i0;
-      var op = (s<0.42||s>0.58)?1:(1-Math.sin(Math.PI*(s-0.42)/0.16)); // full on dwell, dips to 0 mid-warp
+      var op = (s<0.26||s>0.74)?1:(1-Math.sin(Math.PI*(s-0.26)/0.48)); // full on dwell, eases to 0 mid-warp
       if(shown>=0){
         var sy=SYSTEMS[shown], L=[],R=[];
         sy.nodes.forEach(function(n){ (n._sx<cssW/2?L:R).push(n); });
