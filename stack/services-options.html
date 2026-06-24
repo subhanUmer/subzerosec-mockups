@@ -222,6 +222,24 @@
   .essheet .lk2{margin-top:1.5rem;display:inline-flex;align-items:center;gap:.45em;font-weight:600;font-size:.86rem;color:#2759A5}
   .essheet .lk2 svg{width:15px;height:15px}
   @media(max-width:780px){.esheet{grid-template-columns:1fr}.esright{min-height:360px}}
+
+  /* ===== Option J — Scroll-driven sticky sheets (left dark static, right cards slide as you scroll) ===== */
+  .scrolly{position:relative;height:440vh}
+  .scrolly-stage{position:sticky;top:7vh;height:86vh;display:grid;grid-template-columns:.82fr 1.18fr;
+    border:1px solid rgba(255,255,255,.12);border-radius:22px;overflow:hidden}
+  .scrolly-stage .esleft{height:100%}
+  .scrolly-stage .esright{height:100%;min-height:0}
+  .sc-hint{position:absolute;left:0;right:0;bottom:16px;text-align:center;color:#7f93b3;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;z-index:6;pointer-events:none}
+  .sc-hint .ar{display:inline-block;animation:scbob 1.6s ease-in-out infinite}
+  @keyframes scbob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+  @media(prefers-reduced-motion:reduce){.sc-hint .ar{animation:none}}
+  @media(max-width:780px){
+    .scrolly{height:auto}
+    .scrolly-stage{position:static;height:auto;grid-template-columns:1fr}
+    .scrolly-stage .esright{height:auto;display:block}
+    .scrolly-stage .essheet{position:relative;inset:auto;transform:none!important;clip-path:none!important;border-top:1px solid #e6edf6;min-height:0}
+    .sc-hint{display:none}
+  }
 </style>
 </head>
 <body class="dark">
@@ -342,6 +360,23 @@
     <div class="esright" id="esright"></div>
   </div>
 </div>
+
+<!-- ================= OPTION J — SCROLL-DRIVEN STICKY SHEETS ================= -->
+<div class="optwrap optband">
+  <div class="tagrow"><span class="otag">Option J</span><h2>Scroll-driven sticky sheets (the site's signature)</h2></div>
+  <p class="odesc">This is the one you meant: the left dark panel stays static while you scroll, and the white "paper" cards slide up over each other one-by-one <b>as you scroll down</b> — the left list highlights the current step. Scroll up and they slide back. Click a service to jump.</p>
+</div>
+<div class="optwrap stage" style="padding-bottom:0">
+  <span class="seyebrow">Penetration Testing &amp; Offensive Services</span>
+  <h2 class="sh2">Turn attacker knowledge into stronger security.</h2>
+</div>
+<div class="optwrap"><section class="scrolly" id="scrolly">
+  <div class="scrolly-stage">
+    <div class="esleft" id="scLeft"></div>
+    <div class="esright" id="scRight"></div>
+    <div class="sc-hint">Scroll <span class="ar">↓</span></div>
+  </div>
+</section></div>
 
 <div class="optwrap" style="padding:60px 0 90px;text-align:center">
   <a class="btn btn-out" href="index.html" style="color:#C4CEDE;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.18)">← Back to site</a>
@@ -491,6 +526,42 @@ var X={
  var wrap=document.getElementById('esheet');
  wrap.addEventListener('mouseenter',function(){clear();var b=items[cur].querySelector('.esbar');var w=getComputedStyle(b).width;b.style.transition='none';b.style.width=w;});
  wrap.addEventListener('mouseleave',function(){bar(items[cur],true);schedule();});
+})();
+
+/* J — scroll-driven sticky sheets */
+(function(){
+ var cuts=['cA','cB','cC'],left='',right='';
+ S.forEach(function(s,i){
+  left+='<button class="esitem'+(i===0?' active':'')+'" data-i="'+i+'"><span class="esn">0'+(i+1)+'</span>'+tile('esti',s.k)+'<span class="esmeta"><b>'+s.name+'</b><span>'+s.short+'</span></span></button>';
+  right+='<div class="essheet '+cuts[i%3]+'" data-i="'+i+'" style="transform:translateY('+(i===0?'0':'110%')+')"><div class="ek">Step 0'+(i+1)+' · '+s.short+'</div><h3>'+s.name+'</h3><p>'+s.sum+'</p><ul>'+s.pts.map(function(p){return '<li><span class="ck">'+CK+'</span>'+p+'</li>';}).join('')+'</ul><a class="lk2">Explore '+s.short+' '+ARROW+'</a></div>';
+ });
+ document.getElementById('scLeft').innerHTML=left;
+ document.getElementById('scRight').innerHTML=right;
+ var items=[].slice.call(document.querySelectorAll('#scLeft .esitem'));
+ var cards=[].slice.call(document.querySelectorAll('#scRight .essheet'));
+ var N=cards.length,cur=-1;
+ function setActive(idx){
+  if(idx===cur)return;cur=idx;
+  cards.forEach(function(c,k){c.style.transform=(k<=idx?'translateY(0)':'translateY(110%)');c.style.zIndex=k;});
+  items.forEach(function(it,k){it.classList.toggle('active',k===idx);});
+ }
+ var sec=document.getElementById('scrolly');
+ function onScroll(){
+  if(window.innerWidth<=780){setActive(N-1);return;}
+  var rect=sec.getBoundingClientRect();
+  var total=sec.offsetHeight-window.innerHeight;
+  var scrolled=Math.min(Math.max(-rect.top,0),total);
+  var p=total>0?scrolled/total:0;
+  var idx=Math.min(N-1,Math.floor(p*N+0.0001));
+  setActive(idx);
+ }
+ window.addEventListener('scroll',onScroll,{passive:true});
+ window.addEventListener('resize',onScroll);
+ setActive(0);onScroll();
+ items.forEach(function(it){it.addEventListener('click',function(){
+  var i=+it.dataset.i,total=sec.offsetHeight-window.innerHeight;
+  window.scrollTo({top:sec.offsetTop+(i+0.5)/N*total,behavior:'smooth'});
+ });});
 })();
 </script>
 </body>
