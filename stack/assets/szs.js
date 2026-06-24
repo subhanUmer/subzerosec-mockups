@@ -64,6 +64,31 @@
       requestAnimationFrame(step);
     });
   }
+  // Home services showcase: scroll-driven white sheets (left) + pinned panel (right)
+  var hsv = document.querySelector('.hsv');
+  if (hsv) {
+    var hsheets = Array.prototype.slice.call(hsv.querySelectorAll('.hsv-sheet'));
+    var hpanes = Array.prototype.slice.call(hsv.querySelectorAll('.hsv-pane'));
+    var htrack = hsv.querySelector('.hsv-track');
+    var HN = hsheets.length, hcur = -1;
+    function hsvSet(i) {
+      if (i === hcur) return; hcur = i;
+      hsheets.forEach(function (c, k) { c.style.transform = k <= i ? 'translateY(0)' : 'translateY(110%)'; c.style.zIndex = k; });
+      hpanes.forEach(function (p, k) { p.classList.toggle('active', k === i); });
+    }
+    function hsvScroll() {
+      if (window.innerWidth <= 880) { return; }
+      var rect = htrack.getBoundingClientRect();
+      var total = htrack.offsetHeight - window.innerHeight;
+      var scrolled = Math.min(Math.max(-rect.top, 0), total);
+      var p = total > 0 ? scrolled / total : 0;
+      hsvSet(Math.min(HN - 1, Math.floor(p * HN + 0.0001)));
+    }
+    window.addEventListener('scroll', hsvScroll, { passive: true });
+    window.addEventListener('resize', hsvScroll);
+    hsvSet(0); hsvScroll();
+  }
+
   document.querySelectorAll('.stats').forEach(function (statsEl) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) { if (en.isIntersecting) { runCounters(statsEl); io.unobserve(en.target); } });
