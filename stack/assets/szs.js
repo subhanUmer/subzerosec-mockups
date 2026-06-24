@@ -24,12 +24,13 @@
   var navlinks = document.querySelector('.nav-links');
   var pill = document.querySelector('.navpill');
   if (navlinks && pill) {
-    var links = Array.prototype.slice.call(navlinks.querySelectorAll('a'));
-    var activeLink = navlinks.querySelector('a.active');
+    var links = Array.prototype.slice.call(navlinks.querySelectorAll('.navlink'));
+    var activeLink = navlinks.querySelector('.navlink.active');
     function movePill(el) {
       if (!el) { pill.style.opacity = '0'; return; }
-      pill.style.left = el.offsetLeft + 'px';
-      pill.style.width = el.offsetWidth + 'px';
+      var r = el.getBoundingClientRect(), pr = navlinks.getBoundingClientRect();
+      pill.style.left = (r.left - pr.left) + 'px';
+      pill.style.width = r.width + 'px';
       pill.style.opacity = '1';
     }
     links.forEach(function (a) { a.addEventListener('mouseenter', function () { movePill(a); }); });
