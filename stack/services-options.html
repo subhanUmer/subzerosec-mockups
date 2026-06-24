@@ -121,6 +121,77 @@
   .frow:hover .go{background:#2759A5;border-color:#2759A5;color:#fff;transform:translateX(3px)}
   .frow .go svg{width:17px;height:17px}
   @media(max-width:680px){.frow{grid-template-columns:46px 1fr auto}.frow .ti{display:none}.frow .txt p{display:none}}
+
+  /* ===== Option E — Sticky-scroll showcase ===== */
+  .sscroll{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(30px,5vw,70px);align-items:start}
+  .ssleft{display:flex;flex-direction:column}
+  .ssblock{min-height:62vh;display:flex;flex-direction:column;justify-content:center;opacity:.3;transition:opacity .45s var(--ease)}
+  .ssblock.active{opacity:1}
+  .ssblock .ix{font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#5A8CD8}
+  .ssblock h3{color:#fff;font-size:clamp(1.6rem,3vw,2.2rem);margin:.5rem 0 .7rem}
+  .ssblock p{color:#A9B7CE;max-width:46ch}
+  .ssright{position:sticky;top:16vh;height:68vh;display:flex;align-items:center}
+  .ssstage{position:relative;width:100%;height:400px;border:1px solid rgba(255,255,255,.1);border-radius:20px;overflow:hidden;
+    background:radial-gradient(120% 120% at 100% 0,rgba(90,140,216,.16),transparent 55%),#0C1525}
+  .sspane{position:absolute;inset:0;padding:clamp(26px,3vw,40px);display:flex;flex-direction:column;justify-content:center;opacity:0;transform:scale(.97);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+  .sspane.active{opacity:1;transform:none}
+  .sspane .bigic{width:62px;height:62px;border-radius:18px;margin-bottom:1.2rem}
+  .sspane .bigic svg{width:30px;height:30px}
+  .sspane h4{color:#fff;font-size:1.5rem;margin-bottom:.5rem}
+  .sspane>p{color:#A9B7CE;max-width:44ch}
+  .sspane ul{list-style:none;margin:1.3rem 0 0;display:grid;gap:.6rem}
+  .sspane li{display:flex;gap:.6rem;align-items:flex-start;color:#EAF1FF;font-size:.9rem}
+  .sspane li .ck{width:20px;height:20px;flex:none;border-radius:6px;background:rgba(90,140,216,.18);color:#5A8CD8;display:flex;align-items:center;justify-content:center}
+  .sspane li .ck svg{width:12px;height:12px}
+  @media(max-width:780px){.sscroll{grid-template-columns:1fr}.ssright{display:none}.ssblock{min-height:0;padding:18px 0;opacity:1}}
+
+  /* ===== Option F — Horizontal expanding panels ===== */
+  .hpanels{display:flex;gap:12px;height:400px}
+  .hpanel{position:relative;flex:1;min-width:0;border:1px solid rgba(255,255,255,.1);border-radius:18px;overflow:hidden;cursor:pointer;
+    display:flex;flex-direction:column;justify-content:flex-end;padding:24px;transition:flex .55s var(--ease),border-color .35s;
+    background:linear-gradient(180deg,rgba(12,21,37,.15),rgba(10,18,34,.94)),linear-gradient(160deg,#1a2c4e,#0C1525)}
+  .hpanel:hover{border-color:rgba(90,140,216,.45)}
+  .hpanel.active{flex:3.4}
+  .hpanel .ti{width:46px;height:46px;margin-bottom:auto}
+  .hpanel .ti svg{width:23px;height:23px}
+  .hpanel h3{color:#fff;font-size:1.1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hpanel .tg{color:#7f93b3;font-size:.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hpanel .more{max-height:0;opacity:0;overflow:hidden;transition:max-height .55s var(--ease),opacity .4s,margin .4s}
+  .hpanel.active .more{max-height:180px;opacity:1;margin-top:.7rem}
+  .hpanel .more p{color:#c2d4ef;font-size:.92rem;max-width:42ch}
+  .hpanel .more .lk{margin-top:.9rem}
+  @media(max-width:780px){.hpanels{flex-direction:column;height:auto}.hpanel,.hpanel.active{flex:none}.hpanel{padding:22px}.hpanel h3,.hpanel .tg{white-space:normal}.hpanel .more{max-height:none;opacity:1;margin-top:.6rem}}
+
+  /* ===== Option G — Capability table ===== */
+  .captable-wrap{overflow-x:auto;border:1px solid rgba(255,255,255,.1);border-radius:16px}
+  .captable{width:100%;border-collapse:collapse;min-width:760px}
+  .captable th{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:#73839B;text-align:left;padding:16px 22px;border-bottom:1px solid rgba(255,255,255,.14);font-weight:700}
+  .captable td{padding:20px 22px;border-bottom:1px solid rgba(255,255,255,.07);color:#A9B7CE;font-size:.9rem;vertical-align:top}
+  .captable tbody tr:last-child td{border-bottom:0}
+  .captable tbody tr{transition:background .25s}
+  .captable tbody tr:hover{background:rgba(90,140,216,.07)}
+  .captable .svc{display:flex;gap:13px;align-items:center;color:#fff;font-weight:600}
+  .captable .svc .ti{width:40px;height:40px;flex:none}
+  .captable .svc .ti svg{width:20px;height:20px}
+  .captable td .ans{color:#EAF1FF}
+
+  /* ===== Option H — Carousel ===== */
+  .carwrap{position:relative}
+  .carnav{display:flex;gap:10px;justify-content:flex-end;margin-bottom:16px}
+  .carbtn{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.16);background:transparent;color:#C4CEDE;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.25s}
+  .carbtn:hover{background:#2759A5;border-color:#2759A5;color:#fff}
+  .carbtn svg{width:18px;height:18px}
+  .cartrack{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;scrollbar-width:none;scroll-behavior:smooth}
+  .cartrack::-webkit-scrollbar{display:none}
+  .carcard{flex:0 0 clamp(280px,42%,440px);scroll-snap-align:start;border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:30px;
+    background:linear-gradient(165deg,#16233F,#0C1525);min-height:248px;display:flex;flex-direction:column;transition:border-color .3s}
+  .carcard:hover{border-color:rgba(90,140,216,.4)}
+  .carcard .ti{width:50px;height:50px;margin-bottom:1.1rem}
+  .carcard .ti svg{width:24px;height:24px}
+  .carcard .ix{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#73839B;margin-bottom:.5rem}
+  .carcard h3{color:#fff;font-size:1.18rem;margin-bottom:.4rem}
+  .carcard p{color:#9fb0cb;font-size:.9rem;flex:1}
+  .carcard .lk{margin-top:1.1rem}
 </style>
 </head>
 <body class="dark">
@@ -174,6 +245,57 @@
   <h2 class="sh2">Turn attacker knowledge into stronger security.</h2>
   <div style="height:18px"></div>
   <div class="frows" id="frows"></div>
+</div>
+
+<!-- ================= OPTION E — STICKY SCROLL ================= -->
+<div class="optwrap optband">
+  <div class="tagrow"><span class="otag">Option E</span><h2>Sticky-scroll showcase</h2></div>
+  <p class="odesc">Interactive on scroll. The list scrolls on the left while a panel pins on the right and swaps to the service you're reading — the Aceternity "sticky scroll reveal." Cinematic and premium. (Scroll slowly through this one.)</p>
+</div>
+<div class="optwrap stage">
+  <span class="seyebrow">Penetration Testing &amp; Offensive Services</span>
+  <h2 class="sh2">Turn attacker knowledge into stronger security.</h2>
+  <div style="height:24px"></div>
+  <div class="sscroll" id="sscroll"></div>
+</div>
+
+<!-- ================= OPTION F — HORIZONTAL PANELS ================= -->
+<div class="optwrap optband">
+  <div class="tagrow"><span class="otag">Option F</span><h2>Expanding panels (horizontal accordion)</h2></div>
+  <p class="odesc">Not a grid. Five panels side by side; hover one and it expands to reveal its detail while the others slide aside. Tactile and distinctive — a favorite on high-end agency sites.</p>
+</div>
+<div class="optwrap stage">
+  <span class="seyebrow">Penetration Testing &amp; Offensive Services</span>
+  <h2 class="sh2">Turn attacker knowledge into stronger security.</h2>
+  <div style="height:24px"></div>
+  <div class="hpanels" id="hpanels"></div>
+</div>
+
+<!-- ================= OPTION G — CAPABILITY TABLE ================= -->
+<div class="optwrap optband">
+  <div class="tagrow"><span class="otag">Option G</span><h2>Capability table</h2></div>
+  <p class="odesc">Not cards. A clean, information-dense table — what each service answers, the engagement shape, and the output. Enterprise and decision-oriented; great for buyers comparing services at a glance.</p>
+</div>
+<div class="optwrap stage">
+  <span class="seyebrow">Penetration Testing &amp; Offensive Services</span>
+  <h2 class="sh2">Turn attacker knowledge into stronger security.</h2>
+  <div style="height:24px"></div>
+  <div class="captable-wrap"><table class="captable" id="captable"></table></div>
+</div>
+
+<!-- ================= OPTION H — CAROUSEL ================= -->
+<div class="optwrap optband">
+  <div class="tagrow"><span class="otag">Option H</span><h2>Carousel / slider</h2></div>
+  <p class="odesc">Horizontal scroll-snap of larger feature panels with prev/next controls. Keeps the section compact while letting each service breathe; familiar and polished.</p>
+</div>
+<div class="optwrap stage">
+  <span class="seyebrow">Penetration Testing &amp; Offensive Services</span>
+  <h2 class="sh2">Turn attacker knowledge into stronger security.</h2>
+  <div style="height:18px"></div>
+  <div class="carwrap">
+    <div class="carnav"><button class="carbtn" id="carprev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button><button class="carbtn" id="carnext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button></div>
+    <div class="cartrack" id="cartrack"></div>
+  </div>
 </div>
 
 <div class="optwrap" style="padding:60px 0 90px;text-align:center">
@@ -243,6 +365,61 @@ function tile(cls,k){return '<span class="ic-tile '+cls+'"><svg viewBox="0 0 24 
   h+='<a class="frow"><div class="fn ghostnum">0'+(i+1)+'</div>'+tile('ti',s.k)+'<div class="txt"><div class="tg">'+s.short+'</div><h3>'+s.name+'</h3><p>'+s.sum+'</p></div><span class="go">'+ARROW+'</span></a>';
  });
  document.getElementById('frows').innerHTML=h;
+})();
+
+/* extra copy for table/panes */
+var X={
+ vapt:{ans:'What is exploitable, and how badly?',eng:'1–4 weeks · remote-first',out:'Ranked, exploit-proven findings + free retest'},
+ red:{ans:'Can we detect & stop a real adversary?',eng:'4–8 weeks · covert, production',out:'ATT&CK attack narrative + purple-team replay'},
+ hunt:{ans:'Is an adversary already inside?',eng:'2–4 weeks · with your SOC',out:'Scoped findings + new detections'},
+ osint:{ans:'What can an attacker learn for free?',eng:'1–3 weeks · non-intrusive',out:'Exposure inventory + takedown/rotation plan'},
+ asm:{ans:'What do we actually expose?',eng:'Baseline or continuous',out:'Living, attributed asset inventory'}
+};
+
+/* E — sticky scroll */
+(function(){
+ var left='',panes='';
+ S.forEach(function(s,i){
+  left+='<div class="ssblock'+(i===0?' active':'')+'" data-i="'+i+'"><div class="ix">'+('0'+(i+1))+' · '+s.short+'</div><h3>'+s.name+'</h3><p>'+s.sum+'</p></div>';
+  panes+='<div class="sspane'+(i===0?' active':'')+'" data-i="'+i+'">'+tile('bigic',s.k)+'<h4>'+s.name+'</h4><p>'+s.tag+'</p><ul>'+s.pts.map(function(p){return '<li><span class="ck">'+CK+'</span>'+p+'</li>';}).join('')+'</ul></div>';
+ });
+ document.getElementById('sscroll').innerHTML='<div class="ssleft">'+left+'</div><div class="ssright"><div class="ssstage">'+panes+'</div></div>';
+ var blocks=document.querySelectorAll('#sscroll .ssblock'),panes2=document.querySelectorAll('#sscroll .sspane');
+ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var i=+e.target.dataset.i;blocks.forEach(function(b){b.classList.toggle('active',+b.dataset.i===i);});panes2.forEach(function(p){p.classList.toggle('active',+p.dataset.i===i);});}});},{rootMargin:'-45% 0px -45% 0px',threshold:0});
+ blocks.forEach(function(b){io.observe(b);});
+})();
+
+/* F — horizontal expanding panels */
+(function(){
+ var h='';
+ S.forEach(function(s,i){
+  h+='<div class="hpanel'+(i===0?' active':'')+'" data-i="'+i+'">'+tile('ti',s.k)+'<h3>'+s.name+'</h3><div class="tg">'+s.short+'</div><div class="more"><p>'+s.sum+'</p><a class="lk">Explore '+s.short+' '+ARROW+'</a></div></div>';
+ });
+ var el=document.getElementById('hpanels');el.innerHTML=h;
+ var ps=el.querySelectorAll('.hpanel');
+ ps.forEach(function(p){p.addEventListener('mouseenter',function(){ps.forEach(function(x){x.classList.toggle('active',x===p);});});p.addEventListener('click',function(){ps.forEach(function(x){x.classList.toggle('active',x===p);});});});
+})();
+
+/* G — capability table */
+(function(){
+ var h='<thead><tr><th>Service</th><th>What it answers</th><th>Engagement</th><th>Key output</th></tr></thead><tbody>';
+ S.forEach(function(s){var x=X[s.k];
+  h+='<tr><td><div class="svc">'+tile('ti',s.k)+'<span>'+s.name+'</span></div></td><td class="ans">'+x.ans+'</td><td>'+x.eng+'</td><td>'+x.out+'</td></tr>';
+ });
+ h+='</tbody>';
+ document.getElementById('captable').innerHTML=h;
+})();
+
+/* H — carousel */
+(function(){
+ var h='';
+ S.forEach(function(s,i){
+  h+='<div class="carcard"><div class="ix">0'+(i+1)+' · '+s.short+'</div>'+tile('ti',s.k)+'<h3>'+s.name+'</h3><p>'+s.sum+'</p><a class="lk">Learn more '+ARROW+'</a></div>';
+ });
+ var track=document.getElementById('cartrack');track.innerHTML=h;
+ function step(){var c=track.querySelector('.carcard');return c?c.offsetWidth+18:360;}
+ document.getElementById('carprev').addEventListener('click',function(){track.scrollBy({left:-step(),behavior:'smooth'});});
+ document.getElementById('carnext').addEventListener('click',function(){track.scrollBy({left:step(),behavior:'smooth'});});
 })();
 </script>
 </body>
