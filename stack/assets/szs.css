@@ -379,6 +379,15 @@ header.scrolled .nav{height:58px}
 .channel .cn{font-size:.85rem;color:var(--p-muted)}
 .ilink{color:var(--p-accent);text-decoration:underline}
 
+/* ---------- LOGO WALL (real disclosures) ---------- */
+.logowall{margin-top:clamp(36px,5vh,60px);text-align:center}
+.why+.logowall{margin-top:clamp(40px,6vh,64px)}
+.logowall .lwlabel{font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--p-faint);margin-bottom:1.5rem}
+.logorow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:clamp(26px,5vw,60px)}
+.logorow img{height:30px;width:auto;max-width:140px;object-fit:contain;opacity:.62;filter:grayscale(1);transition:opacity .25s var(--ease),filter .25s var(--ease)}
+.logorow img:hover{opacity:1;filter:grayscale(0)}
+@media(max-width:560px){.logorow img{height:24px}}
+
 /* ---------- CTA sheet ---------- */
 .cta-in{text-align:center;max-width:60ch;margin:0 auto}
 .cta-in h2{font-size:clamp(2rem,4.4vw,3.1rem);margin-top:.5rem;color:var(--p-fg)}
