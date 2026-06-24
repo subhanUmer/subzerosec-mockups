@@ -240,6 +240,39 @@
     .scrolly-stage .essheet{position:relative;inset:auto;transform:none!important;clip-path:none!important;border-top:1px solid #e6edf6;min-height:0}
     .sc-hint{display:none}
   }
+
+  /* ===== Option K — Sticky: LEFT white sliding sheets over dark (site theme), RIGHT pinned panel that changes ===== */
+  .koh{position:relative;height:440vh}
+  .kstage{position:sticky;top:7vh;height:86vh;display:grid;grid-template-columns:1.05fr .95fr;border:1px solid rgba(255,255,255,.12);border-radius:22px;overflow:hidden}
+  .kleft{position:relative;overflow:hidden;background:#0A1326}
+  .kleft .ksheet{position:absolute;inset:0;background:#fff;color:#102B4F;display:flex;flex-direction:column;justify-content:center;
+    padding:clamp(30px,4vw,58px);transform:translateY(110%);transition:transform .72s cubic-bezier(.66,0,.2,1);box-shadow:0 -24px 48px -30px rgba(0,0,0,.55)}
+  .kleft .ksheet.cA{clip-path:polygon(0 0,100% 46px,100% 100%,0 100%)}
+  .kleft .ksheet.cB{clip-path:polygon(0 50px,55% 0,100% 50px,100% 100%,0 100%)}
+  .kleft .ksheet.cC{clip-path:polygon(0 0,62% 0,62% 38px,100% 38px,100% 100%,0 100%)}
+  .kleft .ksheet .num{font-size:clamp(3rem,7vw,5rem);font-weight:800;color:rgba(39,89,165,.13);line-height:1;margin-bottom:.3rem;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+  .kleft .ksheet .ek{font-size:.74rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#2759A5}
+  .kleft .ksheet h3{color:#102B4F;font-size:clamp(1.7rem,3vw,2.5rem);margin:.5rem 0 .6rem;font-weight:800;letter-spacing:-.02em}
+  .kleft .ksheet p{color:#4C5C73;font-size:1.05rem;max-width:34ch}
+  .kright{position:relative;overflow:hidden;background:linear-gradient(165deg,#0f1c35,#0A1326)}
+  .kpane{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:clamp(28px,3.4vw,48px);opacity:0;transform:translateY(12px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+  .kpane.active{opacity:1;transform:none}
+  .kpane .ek{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#5A8CD8}
+  .kpane .kbig{width:58px;height:58px;border-radius:16px;margin-bottom:1.1rem}
+  .kpane .kbig svg{width:28px;height:28px}
+  .kpane h4{color:#fff;font-size:1.4rem;margin:.2rem 0 .5rem}
+  .kpane>p{color:#A9B7CE;max-width:42ch}
+  .kpane ul{list-style:none;margin:1.3rem 0 0;display:grid;gap:.6rem}
+  .kpane li{display:flex;gap:.6rem;align-items:flex-start;color:#EAF1FF;font-size:.9rem}
+  .kpane li .ck{width:20px;height:20px;flex:none;border-radius:6px;background:rgba(90,140,216,.18);color:#5A8CD8;display:flex;align-items:center;justify-content:center}
+  .kpane li .ck svg{width:12px;height:12px}
+  .kpane .lk{margin-top:1.4rem;display:inline-flex;align-items:center;gap:.45em;font-weight:600;font-size:.86rem;color:#5A8CD8}
+  .kpane .lk svg{width:15px;height:15px}
+  .k-hint{position:absolute;left:0;right:0;bottom:16px;text-align:center;color:#7f93b3;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;z-index:6;pointer-events:none}
+  .k-hint .ar{display:inline-block;animation:scbob 1.6s ease-in-out infinite}
+  @media(max-width:780px){.koh{height:auto}.kstage{position:static;height:auto;grid-template-columns:1fr}
+    .kleft{min-height:0}.kleft .ksheet{position:relative;inset:auto;transform:none!important;clip-path:none!important;border-top:1px solid #e6edf6}
+    .kright,.k-hint{display:none}}
 </style>
 </head>
 <body class="dark">
@@ -375,6 +408,23 @@
     <div class="esleft" id="scLeft"></div>
     <div class="esright" id="scRight"></div>
     <div class="sc-hint">Scroll <span class="ar">↓</span></div>
+  </div>
+</section></div>
+
+<!-- ================= OPTION K — STICKY: LEFT WHITE SHEETS + RIGHT PINNED ================= -->
+<div class="optwrap optband">
+  <div class="tagrow"><span class="otag">Option K</span><h2>Sticky-scroll — white sheets slide on the left, panel changes on the right</h2></div>
+  <p class="odesc">Option E reworked the way you meant: as you scroll, white "paper" sheets slide up over the dark on the <b>left</b> (the overall site theme), and the <b>right</b> panel stays pinned and swaps to match the current service. Scroll up and the sheets slide back.</p>
+</div>
+<div class="optwrap stage" style="padding-bottom:0">
+  <span class="seyebrow">Penetration Testing &amp; Offensive Services</span>
+  <h2 class="sh2">Turn attacker knowledge into stronger security.</h2>
+</div>
+<div class="optwrap"><section class="koh" id="koh">
+  <div class="kstage">
+    <div class="kleft" id="kLeft"></div>
+    <div class="kright" id="kRight"></div>
+    <div class="k-hint">Scroll <span class="ar">↓</span></div>
   </div>
 </section></div>
 
@@ -562,6 +612,37 @@ var X={
   var i=+it.dataset.i,total=sec.offsetHeight-window.innerHeight;
   window.scrollTo({top:sec.offsetTop+(i+0.5)/N*total,behavior:'smooth'});
  });});
+})();
+
+/* K — sticky: left white sliding sheets + right pinned changing panel */
+(function(){
+ var cuts=['cA','cB','cC'],L='',R='';
+ S.forEach(function(s,i){
+  L+='<div class="ksheet '+cuts[i%3]+'" data-i="'+i+'" style="transform:translateY('+(i===0?'0':'110%')+')"><div class="num">0'+(i+1)+'</div><div class="ek">Step 0'+(i+1)+' · '+s.short+'</div><h3>'+s.name+'</h3><p>'+s.tag+'</p></div>';
+  R+='<div class="kpane'+(i===0?' active':'')+'" data-i="'+i+'"><div class="ek">'+s.short+'</div>'+tile('kbig',s.k)+'<h4>'+s.name+'</h4><p>'+s.sum+'</p><ul>'+s.pts.map(function(p){return '<li><span class="ck">'+CK+'</span>'+p+'</li>';}).join('')+'</ul><a class="lk">Explore '+s.short+' '+ARROW+'</a></div>';
+ });
+ document.getElementById('kLeft').innerHTML=L;
+ document.getElementById('kRight').innerHTML=R;
+ var sheets=[].slice.call(document.querySelectorAll('#kLeft .ksheet'));
+ var panes=[].slice.call(document.querySelectorAll('#kRight .kpane'));
+ var N=sheets.length,cur=-1;
+ function setActive(idx){
+  if(idx===cur)return;cur=idx;
+  sheets.forEach(function(c,k){c.style.transform=(k<=idx?'translateY(0)':'translateY(110%)');c.style.zIndex=k;});
+  panes.forEach(function(p,k){p.classList.toggle('active',k===idx);});
+ }
+ var sec=document.getElementById('koh');
+ function onScroll(){
+  if(window.innerWidth<=780){return;}
+  var rect=sec.getBoundingClientRect();
+  var total=sec.offsetHeight-window.innerHeight;
+  var scrolled=Math.min(Math.max(-rect.top,0),total);
+  var p=total>0?scrolled/total:0;
+  setActive(Math.min(N-1,Math.floor(p*N+0.0001)));
+ }
+ window.addEventListener('scroll',onScroll,{passive:true});
+ window.addEventListener('resize',onScroll);
+ setActive(0);onScroll();
 })();
 </script>
 </body>
