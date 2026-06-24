@@ -20,6 +20,28 @@
   if (backdrop) backdrop.addEventListener('click', function () { setMenu(false); });
   if (mnav) mnav.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
 
+  // Sliding highlight pill that follows hovered link, resting on the active one
+  var navlinks = document.querySelector('.nav-links');
+  var pill = document.querySelector('.navpill');
+  if (navlinks && pill) {
+    var links = Array.prototype.slice.call(navlinks.querySelectorAll('a'));
+    var activeLink = navlinks.querySelector('a.active');
+    function movePill(el) {
+      if (!el) { pill.style.opacity = '0'; return; }
+      pill.style.left = el.offsetLeft + 'px';
+      pill.style.width = el.offsetWidth + 'px';
+      pill.style.opacity = '1';
+    }
+    links.forEach(function (a) { a.addEventListener('mouseenter', function () { movePill(a); }); });
+    navlinks.addEventListener('mouseleave', function () { movePill(activeLink); });
+    var settle = function () { movePill(activeLink); };
+    requestAnimationFrame(settle);
+    window.addEventListener('load', settle);
+    window.addEventListener('resize', settle);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(settle);
+    setTimeout(settle, 300);
+  }
+
   // Cursor-following glow on cards
   document.querySelectorAll('.card').forEach(function (c) {
     c.addEventListener('pointermove', function (e) {
