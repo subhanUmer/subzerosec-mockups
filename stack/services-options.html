@@ -192,6 +192,36 @@
   .carcard h3{color:#fff;font-size:1.18rem;margin-bottom:.4rem}
   .carcard p{color:#9fb0cb;font-size:.9rem;flex:1}
   .carcard .lk{margin-top:1.1rem}
+
+  /* ===== Option I — Split: dark rail + auto sliding white sheets ===== */
+  .esheet{display:grid;grid-template-columns:.82fr 1.18fr;min-height:460px;border:1px solid rgba(255,255,255,.12);border-radius:22px;overflow:hidden}
+  .esleft{background:linear-gradient(165deg,#101c34,#0A1326);padding:clamp(20px,2.4vw,30px);display:flex;flex-direction:column;justify-content:center;gap:6px}
+  .esitem{display:flex;align-items:center;gap:13px;padding:14px 15px;border-radius:12px;border:1px solid transparent;background:transparent;cursor:pointer;text-align:left;transition:background .25s,border-color .25s;position:relative;overflow:hidden;width:100%;font-family:inherit}
+  .esitem:hover{background:rgba(255,255,255,.04)}
+  .esitem.active{background:rgba(90,140,216,.13);border-color:rgba(90,140,216,.3)}
+  .esitem .esn{font-variant-numeric:tabular-nums;font-weight:800;color:#5A8CD8;font-size:.85rem;width:22px;flex:none}
+  .esitem .esti{width:36px;height:36px;flex:none}
+  .esitem .esti svg{width:18px;height:18px}
+  .esitem .esmeta b{display:block;color:#C4CEDE;font-size:.95rem;font-weight:600}
+  .esitem.active .esmeta b{color:#fff}
+  .esitem .esmeta span{font-size:.75rem;color:#73839B}
+  .esitem .esbar{position:absolute;left:0;bottom:0;height:2px;width:0;background:linear-gradient(90deg,#2759A5,#5A8CD8)}
+  .esright{position:relative;background:#fff;overflow:hidden;min-height:380px}
+  .essheet{position:absolute;inset:0;background:#fff;color:#102B4F;padding:clamp(28px,3.4vw,50px);display:flex;flex-direction:column;justify-content:center;
+    transform:translateY(110%);transition:transform .72s cubic-bezier(.66,0,.2,1);will-change:transform;box-shadow:0 -22px 44px -30px rgba(0,0,0,.45)}
+  .essheet.cA{clip-path:polygon(0 0,100% 40px,100% 100%,0 100%)}
+  .essheet.cB{clip-path:polygon(0 44px,50% 0,100% 44px,100% 100%,0 100%)}
+  .essheet.cC{clip-path:polygon(0 0,60% 0,60% 34px,100% 34px,100% 100%,0 100%)}
+  .essheet .ek{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#2759A5}
+  .essheet h3{color:#102B4F;font-size:clamp(1.5rem,2.6vw,2rem);margin:.5rem 0 .6rem;font-weight:800;letter-spacing:-.02em}
+  .essheet>p{color:#4C5C73;max-width:46ch;font-size:1rem}
+  .essheet ul{list-style:none;margin:1.3rem 0 0;display:grid;gap:.65rem}
+  .essheet li{display:flex;gap:.7rem;align-items:flex-start;color:#1f3a5f;font-size:.92rem}
+  .essheet li .ck{width:20px;height:20px;flex:none;border-radius:6px;background:rgba(39,89,165,.12);color:#2759A5;display:flex;align-items:center;justify-content:center}
+  .essheet li .ck svg{width:12px;height:12px}
+  .essheet .lk2{margin-top:1.5rem;display:inline-flex;align-items:center;gap:.45em;font-weight:600;font-size:.86rem;color:#2759A5}
+  .essheet .lk2 svg{width:15px;height:15px}
+  @media(max-width:780px){.esheet{grid-template-columns:1fr}.esright{min-height:360px}}
 </style>
 </head>
 <body class="dark">
@@ -295,6 +325,21 @@
   <div class="carwrap">
     <div class="carnav"><button class="carbtn" id="carprev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button><button class="carbtn" id="carnext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button></div>
     <div class="cartrack" id="cartrack"></div>
+  </div>
+</div>
+
+<!-- ================= OPTION I — SPLIT: DARK RAIL + SLIDING WHITE SHEETS ================= -->
+<div class="optwrap optband">
+  <div class="tagrow"><span class="otag">Option I</span><h2>Split — dark rail + auto-sliding white sheets</h2></div>
+  <p class="odesc">Option E, reworked the way you described: a dark control rail on the left, and on the right white "paper" sheets that constantly slide up over each other (the tcm-stack signature) — auto-cycling through the services with geometric leading edges. Hover to pause; click a service to jump.</p>
+</div>
+<div class="optwrap stage">
+  <span class="seyebrow">Penetration Testing &amp; Offensive Services</span>
+  <h2 class="sh2">Turn attacker knowledge into stronger security.</h2>
+  <div style="height:22px"></div>
+  <div class="esheet" id="esheet">
+    <div class="esleft" id="esleft"></div>
+    <div class="esright" id="esright"></div>
   </div>
 </div>
 
@@ -420,6 +465,32 @@ var X={
  function step(){var c=track.querySelector('.carcard');return c?c.offsetWidth+18:360;}
  document.getElementById('carprev').addEventListener('click',function(){track.scrollBy({left:-step(),behavior:'smooth'});});
  document.getElementById('carnext').addEventListener('click',function(){track.scrollBy({left:step(),behavior:'smooth'});});
+})();
+
+/* I — split: dark rail + auto-sliding white sheets */
+(function(){
+ var DUR=3400,cuts=['cA','cB','cC'];
+ var left='',right='';
+ S.forEach(function(s,i){
+  left+='<button class="esitem'+(i===0?' active':'')+'" data-i="'+i+'"><span class="esn">0'+(i+1)+'</span>'+tile('esti',s.k)+'<span class="esmeta"><b>'+s.name+'</b><span>'+s.short+'</span></span><span class="esbar"></span></button>';
+  right+='<div class="essheet '+cuts[i%3]+'" data-i="'+i+'"><div class="ek">Step 0'+(i+1)+' · '+s.short+'</div><h3>'+s.name+'</h3><p>'+s.sum+'</p><ul>'+s.pts.map(function(p){return '<li><span class="ck">'+CK+'</span>'+p+'</li>';}).join('')+'</ul><a class="lk2">Explore '+s.short+' '+ARROW+'</a></div>';
+ });
+ document.getElementById('esleft').innerHTML=left;
+ document.getElementById('esright').innerHTML=right;
+ var items=[].slice.call(document.querySelectorAll('#esleft .esitem'));
+ var sheets=[].slice.call(document.querySelectorAll('#esright .essheet'));
+ var n=sheets.length,cur=0,z=10,timer=null;
+ function bar(it,run){var b=it.querySelector('.esbar');b.style.transition='none';b.style.width='0';if(run){void b.offsetWidth;b.style.transition='width '+DUR+'ms linear';b.style.width='100%';}}
+ function show(i){var s=sheets[i];s.style.transition='none';s.style.transform='translateY(110%)';s.style.zIndex=(++z);void s.offsetWidth;s.style.transition='';s.style.transform='translateY(0)';items.forEach(function(it,k){it.classList.toggle('active',k===i);if(k!==i)bar(it,false);});bar(items[i],true);cur=i;}
+ function next(){show((cur+1)%n);}
+ function clear(){if(timer){clearTimeout(timer);timer=null;}}
+ function schedule(){clear();timer=setTimeout(function(){next();schedule();},DUR);}
+ sheets[0].style.transform='translateY(0)';sheets[0].style.zIndex=z;bar(items[0],true);
+ schedule();
+ items.forEach(function(it){it.addEventListener('click',function(){var i=+it.dataset.i;if(i!==cur)show(i);else bar(it,true);schedule();});});
+ var wrap=document.getElementById('esheet');
+ wrap.addEventListener('mouseenter',function(){clear();var b=items[cur].querySelector('.esbar');var w=getComputedStyle(b).width;b.style.transition='none';b.style.width=w;});
+ wrap.addEventListener('mouseleave',function(){bar(items[cur],true);schedule();});
 })();
 </script>
 </body>
