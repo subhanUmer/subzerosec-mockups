@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SubZeroSec — Services display options</title>
+<link rel="icon" href="assets/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/szs.css" />
+<style>
+  body{background:#0A1326}
+  .optwrap{max-width:1200px;margin:0 auto;padding:0 clamp(20px,4vw,40px)}
+  .pagehead{padding:clamp(70px,12vh,120px) 0 10px;text-align:center}
+  .pagehead h1{font-size:clamp(1.8rem,4vw,2.6rem);color:#fff}
+  .pagehead p{color:#A9B7CE;margin-top:.7rem}
+  .optband{margin:clamp(40px,7vh,84px) 0 0;padding:18px 0 0;border-top:1px solid rgba(255,255,255,.10)}
+  .optband .tagrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .optband .otag{font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:#2759A5;padding:.35rem .7rem;border-radius:6px}
+  .optband h2{color:#fff;font-size:1.25rem}
+  .optband .odesc{color:#9aa8bf;font-size:.92rem;margin:.5rem 0 1.6rem;max-width:75ch}
+  .stage{padding:clamp(24px,4vh,44px) 0 clamp(10px,3vh,30px)}
+  .seyebrow{font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#5A8CD8}
+  .sh2{color:#fff;font-size:clamp(1.6rem,3.2vw,2.3rem);font-weight:800;letter-spacing:-.02em;margin:.5rem 0 0;max-width:22ch}
+  .sh-sub{color:#A9B7CE;margin:.8rem 0 2rem;max-width:60ch}
+  .ic-tile{display:flex;align-items:center;justify-content:center;border-radius:13px;color:#fff;
+    background:linear-gradient(160deg,#2759A5,#132D53);border:1px solid rgba(255,255,255,.12);box-shadow:0 10px 22px -10px rgba(39,89,165,.6)}
+  .ic-tile svg{stroke:currentColor}
+  .lk{display:inline-flex;align-items:center;gap:.45em;font-weight:600;font-size:.86rem;color:#5A8CD8}
+  .lk svg{width:15px;height:15px;transition:transform .25s}
+  .ghostnum{font-variant-numeric:tabular-nums;font-weight:800;letter-spacing:-.02em}
+
+  /* ===== Option A — Feature tabs (split showcase) ===== */
+  .ftabs{display:grid;grid-template-columns:.82fr 1.18fr;gap:20px;border:1px solid rgba(255,255,255,.10);border-radius:22px;
+    padding:18px;background:linear-gradient(165deg,rgba(22,35,63,.6),rgba(12,21,37,.6))}
+  .ftablist{display:flex;flex-direction:column;gap:5px}
+  .ftab{display:flex;gap:13px;align-items:center;padding:15px;border-radius:14px;cursor:pointer;border:1px solid transparent;transition:.25s var(--ease)}
+  .ftab .ti{width:42px;height:42px;flex:none}
+  .ftab .ti svg{width:21px;height:21px}
+  .ftab .meta b{display:block;color:#C4CEDE;font-size:.98rem;font-weight:600;transition:.2s}
+  .ftab .meta span{font-size:.76rem;color:#73839B}
+  .ftab:hover{background:rgba(255,255,255,.04)}
+  .ftab:hover .meta b{color:#fff}
+  .ftab.active{background:rgba(90,140,216,.13);border-color:rgba(90,140,216,.32)}
+  .ftab.active .meta b{color:#fff}
+  .ftpanel{position:relative;border-radius:16px;padding:clamp(24px,3vw,38px);overflow:hidden;
+    background:radial-gradient(120% 120% at 100% 0,rgba(90,140,216,.14),transparent 55%),#0C1525;border:1px solid rgba(255,255,255,.07)}
+  .ftpane{display:none}
+  .ftpane.active{display:block;animation:fade .4s var(--ease)}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .ftpane .pe{font-size:.74rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#5A8CD8}
+  .ftpane h3{color:#fff;font-size:1.5rem;margin:.5rem 0 .6rem}
+  .ftpane>p{color:#A9B7CE;font-size:1rem;max-width:52ch}
+  .ftpane ul{list-style:none;margin:1.4rem 0 0;display:grid;gap:.7rem}
+  .ftpane li{display:flex;gap:.7rem;align-items:flex-start;color:#EAF1FF;font-size:.92rem}
+  .ftpane li .ck{width:20px;height:20px;flex:none;border-radius:6px;background:rgba(90,140,216,.18);color:#5A8CD8;display:flex;align-items:center;justify-content:center}
+  .ftpane li .ck svg{width:12px;height:12px}
+  .ftpane .lk{margin-top:1.6rem}
+  @media(max-width:780px){.ftabs{grid-template-columns:1fr}}
+
+  /* ===== Option B — Accordion list ===== */
+  .facc{border:1px solid rgba(255,255,255,.10);border-radius:18px;overflow:hidden;background:rgba(255,255,255,.015)}
+  .farow+.farow{border-top:1px solid rgba(255,255,255,.08)}
+  .fahead{display:flex;align-items:center;gap:18px;padding:22px clamp(18px,2.4vw,28px);cursor:pointer;transition:background .25s}
+  .fahead:hover{background:rgba(255,255,255,.03)}
+  .fahead .ti{width:44px;height:44px;flex:none}
+  .fahead .ti svg{width:22px;height:22px}
+  .fahead .ht{flex:1;min-width:0}
+  .fahead .ht b{display:block;color:#fff;font-size:1.1rem;font-weight:700}
+  .fahead .ht span{color:#8da0bd;font-size:.86rem}
+  .fahead .pm{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,.16);position:relative;transition:.3s}
+  .fahead .pm::before,.fahead .pm::after{content:"";position:absolute;left:50%;top:50%;background:#5A8CD8;transition:.3s}
+  .fahead .pm::before{width:11px;height:2px;transform:translate(-50%,-50%)}
+  .fahead .pm::after{width:2px;height:11px;transform:translate(-50%,-50%)}
+  .farow.open .pm{background:rgba(90,140,216,.18);border-color:rgba(90,140,216,.4)}
+  .farow.open .pm::after{transform:translate(-50%,-50%) scaleY(0)}
+  .fabody{max-height:0;overflow:hidden;transition:max-height .45s var(--ease)}
+  .fabody-in{padding:0 clamp(18px,2.4vw,28px) 24px 78px}
+  .fabody p{color:#A9B7CE;font-size:.95rem;max-width:62ch}
+  .fabody ul{list-style:none;margin:1rem 0 0;display:flex;flex-wrap:wrap;gap:.6rem}
+  .fabody li{font-size:.78rem;color:#bcd0ee;background:rgba(90,140,216,.12);border:1px solid rgba(90,140,216,.2);padding:.3rem .7rem;border-radius:20px}
+  .fabody .lk{margin-top:1.1rem}
+  @media(max-width:560px){.fabody-in{padding-left:clamp(18px,2.4vw,28px)}}
+
+  /* ===== Option C — Bento grid ===== */
+  .bento{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .bcell{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.10);border-radius:18px;padding:26px;
+    background:linear-gradient(165deg,rgba(22,35,63,.7),rgba(12,21,37,.7));transition:transform .35s var(--ease),border-color .35s}
+  .bcell:hover{transform:translateY(-5px);border-color:rgba(90,140,216,.45)}
+  .bcell .ti{width:46px;height:46px;margin-bottom:1rem}
+  .bcell .ti svg{width:23px;height:23px}
+  .bcell h3{color:#fff;font-size:1.12rem;margin-bottom:.4rem}
+  .bcell p{color:#9fb0cb;font-size:.88rem}
+  .bcell .lk{margin-top:1rem}
+  .bcell:first-child{grid-column:span 2;background:radial-gradient(110% 130% at 0 0,rgba(90,140,216,.2),transparent 55%),linear-gradient(165deg,#16233F,#0C1525)}
+  .bcell:first-child .ti{width:54px;height:54px}
+  .bcell:first-child h3{font-size:1.7rem;margin-top:.3rem}
+  .bcell:first-child p{font-size:1rem;max-width:48ch}
+  .bcell .bnum{position:absolute;top:18px;right:22px;font-size:.74rem;font-weight:700;color:#73839B;letter-spacing:.1em}
+  @media(max-width:780px){.bento{grid-template-columns:1fr 1fr}.bcell:first-child{grid-column:span 2}}
+  @media(max-width:540px){.bento{grid-template-columns:1fr}.bcell:first-child{grid-column:span 1}}
+
+  /* ===== Option D — Numbered feature rows (editorial list) ===== */
+  .frows{border-top:1px solid rgba(255,255,255,.10)}
+  .frow{display:grid;grid-template-columns:74px 52px 1fr auto;align-items:center;gap:clamp(16px,2.2vw,30px);
+    padding:clamp(22px,2.6vh,30px) 10px;border-bottom:1px solid rgba(255,255,255,.10);transition:.3s var(--ease);position:relative}
+  .frow::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(90,140,216,.1),transparent 60%);opacity:0;transition:opacity .3s;border-radius:12px}
+  .frow:hover{padding-left:22px}
+  .frow:hover::before{opacity:1}
+  .frow .fn{font-size:1.9rem;color:#33415d;transition:color .3s}
+  .frow:hover .fn{color:#5A8CD8}
+  .frow .ti{width:50px;height:50px;position:relative;z-index:1}
+  .frow .ti svg{width:24px;height:24px}
+  .frow .txt{position:relative;z-index:1}
+  .frow .txt h3{color:#fff;font-size:1.18rem;margin-bottom:.2rem}
+  .frow .txt .tg{color:#5A8CD8;font-size:.82rem;font-weight:600}
+  .frow .txt p{color:#9fb0cb;font-size:.9rem;margin-top:.35rem;max-width:64ch}
+  .frow .go{position:relative;z-index:1;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.16);
+    display:flex;align-items:center;justify-content:center;color:#5A8CD8;transition:.3s}
+  .frow:hover .go{background:#2759A5;border-color:#2759A5;color:#fff;transform:translateX(3px)}
+  .frow .go svg{width:17px;height:17px}
+  @media(max-width:680px){.frow{grid-template-columns:46px 1fr auto}.frow .ti{display:none}.frow .txt p{display:none}}
+</style>
+</head>
+<body class="dark">
+<div class="optwrap pagehead">
+  <h1>Services display — <span style="color:#5A8CD8">four options</span></h1>
+  <p>Same five services, four different formats. Two are cards, two aren't. Pick the one you like and I'll wire it into the home + Services pages.</p>
+</div>
+
+<!-- ================= OPTION A — TABS ================= -->
+<div class="optwrap optband">
+  <div class="tagrow"><span class="otag">Option A</span><h2>Feature Tabs (split showcase)</h2></div>
+  <p class="odesc">Interactive. A slim list of services on the left; click one and its full detail animates in on the right. Premium, app-like — the Stripe / Linear pattern. Great when each service deserves a richer panel.</p>
+</div>
+<div class="optwrap stage">
+  <span class="seyebrow">Penetration Testing &amp; Offensive Services</span>
+  <h2 class="sh2">Turn attacker knowledge into stronger security.</h2>
+  <div class="ftabs" id="ftabs"></div>
+</div>
+
+<!-- ================= OPTION B — ACCORDION ================= -->
+<div class="optwrap optband">
+  <div class="tagrow"><span class="otag">Option B</span><h2>Accordion list</h2></div>
+  <p class="odesc">Not cards. A clean full-width list; click a row to expand its description and tags, one open at a time. Content-forward, scannable, minimal chrome — reads like a premium docs/product page.</p>
+</div>
+<div class="optwrap stage">
+  <span class="seyebrow">Penetration Testing &amp; Offensive Services</span>
+  <h2 class="sh2">Turn attacker knowledge into stronger security.</h2>
+  <div style="height:18px"></div>
+  <div class="facc" id="facc"></div>
+</div>
+
+<!-- ================= OPTION C — BENTO ================= -->
+<div class="optwrap optband">
+  <div class="tagrow"><span class="otag">Option C</span><h2>Bento grid</h2></div>
+  <p class="odesc">Still tiles, but asymmetric — the lead service gets a large featured tile, the rest sit in a tidy mosaic. Modern, editorial, and avoids the uniform 3-up card look you didn't like.</p>
+</div>
+<div class="optwrap stage">
+  <span class="seyebrow">Penetration Testing &amp; Offensive Services</span>
+  <h2 class="sh2">Turn attacker knowledge into stronger security.</h2>
+  <div style="height:18px"></div>
+  <div class="bento" id="bento"></div>
+</div>
+
+<!-- ================= OPTION D — NUMBERED ROWS ================= -->
+<div class="optwrap optband">
+  <div class="tagrow"><span class="otag">Option D</span><h2>Numbered feature rows (editorial list)</h2></div>
+  <p class="odesc">Not cards. A confident, minimal list: big ghost numbers, an icon, title + tagline + one line, and a circular arrow that fills on hover. Elegant and very "top-grade marketing site."</p>
+</div>
+<div class="optwrap stage">
+  <span class="seyebrow">Penetration Testing &amp; Offensive Services</span>
+  <h2 class="sh2">Turn attacker knowledge into stronger security.</h2>
+  <div style="height:18px"></div>
+  <div class="frows" id="frows"></div>
+</div>
+
+<div class="optwrap" style="padding:60px 0 90px;text-align:center">
+  <a class="btn btn-out" href="index.html" style="color:#C4CEDE;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.18)">← Back to site</a>
+</div>
+
+<script>
+var ARROW='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+var CK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>';
+var SVG={
+ vapt:'<circle cx="12" cy="12" r="8"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="2"/>',
+ red:'<path d="M3 21l7-7M21 3l-7 7M14 4l6 6M4 14l6 6M14 10l-4 4"/>',
+ hunt:'<circle cx="12" cy="12" r="9"/><path d="M12 12l6-3M12 12V4"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/>',
+ osint:'<circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.5 7.5L11 15M16.5 7.5L13 15M8 6h8"/>',
+ asm:'<path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3"/><rect x="8" y="8" width="8" height="8"/>'
+};
+var S=[
+ {k:'vapt',name:'Penetration Testing (VAPT)',short:'VAPT',tag:'Manual, exploit-driven testing — not a scan with a logo.',sum:'Identify exploitable vulnerabilities before attackers do — across web, API, network, cloud and mobile.',pts:['Every finding proven with a working exploit','Web, API, network, cloud & mobile coverage','Free retest within the engagement window']},
+ {k:'red',name:'Red Teaming',short:'Red Teaming',tag:'Objective-based adversary emulation against your live defenses.',sum:'Simulate a real adversary to test whether your people, process and detection actually stop an intrusion.',pts:['Intelligence-led, scenario-driven operations','Full narrative mapped to MITRE ATT&CK','Purple-team replay to tune detections']},
+ {k:'hunt',name:'Threat Hunting',short:'Threat Hunting',tag:'Hypothesis-driven hunting for adversaries already inside.',sum:'Proactively uncover the threats your automated tooling was never built to catch.',pts:['Hunts across endpoint, identity & network','Confirmed compromise fully scoped','New detections operationalized']},
+ {k:'osint',name:'OSINT & Exposure',short:'OSINT',tag:'Everything an adversary can learn about you for free.',sum:'Discover exposed assets, leaked credentials and the intelligence an attacker gathers before touching you.',pts:['Shadow IT & forgotten infrastructure','Leaked credentials & secrets','Prioritized takedown & rotation plan']},
+ {k:'asm',name:'Attack Surface Analysis',short:'ASM',tag:'A continuously accurate map of everything you expose.',sum:'Understand what attackers see — an authoritative, living inventory of your internet-facing estate.',pts:['Attributed inventory of all assets','Change tracking over time','Risk-ranked, exploitable exposures']}
+];
+function tile(cls,k){return '<span class="ic-tile '+cls+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">'+SVG[k]+'</svg></span>';}
+
+/* A — tabs */
+(function(){
+ var list='<div class="ftablist">',pane='<div class="ftpanes">';
+ S.forEach(function(s,i){
+  list+='<div class="ftab'+(i===0?' active':'')+'" data-i="'+i+'">'+tile('ti',s.k)+'<div class="meta"><b>'+s.name+'</b><span>'+s.short+'</span></div></div>';
+  pane+='<div class="ftpane'+(i===0?' active':'')+'" data-i="'+i+'"><div class="pe">'+s.short+'</div><h3>'+s.name+'</h3><p>'+s.sum+'</p><ul>'+s.pts.map(function(p){return '<li><span class="ck">'+CK+'</span>'+p+'</li>';}).join('')+'</ul><a class="lk">Explore '+s.short+' '+ARROW+'</a></div>';
+ });
+ list+='</div>';pane+='</div>';
+ document.getElementById('ftabs').innerHTML=list+'<div class="ftpanel">'+pane+'</div>';
+ var tabs=document.querySelectorAll('#ftabs .ftab'),panes=document.querySelectorAll('#ftabs .ftpane');
+ tabs.forEach(function(t){t.addEventListener('mouseenter',function(){act(+t.dataset.i);});t.addEventListener('click',function(){act(+t.dataset.i);});});
+ function act(i){tabs.forEach(function(x){x.classList.toggle('active',+x.dataset.i===i);});panes.forEach(function(x){x.classList.toggle('active',+x.dataset.i===i);});}
+})();
+
+/* B — accordion */
+(function(){
+ var h='';
+ S.forEach(function(s,i){
+  h+='<div class="farow'+(i===0?' open':'')+'"><div class="fahead">'+tile('ti',s.k)+'<div class="ht"><b>'+s.name+'</b><span>'+s.tag+'</span></div><span class="pm"></span></div>'
+    +'<div class="fabody"><div class="fabody-in"><p>'+s.sum+'</p><ul>'+s.pts.map(function(p){return '<li>'+p+'</li>';}).join('')+'</ul><a class="lk">Explore '+s.short+' '+ARROW+'</a></div></div></div>';
+ });
+ var el=document.getElementById('facc');el.innerHTML=h;
+ var rows=el.querySelectorAll('.farow');
+ function setH(r){var b=r.querySelector('.fabody');b.style.maxHeight=r.classList.contains('open')?(b.querySelector('.fabody-in').offsetHeight+'px'):'0';}
+ rows.forEach(function(r){r.querySelector('.fahead').addEventListener('click',function(){var was=r.classList.contains('open');rows.forEach(function(x){x.classList.remove('open');setH(x);});if(!was){r.classList.add('open');setH(r);}});});
+ requestAnimationFrame(function(){rows.forEach(setH);});
+})();
+
+/* C — bento */
+(function(){
+ var h='';
+ S.forEach(function(s,i){
+  h+='<div class="bcell"><span class="bnum">0'+(i+1)+'</span>'+tile('ti',s.k)+'<h3>'+s.name+'</h3><p>'+(i===0?s.sum:s.tag)+'</p><a class="lk">Learn more '+ARROW+'</a></div>';
+ });
+ document.getElementById('bento').innerHTML=h;
+})();
+
+/* D — numbered rows */
+(function(){
+ var h='';
+ S.forEach(function(s,i){
+  h+='<a class="frow"><div class="fn ghostnum">0'+(i+1)+'</div>'+tile('ti',s.k)+'<div class="txt"><div class="tg">'+s.short+'</div><h3>'+s.name+'</h3><p>'+s.sum+'</p></div><span class="go">'+ARROW+'</span></a>';
+ });
+ document.getElementById('frows').innerHTML=h;
+})();
+</script>
+</body>
+</html>
