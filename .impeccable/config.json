@@ -1,0 +1,18 @@
+{
+  "detector": {
+    "ignoreRules": [
+      "numbered-section-markers",
+      "layout-transition",
+      "side-tab"
+    ],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "reason": "Body text only; Sora carries display, JetBrains Mono carries numerics",
+        "createdAt": "2026-06-28T10:17:12.005Z"
+      }
+    ]
+  }
+}

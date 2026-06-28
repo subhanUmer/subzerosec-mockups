@@ -9,7 +9,7 @@ import { FOOTER_COLS, SOCIAL } from '../data/site.ts';
         <div class="fsocial">{SOCIAL.map((s) => (<a href={s.href} aria-label={s.label}>{s.label}</a>))}</div>
       </div>
       {FOOTER_COLS.map((col) => (
-        <div class="fcol"><h4>{col.h}</h4>{col.links.map((l) => (<a href={l.href}>{l.t}</a>))}</div>
+        <div class="fcol"><h2>{col.h}</h2>{col.links.map((l) => (<a href={l.href}>{l.t}</a>))}</div>
       ))}
     </div>
     <div class="fbar"><span>&copy; 2026 SubZeroSec (Pvt) Ltd. - Islamabad, Pakistan</span><span>Before Zero. Beyond Breach.</span></div>
