@@ -1,4 +1,4 @@
-@import url("szs.css?v=8");
+@import url("szs.css?v=9");
 
 /* ============================================================
    SubZeroSec — "Pro" enterprise variant
@@ -69,13 +69,14 @@ header.scrolled .navshell{max-width:1040px}/* slightly wider pill = gentler trav
     min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;
     padding:0 clamp(20px,4vw,40px)}
   .ctajaws .geo{display:none}
-  /* the two closing panels (paper white, angled inner edges like teeth) */
-  .ctajaws .jaw{display:block;position:absolute;top:0;bottom:0;width:60%;background:#fff;z-index:1;
-    box-shadow:0 0 90px -10px rgba(0,0,0,.45);will-change:transform}
+  /* two paper-white panels with semicircular inner edges; JS shrinks --jr
+     (the curve radius) toward 0 as they slide in, so they flatten and meet flush */
+  .ctajaws .jaw{display:block;position:absolute;top:0;bottom:0;width:62%;background:#fff;z-index:1;
+    box-shadow:0 0 90px -10px rgba(0,0,0,.45);will-change:transform,border-radius}
   .ctajaws .jaw-l{left:0;transform:translateX(-101%);
-    clip-path:polygon(0 0,100% 0,calc(100% - 58px) 50%,100% 100%,0 100%)}
+    border-radius:0 var(--jr,50vh) var(--jr,50vh) 0}
   .ctajaws .jaw-r{right:0;transform:translateX(101%);
-    clip-path:polygon(58px 0,100% 0,100% 100%,0 100%,58px 50%)}
+    border-radius:var(--jr,50vh) 0 0 var(--jr,50vh)}
   .ctajaws .cta-in{position:relative;z-index:2;opacity:0;transform:translateY(18px) scale(.965)}
 }
 @media (min-width: 881px) and (prefers-reduced-motion: reduce){

@@ -100,6 +100,7 @@
       var on = getComputedStyle(jaws).getPropertyValue('--jaws').trim() === '1';
       if (!on || jreduce || !jl || !jr || !jcta) {
         if (jl) jl.style.transform = ''; if (jr) jr.style.transform = '';
+        jaws.style.removeProperty('--jr');
         if (jcta) { jcta.style.opacity = ''; jcta.style.transform = ''; }
         return;
       }
@@ -111,6 +112,8 @@
       var cp = Math.max(0, (p - 0.7) / 0.3);          // CTA pops in the last ~30%
       jl.style.transform = 'translateX(' + (-101 * (1 - jp)) + '%)';
       jr.style.transform = 'translateX(' + (101 * (1 - jp)) + '%)';
+      // curve radius: full semicircle (~half the height) when open, 0 when shut
+      jaws.style.setProperty('--jr', (vh * 0.5 * (1 - jp)).toFixed(1) + 'px');
       jcta.style.opacity = cp.toFixed(3);
       jcta.style.transform = 'translateY(' + (18 * (1 - cp)).toFixed(1) + 'px) scale(' + (0.965 + 0.035 * cp).toFixed(3) + ')';
     }
