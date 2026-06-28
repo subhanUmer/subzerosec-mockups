@@ -1,0 +1,42 @@
+---
+/**
+ * Central registry for the site's hand-drawn line icons.
+ * One source of truth — edit a glyph here and it updates everywhere.
+ * Every icon shares the 24x24 viewBox, fill:none, stroke:currentColor
+ * convention; only the stroke-width varies per glyph (kept faithful to
+ * the original hand-rolled markup).
+ */
+interface Props {
+  name: keyof typeof ICONS;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const ICONS = {
+  check:          { sw: 3,   d: '<path d="M5 12l5 5L20 7"/>' },
+  'arrow-right':  { sw: 2,   d: '<path d="M5 12h14M13 6l6 6-6 6"/>' },
+  'chevron-down': { sw: 2.2, d: '<path d="M6 9l6 6 6-6"/>' },
+  burger:         { sw: 2,   d: '<path d="M3 6h18M3 12h18M3 18h18"/>' },
+  vapt:           { sw: 1.7, d: '<circle cx="12" cy="12" r="8"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/><circle cx="12" cy="12" r="2"/>' },
+  'red-team':     { sw: 1.7, d: '<path d="M3 21l7-7M21 3l-7 7M14 4l6 6M4 14l6 6M14 10l-4 4"/>' },
+  'threat-hunting': { sw: 1.7, d: '<circle cx="12" cy="12" r="9"/><path d="M12 12l6-3M12 12V4"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/>' },
+  osint:          { sw: 1.7, d: '<circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7.5 7.5L11 15M16.5 7.5L13 15M8 6h8"/>' },
+  'attack-surface': { sw: 1.7, d: '<path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3"/><rect x="8" y="8" width="8" height="8"/>' },
+  mail:           { sw: 1.7, d: '<path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/>' },
+  location:       { sw: 1.7, d: '<path d="M12 21s-7-5.2-7-11a7 7 0 0114 0c0 5.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>' },
+} as const;
+
+const { name, class: className, ...rest } = Astro.props;
+const icon = ICONS[name];
+if (!icon) throw new Error(`Icon "${String(name)}" is not in the registry`);
+---
+<svg
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width={icon.sw}
+  class={className}
+  aria-hidden="true"
+  set:html={icon.d}
+  {...rest}
+></svg>

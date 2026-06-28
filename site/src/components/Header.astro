@@ -1,0 +1,21 @@
+---
+import Icon from './Icon.astro';
+import { SERVICES, NAV } from '../data/site.ts';
+
+interface Props { active?: string }
+const { active } = Astro.props;
+---
+<header>
+  <div class="navshell">
+    <a class="brand" href="index.html"><img src="assets/logo.png" alt="SubZeroSec logo" />SubZero<span class="z">Sec</span></a>
+    <nav class="nav-links"><span class="navpill" aria-hidden="true"></span><div class="navitem has-mega"><a class={`navlink${active === 'services' ? ' active' : ''}`} href="services.html">Services<Icon name="chevron-down" class="chev" /></a><div class="megawrap"><div class="mega">{SERVICES.map((s) => (
+      <a class="mi" href={s.href}><span class="mic"><Icon name={s.icon} /></span><span><b>{s.title}</b><span>{s.blurb}</span></span></a>
+    ))}<a class="mfeat" href="contact.html"><span><b>Book a security assessment</b><span>See your organization the way an adversary does.</span></span><Icon name="arrow-right" class="arr" /></a></div></div></div>{NAV.map((n) => (
+      <a class={`navlink${active === n.key ? ' active' : ''}`} href={n.href}>{n.label}</a>
+    ))}</nav>
+    <div class="nav-end">
+      <a class="btn" href="contact.html">Book an assessment</a>
+    </div>
+    <button class="burger" aria-label="Menu" aria-expanded="false"><Icon name="burger" /></button>
+  </div>
+</header>

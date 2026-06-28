@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+const title = "Book a Security Assessment - SubZeroSec";
+const description = "Talk to SubZeroSec about a penetration test, red team, or attack surface review.";
+---
+<Base title={title} description={description}>
+<section class="phead">
+  <div class="phbg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Home</a> <i>/</i> <span>Contact</span></div><span class="eyebrow">CONTACT</span>
+    <h1>Book a security assessment.</h1>
+    <p class="lead">Tell us what you want tested and why. We will come back within one business day with a scoping conversation - not a sales pitch - and an honest view of where to start.</p>
+  </div>
+</section>
+<section class="sec light cutA" id="book"><div class="geo" aria-hidden="true"></div><div class="wrap"><div class="contact-grid"><div class="formcard contactform"><h3>Request an assessment</h3><div class="fsub">The more you share about scope, environments, and compliance drivers, the sharper our first response. Everything you send is confidential.</div><form onsubmit="return false"><div class="two"><div><label>First name*</label><input placeholder="First name" /></div><div><label>Last name*</label><input placeholder="Last name" /></div></div><label>Work email*</label><input type="email" placeholder="you@company.com" /><label>Company</label><input placeholder="Company name" /><label>What would you like tested?*</label><textarea placeholder="Scope, environments, timelines, compliance drivers..."></textarea><button class="btn" type="submit">Send request</button></form></div><div class="cside"><div><h3 class="colh">Direct lines</h3><div class="channels"><div class="channel"><span class="ci"><Icon name="mail" /></span><div><p class="cl">Assessments</p><a href="mailto:assessments@subzerosec.com">assessments@subzerosec.com</a><p class="cn">Scoping new engagements</p></div></div><div class="channel"><span class="ci"><Icon name="mail" /></span><div><p class="cl">General enquiries</p><a href="mailto:hello@subzerosec.com">hello@subzerosec.com</a><p class="cn">Partnerships, press, everything else</p></div></div><div class="channel"><span class="ci"><Icon name="mail" /></span><div><p class="cl">Phone</p><a href="tel:+92510000000">+92 51 000 0000</a><p class="cn">Business hours, GMT &amp; CST</p></div></div></div></div><div><h3 class="colh">Offices</h3><div class="channel"><span class="ci"><Icon name="location" /></span><div><p class="cl">Islamabad, Pakistan</p><p class="cn">[Registered office address], Islamabad</p></div></div></div><div class="aside-card"><h4>Response within one business day</h4><p>Every request reaches a senior consultant, not a queue. For active incidents, mark your message urgent and we will prioritize accordingly. Confidential by default - we will sign your NDA before any technical detail changes hands. See our <a href="trust.html" class="ilink">trust &amp; compliance</a> commitments.</p></div></div></div></div></section>
+</Base>

@@ -1,0 +1,14 @@
+{
+  "name": "subzerosec-site",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && rm -f ../stack/content-assets.mjs ../stack/content-modules.mjs",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^5.6.0"
+  }
+}

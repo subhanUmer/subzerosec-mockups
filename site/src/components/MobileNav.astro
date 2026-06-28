@@ -1,0 +1,9 @@
+---
+import { SERVICES, NAV } from '../data/site.ts';
+---
+<div class="mbackdrop"></div>
+<nav class="mnav"><a class="navlink" href="services.html">Services</a><span class="msublabel">Services</span>{SERVICES.map((s) => (
+  <a class="msub" href={s.href}>{s.title}</a>
+))}{NAV.map((n) => (
+  <a class="navlink" href={n.href}>{n.label}</a>
+))}<a class="btn" href="contact.html">Book an assessment</a></nav>
