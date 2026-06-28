@@ -1,10 +1,23 @@
-# SubZeroSec — Design Direction Mockups
+# SubZeroSec
 
-Three competing visual directions for the SubZeroSec (offensive security / VAPT) website.
-Open `index.html` for the chooser, or jump straight to a direction:
+Marketing site for SubZeroSec, an offensive-security firm. "Before Zero. Beyond Breach."
 
-- **`axis.html`** — Direction B · *The Axis* (Swiss-engineered, negative-number-line hero)
-- **`cryo.html`** — Direction A · *Cryo* (atmospheric freeze-frame)
-- **`dossier.html`** — Direction C · *The Dossier* (editorial intelligence-lab)
+Live: https://subhanumer.github.io/subzerosec-mockups/stack/
 
-Static HTML/CSS — no build step. Hosted via GitHub Pages.
+## Stack
+
+Static site built with [Astro](https://astro.build). Source lives in `site/`,
+the build outputs to `stack/`, and GitHub Actions deploys on every push to `main`.
+
+```bash
+cd site
+npm install
+npm run dev      # local preview
+npm run build    # outputs to ../stack
+```
+
+- `site/src/components/Icon.astro` — single registry for the hand-drawn line icons
+- `site/src/components/` — Header (mega-menu), Footer, MobileNav, Base layout
+- `site/src/data/site.ts` — nav, services and footer content
+- `site/src/pages/` — one file per page
+- `site/public/assets/` — shared `szs.css`, `szs.js`, logos

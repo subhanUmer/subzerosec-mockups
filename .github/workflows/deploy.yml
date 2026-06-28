@@ -38,7 +38,7 @@ jobs:
       - name: Stage Pages artifact (gallery + siblings + built /stack)
         run: |
           mkdir -p _site
-          rsync -a --exclude='_site' --exclude='site' --exclude='.git' --exclude='node_modules' ./ _site/
+          rsync -a --exclude='_site' --exclude='site' --exclude='.git' --exclude='.github' --exclude='node_modules' ./ _site/
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
