@@ -1,4 +1,4 @@
-/* SubZeroSec — shared interactions */
+/* SubZeroSec - shared interactions */
 (function () {
   // Scroll-shrink / darken navbar
   var hdr = document.querySelector('header');
@@ -69,12 +69,14 @@
   if (hsv) {
     var hsheets = Array.prototype.slice.call(hsv.querySelectorAll('.hsv-sheet'));
     var hpanes = Array.prototype.slice.call(hsv.querySelectorAll('.hsv-pane'));
+    var hdots = Array.prototype.slice.call(hsv.querySelectorAll('.hsv-dot'));
     var htrack = hsv.querySelector('.hsv-track');
     var HN = hsheets.length, hcur = -1;
     function hsvSet(i) {
       if (i === hcur) return; hcur = i;
       hsheets.forEach(function (c, k) { c.style.transform = k <= i ? 'translateY(0)' : 'translateY(110%)'; c.style.zIndex = k; });
       hpanes.forEach(function (p, k) { p.classList.toggle('active', k === i); });
+      hdots.forEach(function (d, k) { d.classList.toggle('on', k === i); });
     }
     function hsvScroll() {
       if (window.innerWidth <= 880) { return; }

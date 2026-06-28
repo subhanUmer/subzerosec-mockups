@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SubZeroSec — Services display options</title>
+<title>SubZeroSec - Services display options</title>
 <link rel="icon" href="assets/logo.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -31,7 +31,7 @@
   .lk svg{width:15px;height:15px;transition:transform .25s}
   .ghostnum{font-variant-numeric:tabular-nums;font-weight:800;letter-spacing:-.02em}
 
-  /* ===== Option A — Feature tabs (split showcase) ===== */
+  /* ===== Option A - Feature tabs (split showcase) ===== */
   .ftabs{display:grid;grid-template-columns:.82fr 1.18fr;gap:20px;border:1px solid rgba(255,255,255,.10);border-radius:22px;
     padding:18px;background:linear-gradient(165deg,rgba(22,35,63,.6),rgba(12,21,37,.6))}
   .ftablist{display:flex;flex-direction:column;gap:5px}
@@ -59,7 +59,7 @@
   .ftpane .lk{margin-top:1.6rem}
   @media(max-width:780px){.ftabs{grid-template-columns:1fr}}
 
-  /* ===== Option B — Accordion list ===== */
+  /* ===== Option B - Accordion list ===== */
   .facc{border:1px solid rgba(255,255,255,.10);border-radius:18px;overflow:hidden;background:rgba(255,255,255,.015)}
   .farow+.farow{border-top:1px solid rgba(255,255,255,.08)}
   .fahead{display:flex;align-items:center;gap:18px;padding:22px clamp(18px,2.4vw,28px);cursor:pointer;transition:background .25s}
@@ -83,7 +83,7 @@
   .fabody .lk{margin-top:1.1rem}
   @media(max-width:560px){.fabody-in{padding-left:clamp(18px,2.4vw,28px)}}
 
-  /* ===== Option C — Bento grid ===== */
+  /* ===== Option C - Bento grid ===== */
   .bento{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
   .bcell{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.10);border-radius:18px;padding:26px;
     background:linear-gradient(165deg,rgba(22,35,63,.7),rgba(12,21,37,.7));transition:transform .35s var(--ease),border-color .35s}
@@ -101,7 +101,7 @@
   @media(max-width:780px){.bento{grid-template-columns:1fr 1fr}.bcell:first-child{grid-column:span 2}}
   @media(max-width:540px){.bento{grid-template-columns:1fr}.bcell:first-child{grid-column:span 1}}
 
-  /* ===== Option D — Numbered feature rows (editorial list) ===== */
+  /* ===== Option D - Numbered feature rows (editorial list) ===== */
   .frows{border-top:1px solid rgba(255,255,255,.10)}
   .frow{display:grid;grid-template-columns:74px 52px 1fr auto;align-items:center;gap:clamp(16px,2.2vw,30px);
     padding:clamp(22px,2.6vh,30px) 10px;border-bottom:1px solid rgba(255,255,255,.10);transition:.3s var(--ease);position:relative}
@@ -122,7 +122,7 @@
   .frow .go svg{width:17px;height:17px}
   @media(max-width:680px){.frow{grid-template-columns:46px 1fr auto}.frow .ti{display:none}.frow .txt p{display:none}}
 
-  /* ===== Option E — Sticky-scroll showcase ===== */
+  /* ===== Option E - Sticky-scroll showcase ===== */
   .sscroll{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(30px,5vw,70px);align-items:start}
   .ssleft{display:flex;flex-direction:column}
   .ssblock{min-height:62vh;display:flex;flex-direction:column;justify-content:center;opacity:.3;transition:opacity .45s var(--ease)}
@@ -145,7 +145,7 @@
   .sspane li .ck svg{width:12px;height:12px}
   @media(max-width:780px){.sscroll{grid-template-columns:1fr}.ssright{display:none}.ssblock{min-height:0;padding:18px 0;opacity:1}}
 
-  /* ===== Option F — Horizontal expanding panels ===== */
+  /* ===== Option F - Horizontal expanding panels ===== */
   .hpanels{display:flex;gap:12px;height:400px}
   .hpanel{position:relative;flex:1;min-width:0;border:1px solid rgba(255,255,255,.1);border-radius:18px;overflow:hidden;cursor:pointer;
     display:flex;flex-direction:column;justify-content:flex-end;padding:24px;transition:flex .55s var(--ease),border-color .35s;
@@ -162,7 +162,7 @@
   .hpanel .more .lk{margin-top:.9rem}
   @media(max-width:780px){.hpanels{flex-direction:column;height:auto}.hpanel,.hpanel.active{flex:none}.hpanel{padding:22px}.hpanel h3,.hpanel .tg{white-space:normal}.hpanel .more{max-height:none;opacity:1;margin-top:.6rem}}
 
-  /* ===== Option G — Capability table ===== */
+  /* ===== Option G - Capability table ===== */
   .captable-wrap{overflow-x:auto;border:1px solid rgba(255,255,255,.1);border-radius:16px}
   .captable{width:100%;border-collapse:collapse;min-width:760px}
   .captable th{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:#73839B;text-align:left;padding:16px 22px;border-bottom:1px solid rgba(255,255,255,.14);font-weight:700}
@@ -175,7 +175,7 @@
   .captable .svc .ti svg{width:20px;height:20px}
   .captable td .ans{color:#EAF1FF}
 
-  /* ===== Option H — Carousel ===== */
+  /* ===== Option H - Carousel ===== */
   .carwrap{position:relative}
   .carnav{display:flex;gap:10px;justify-content:flex-end;margin-bottom:16px}
   .carbtn{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.16);background:transparent;color:#C4CEDE;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.25s}
@@ -193,7 +193,7 @@
   .carcard p{color:#9fb0cb;font-size:.9rem;flex:1}
   .carcard .lk{margin-top:1.1rem}
 
-  /* ===== Option I — Split: dark rail + auto sliding white sheets ===== */
+  /* ===== Option I - Split: dark rail + auto sliding white sheets ===== */
   .esheet{display:grid;grid-template-columns:.82fr 1.18fr;min-height:460px;border:1px solid rgba(255,255,255,.12);border-radius:22px;overflow:hidden}
   .esleft{background:linear-gradient(165deg,#101c34,#0A1326);padding:clamp(20px,2.4vw,30px);display:flex;flex-direction:column;justify-content:center;gap:6px}
   .esitem{display:flex;align-items:center;gap:13px;padding:14px 15px;border-radius:12px;border:1px solid transparent;background:transparent;cursor:pointer;text-align:left;transition:background .25s,border-color .25s;position:relative;overflow:hidden;width:100%;font-family:inherit}
@@ -223,7 +223,7 @@
   .essheet .lk2 svg{width:15px;height:15px}
   @media(max-width:780px){.esheet{grid-template-columns:1fr}.esright{min-height:360px}}
 
-  /* ===== Option J — Scroll-driven sticky sheets (left dark static, right cards slide as you scroll) ===== */
+  /* ===== Option J - Scroll-driven sticky sheets (left dark static, right cards slide as you scroll) ===== */
   .scrolly{position:relative;height:440vh}
   .scrolly-stage{position:sticky;top:7vh;height:86vh;display:grid;grid-template-columns:.82fr 1.18fr;
     border:1px solid rgba(255,255,255,.12);border-radius:22px;overflow:hidden}
@@ -241,7 +241,7 @@
     .sc-hint{display:none}
   }
 
-  /* ===== Option K — Sticky: LEFT white sliding sheets over dark (site theme), RIGHT pinned panel that changes ===== */
+  /* ===== Option K - Sticky: LEFT white sliding sheets over dark (site theme), RIGHT pinned panel that changes ===== */
   .koh{position:relative;height:440vh}
   .kstage{position:sticky;top:7vh;height:86vh;display:grid;grid-template-columns:1.05fr .95fr;border:1px solid rgba(255,255,255,.12);border-radius:22px;overflow:hidden}
   .kleft{position:relative;overflow:hidden;background:#0A1326}
@@ -277,14 +277,14 @@
 </head>
 <body class="dark">
 <div class="optwrap pagehead">
-  <h1>Services display — <span style="color:#5A8CD8">four options</span></h1>
+  <h1>Services display - <span style="color:#5A8CD8">four options</span></h1>
   <p>Same five services, four different formats. Two are cards, two aren't. Pick the one you like and I'll wire it into the home + Services pages.</p>
 </div>
 
-<!-- ================= OPTION A — TABS ================= -->
+<!-- ================= OPTION A - TABS ================= -->
 <div class="optwrap optband">
   <div class="tagrow"><span class="otag">Option A</span><h2>Feature Tabs (split showcase)</h2></div>
-  <p class="odesc">Interactive. A slim list of services on the left; click one and its full detail animates in on the right. Premium, app-like — the Stripe / Linear pattern. Great when each service deserves a richer panel.</p>
+  <p class="odesc">Interactive. A slim list of services on the left; click one and its full detail animates in on the right. Premium, app-like - the Stripe / Linear pattern. Great when each service deserves a richer panel.</p>
 </div>
 <div class="optwrap stage">
   <span class="seyebrow">Penetration Testing &amp; Offensive Services</span>
@@ -292,10 +292,10 @@
   <div class="ftabs" id="ftabs"></div>
 </div>
 
-<!-- ================= OPTION B — ACCORDION ================= -->
+<!-- ================= OPTION B - ACCORDION ================= -->
 <div class="optwrap optband">
   <div class="tagrow"><span class="otag">Option B</span><h2>Accordion list</h2></div>
-  <p class="odesc">Not cards. A clean full-width list; click a row to expand its description and tags, one open at a time. Content-forward, scannable, minimal chrome — reads like a premium docs/product page.</p>
+  <p class="odesc">Not cards. A clean full-width list; click a row to expand its description and tags, one open at a time. Content-forward, scannable, minimal chrome - reads like a premium docs/product page.</p>
 </div>
 <div class="optwrap stage">
   <span class="seyebrow">Penetration Testing &amp; Offensive Services</span>
@@ -304,10 +304,10 @@
   <div class="facc" id="facc"></div>
 </div>
 
-<!-- ================= OPTION C — BENTO ================= -->
+<!-- ================= OPTION C - BENTO ================= -->
 <div class="optwrap optband">
   <div class="tagrow"><span class="otag">Option C</span><h2>Bento grid</h2></div>
-  <p class="odesc">Still tiles, but asymmetric — the lead service gets a large featured tile, the rest sit in a tidy mosaic. Modern, editorial, and avoids the uniform 3-up card look you didn't like.</p>
+  <p class="odesc">Still tiles, but asymmetric - the lead service gets a large featured tile, the rest sit in a tidy mosaic. Modern, editorial, and avoids the uniform 3-up card look you didn't like.</p>
 </div>
 <div class="optwrap stage">
   <span class="seyebrow">Penetration Testing &amp; Offensive Services</span>
@@ -316,7 +316,7 @@
   <div class="bento" id="bento"></div>
 </div>
 
-<!-- ================= OPTION D — NUMBERED ROWS ================= -->
+<!-- ================= OPTION D - NUMBERED ROWS ================= -->
 <div class="optwrap optband">
   <div class="tagrow"><span class="otag">Option D</span><h2>Numbered feature rows (editorial list)</h2></div>
   <p class="odesc">Not cards. A confident, minimal list: big ghost numbers, an icon, title + tagline + one line, and a circular arrow that fills on hover. Elegant and very "top-grade marketing site."</p>
@@ -328,10 +328,10 @@
   <div class="frows" id="frows"></div>
 </div>
 
-<!-- ================= OPTION E — STICKY SCROLL ================= -->
+<!-- ================= OPTION E - STICKY SCROLL ================= -->
 <div class="optwrap optband">
   <div class="tagrow"><span class="otag">Option E</span><h2>Sticky-scroll showcase</h2></div>
-  <p class="odesc">Interactive on scroll. The list scrolls on the left while a panel pins on the right and swaps to the service you're reading — the Aceternity "sticky scroll reveal." Cinematic and premium. (Scroll slowly through this one.)</p>
+  <p class="odesc">Interactive on scroll. The list scrolls on the left while a panel pins on the right and swaps to the service you're reading - the Aceternity "sticky scroll reveal." Cinematic and premium. (Scroll slowly through this one.)</p>
 </div>
 <div class="optwrap stage">
   <span class="seyebrow">Penetration Testing &amp; Offensive Services</span>
@@ -340,10 +340,10 @@
   <div class="sscroll" id="sscroll"></div>
 </div>
 
-<!-- ================= OPTION F — HORIZONTAL PANELS ================= -->
+<!-- ================= OPTION F - HORIZONTAL PANELS ================= -->
 <div class="optwrap optband">
   <div class="tagrow"><span class="otag">Option F</span><h2>Expanding panels (horizontal accordion)</h2></div>
-  <p class="odesc">Not a grid. Five panels side by side; hover one and it expands to reveal its detail while the others slide aside. Tactile and distinctive — a favorite on high-end agency sites.</p>
+  <p class="odesc">Not a grid. Five panels side by side; hover one and it expands to reveal its detail while the others slide aside. Tactile and distinctive - a favorite on high-end agency sites.</p>
 </div>
 <div class="optwrap stage">
   <span class="seyebrow">Penetration Testing &amp; Offensive Services</span>
@@ -352,10 +352,10 @@
   <div class="hpanels" id="hpanels"></div>
 </div>
 
-<!-- ================= OPTION G — CAPABILITY TABLE ================= -->
+<!-- ================= OPTION G - CAPABILITY TABLE ================= -->
 <div class="optwrap optband">
   <div class="tagrow"><span class="otag">Option G</span><h2>Capability table</h2></div>
-  <p class="odesc">Not cards. A clean, information-dense table — what each service answers, the engagement shape, and the output. Enterprise and decision-oriented; great for buyers comparing services at a glance.</p>
+  <p class="odesc">Not cards. A clean, information-dense table - what each service answers, the engagement shape, and the output. Enterprise and decision-oriented; great for buyers comparing services at a glance.</p>
 </div>
 <div class="optwrap stage">
   <span class="seyebrow">Penetration Testing &amp; Offensive Services</span>
@@ -364,7 +364,7 @@
   <div class="captable-wrap"><table class="captable" id="captable"></table></div>
 </div>
 
-<!-- ================= OPTION H — CAROUSEL ================= -->
+<!-- ================= OPTION H - CAROUSEL ================= -->
 <div class="optwrap optband">
   <div class="tagrow"><span class="otag">Option H</span><h2>Carousel / slider</h2></div>
   <p class="odesc">Horizontal scroll-snap of larger feature panels with prev/next controls. Keeps the section compact while letting each service breathe; familiar and polished.</p>
@@ -379,10 +379,10 @@
   </div>
 </div>
 
-<!-- ================= OPTION I — SPLIT: DARK RAIL + SLIDING WHITE SHEETS ================= -->
+<!-- ================= OPTION I - SPLIT: DARK RAIL + SLIDING WHITE SHEETS ================= -->
 <div class="optwrap optband">
-  <div class="tagrow"><span class="otag">Option I</span><h2>Split — dark rail + auto-sliding white sheets</h2></div>
-  <p class="odesc">Option E, reworked the way you described: a dark control rail on the left, and on the right white "paper" sheets that constantly slide up over each other (the tcm-stack signature) — auto-cycling through the services with geometric leading edges. Hover to pause; click a service to jump.</p>
+  <div class="tagrow"><span class="otag">Option I</span><h2>Split - dark rail + auto-sliding white sheets</h2></div>
+  <p class="odesc">Option E, reworked the way you described: a dark control rail on the left, and on the right white "paper" sheets that constantly slide up over each other (the tcm-stack signature) - auto-cycling through the services with geometric leading edges. Hover to pause; click a service to jump.</p>
 </div>
 <div class="optwrap stage">
   <span class="seyebrow">Penetration Testing &amp; Offensive Services</span>
@@ -394,10 +394,10 @@
   </div>
 </div>
 
-<!-- ================= OPTION J — SCROLL-DRIVEN STICKY SHEETS ================= -->
+<!-- ================= OPTION J - SCROLL-DRIVEN STICKY SHEETS ================= -->
 <div class="optwrap optband">
   <div class="tagrow"><span class="otag">Option J</span><h2>Scroll-driven sticky sheets (the site's signature)</h2></div>
-  <p class="odesc">This is the one you meant: the left dark panel stays static while you scroll, and the white "paper" cards slide up over each other one-by-one <b>as you scroll down</b> — the left list highlights the current step. Scroll up and they slide back. Click a service to jump.</p>
+  <p class="odesc">This is the one you meant: the left dark panel stays static while you scroll, and the white "paper" cards slide up over each other one-by-one <b>as you scroll down</b> - the left list highlights the current step. Scroll up and they slide back. Click a service to jump.</p>
 </div>
 <div class="optwrap stage" style="padding-bottom:0">
   <span class="seyebrow">Penetration Testing &amp; Offensive Services</span>
@@ -411,9 +411,9 @@
   </div>
 </section></div>
 
-<!-- ================= OPTION K — STICKY: LEFT WHITE SHEETS + RIGHT PINNED ================= -->
+<!-- ================= OPTION K - STICKY: LEFT WHITE SHEETS + RIGHT PINNED ================= -->
 <div class="optwrap optband">
-  <div class="tagrow"><span class="otag">Option K</span><h2>Sticky-scroll — white sheets slide on the left, panel changes on the right</h2></div>
+  <div class="tagrow"><span class="otag">Option K</span><h2>Sticky-scroll - white sheets slide on the left, panel changes on the right</h2></div>
   <p class="odesc">Option E reworked the way you meant: as you scroll, white "paper" sheets slide up over the dark on the <b>left</b> (the overall site theme), and the <b>right</b> panel stays pinned and swaps to match the current service. Scroll up and the sheets slide back.</p>
 </div>
 <div class="optwrap stage" style="padding-bottom:0">
@@ -443,15 +443,15 @@ var SVG={
  asm:'<path d="M3 7V4h3M21 7V4h-3M3 17v3h3M21 17v3h-3"/><rect x="8" y="8" width="8" height="8"/>'
 };
 var S=[
- {k:'vapt',name:'Penetration Testing (VAPT)',short:'VAPT',tag:'Manual, exploit-driven testing — not a scan with a logo.',sum:'Identify exploitable vulnerabilities before attackers do — across web, API, network, cloud and mobile.',pts:['Every finding proven with a working exploit','Web, API, network, cloud & mobile coverage','Free retest within the engagement window']},
+ {k:'vapt',name:'Penetration Testing (VAPT)',short:'VAPT',tag:'Manual, exploit-driven testing - not a scan with a logo.',sum:'Identify exploitable vulnerabilities before attackers do - across web, API, network, cloud and mobile.',pts:['Every finding proven with a working exploit','Web, API, network, cloud & mobile coverage','Free retest within the engagement window']},
  {k:'red',name:'Red Teaming',short:'Red Teaming',tag:'Objective-based adversary emulation against your live defenses.',sum:'Simulate a real adversary to test whether your people, process and detection actually stop an intrusion.',pts:['Intelligence-led, scenario-driven operations','Full narrative mapped to MITRE ATT&CK','Purple-team replay to tune detections']},
  {k:'hunt',name:'Threat Hunting',short:'Threat Hunting',tag:'Hypothesis-driven hunting for adversaries already inside.',sum:'Proactively uncover the threats your automated tooling was never built to catch.',pts:['Hunts across endpoint, identity & network','Confirmed compromise fully scoped','New detections operationalized']},
  {k:'osint',name:'OSINT & Exposure',short:'OSINT',tag:'Everything an adversary can learn about you for free.',sum:'Discover exposed assets, leaked credentials and the intelligence an attacker gathers before touching you.',pts:['Shadow IT & forgotten infrastructure','Leaked credentials & secrets','Prioritized takedown & rotation plan']},
- {k:'asm',name:'Attack Surface Analysis',short:'ASM',tag:'A continuously accurate map of everything you expose.',sum:'Understand what attackers see — an authoritative, living inventory of your internet-facing estate.',pts:['Attributed inventory of all assets','Change tracking over time','Risk-ranked, exploitable exposures']}
+ {k:'asm',name:'Attack Surface Analysis',short:'ASM',tag:'A continuously accurate map of everything you expose.',sum:'Understand what attackers see - an authoritative, living inventory of your internet-facing estate.',pts:['Attributed inventory of all assets','Change tracking over time','Risk-ranked, exploitable exposures']}
 ];
 function tile(cls,k){return '<span class="ic-tile '+cls+'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">'+SVG[k]+'</svg></span>';}
 
-/* A — tabs */
+/* A - tabs */
 (function(){
  var list='<div class="ftablist">',pane='<div class="ftpanes">';
  S.forEach(function(s,i){
@@ -465,7 +465,7 @@ function tile(cls,k){return '<span class="ic-tile '+cls+'"><svg viewBox="0 0 24 
  function act(i){tabs.forEach(function(x){x.classList.toggle('active',+x.dataset.i===i);});panes.forEach(function(x){x.classList.toggle('active',+x.dataset.i===i);});}
 })();
 
-/* B — accordion */
+/* B - accordion */
 (function(){
  var h='';
  S.forEach(function(s,i){
@@ -479,7 +479,7 @@ function tile(cls,k){return '<span class="ic-tile '+cls+'"><svg viewBox="0 0 24 
  requestAnimationFrame(function(){rows.forEach(setH);});
 })();
 
-/* C — bento */
+/* C - bento */
 (function(){
  var h='';
  S.forEach(function(s,i){
@@ -488,7 +488,7 @@ function tile(cls,k){return '<span class="ic-tile '+cls+'"><svg viewBox="0 0 24 
  document.getElementById('bento').innerHTML=h;
 })();
 
-/* D — numbered rows */
+/* D - numbered rows */
 (function(){
  var h='';
  S.forEach(function(s,i){
@@ -499,14 +499,14 @@ function tile(cls,k){return '<span class="ic-tile '+cls+'"><svg viewBox="0 0 24 
 
 /* extra copy for table/panes */
 var X={
- vapt:{ans:'What is exploitable, and how badly?',eng:'1–4 weeks · remote-first',out:'Ranked, exploit-proven findings + free retest'},
- red:{ans:'Can we detect & stop a real adversary?',eng:'4–8 weeks · covert, production',out:'ATT&CK attack narrative + purple-team replay'},
- hunt:{ans:'Is an adversary already inside?',eng:'2–4 weeks · with your SOC',out:'Scoped findings + new detections'},
- osint:{ans:'What can an attacker learn for free?',eng:'1–3 weeks · non-intrusive',out:'Exposure inventory + takedown/rotation plan'},
+ vapt:{ans:'What is exploitable, and how badly?',eng:'1-4 weeks · remote-first',out:'Ranked, exploit-proven findings + free retest'},
+ red:{ans:'Can we detect & stop a real adversary?',eng:'4-8 weeks · covert, production',out:'ATT&CK attack narrative + purple-team replay'},
+ hunt:{ans:'Is an adversary already inside?',eng:'2-4 weeks · with your SOC',out:'Scoped findings + new detections'},
+ osint:{ans:'What can an attacker learn for free?',eng:'1-3 weeks · non-intrusive',out:'Exposure inventory + takedown/rotation plan'},
  asm:{ans:'What do we actually expose?',eng:'Baseline or continuous',out:'Living, attributed asset inventory'}
 };
 
-/* E — sticky scroll */
+/* E - sticky scroll */
 (function(){
  var left='',panes='';
  S.forEach(function(s,i){
@@ -519,7 +519,7 @@ var X={
  blocks.forEach(function(b){io.observe(b);});
 })();
 
-/* F — horizontal expanding panels */
+/* F - horizontal expanding panels */
 (function(){
  var h='';
  S.forEach(function(s,i){
@@ -530,7 +530,7 @@ var X={
  ps.forEach(function(p){p.addEventListener('mouseenter',function(){ps.forEach(function(x){x.classList.toggle('active',x===p);});});p.addEventListener('click',function(){ps.forEach(function(x){x.classList.toggle('active',x===p);});});});
 })();
 
-/* G — capability table */
+/* G - capability table */
 (function(){
  var h='<thead><tr><th>Service</th><th>What it answers</th><th>Engagement</th><th>Key output</th></tr></thead><tbody>';
  S.forEach(function(s){var x=X[s.k];
@@ -540,7 +540,7 @@ var X={
  document.getElementById('captable').innerHTML=h;
 })();
 
-/* H — carousel */
+/* H - carousel */
 (function(){
  var h='';
  S.forEach(function(s,i){
@@ -552,7 +552,7 @@ var X={
  document.getElementById('carnext').addEventListener('click',function(){track.scrollBy({left:step(),behavior:'smooth'});});
 })();
 
-/* I — split: dark rail + auto-sliding white sheets */
+/* I - split: dark rail + auto-sliding white sheets */
 (function(){
  var DUR=3400,cuts=['cA','cB','cC'];
  var left='',right='';
@@ -578,7 +578,7 @@ var X={
  wrap.addEventListener('mouseleave',function(){bar(items[cur],true);schedule();});
 })();
 
-/* J — scroll-driven sticky sheets */
+/* J - scroll-driven sticky sheets */
 (function(){
  var cuts=['cA','cB','cC'],left='',right='';
  S.forEach(function(s,i){
@@ -614,7 +614,7 @@ var X={
  });});
 })();
 
-/* K — sticky: left white sliding sheets + right pinned changing panel */
+/* K - sticky: left white sliding sheets + right pinned changing panel */
 (function(){
  var cuts=['cA','cB','cC'],L='',R='';
  S.forEach(function(s,i){
