@@ -32,8 +32,8 @@ jobs:
       - name: Install deps
         run: npm ci
         working-directory: site
-      - name: Build (outputs to ../stack)
-        run: npm run build
+      - name: Build both variants (../stack and ../stack-pro)
+        run: npm run build:all
         working-directory: site
       - name: Stage Pages artifact (gallery + siblings + built /stack)
         run: |

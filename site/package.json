@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build && rm -f ../stack/content-assets.mjs ../stack/content-modules.mjs",
+    "build:pro": "astro build --config astro.config.pro.mjs && sed -i 's#assets/szs.css?v=#assets/szs-pro.css?v=#g' ../stack-pro/*.html && rm -f ../stack-pro/content-assets.mjs ../stack-pro/content-modules.mjs",
+    "build:all": "npm run build && npm run build:pro",
     "preview": "astro preview"
   },
   "dependencies": {

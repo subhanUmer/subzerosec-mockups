@@ -2,7 +2,14 @@
 
 Marketing site for SubZeroSec, an offensive-security firm. "Before Zero. Beyond Breach."
 
-Live: https://subhanumer.github.io/subzerosec-mockups/stack/
+Live:
+- Original: https://subhanumer.github.io/subzerosec-mockups/stack/
+- Pro (enterprise, quieter) variant: https://subhanumer.github.io/subzerosec-mockups/stack-pro/
+
+Both build from the same Astro source in `site/`. The Pro variant is identical in
+structure but links an override stylesheet (`szs-pro.css`) for a cooler steel palette,
+flatter surfaces and less motion. `npm run build` builds the original, `npm run build:pro`
+the Pro variant, `npm run build:all` both.
 
 ## Stack
 

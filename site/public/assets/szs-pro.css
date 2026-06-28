@@ -1,0 +1,56 @@
+@import url("szs.css?v=7");
+
+/* ============================================================
+   SubZeroSec — "Pro" enterprise variant
+   Same structure as the base site; this file only refines the
+   palette, surfaces, motion and spacing for a quieter, more
+   restrained, higher-trust enterprise feel. Restraint = authority.
+   ============================================================ */
+
+/* ---- 1. Palette: cooler deep navy + desaturated steel accent ---- */
+.dark{
+  --p-bg:#0B1220;--p-fg:#EAF1FB;--p-muted:#9FACC0;--p-faint:#66758C;
+  --p-line:rgba(255,255,255,.06);--p-line2:rgba(255,255,255,.12);
+  --p-surface:#101A2C;--p-accent:#7BA0D4;--p-fill:#2B5594;--p-fill-deep:#16304F;
+  --p-soft:rgba(123,160,212,.12);
+}
+.light{
+  --p-bg:#FFFFFF;--p-fg:#112338;--p-muted:#51607A;--p-faint:#8694AB;
+  --p-line:rgba(17,35,56,.09);--p-line2:rgba(17,35,56,.16);
+  --p-surface:#FFFFFF;--p-accent:#2B5594;--p-fill:#2B5594;--p-fill-deep:#16304F;
+  --p-soft:rgba(43,85,148,.09);--p-line-accent:rgba(43,85,148,.14);
+}
+body{background:#0B1220}
+
+/* ---- 2. Restraint: remove the loud motion / neon ---- */
+.hero-bg .scan{display:none}                       /* drop the sweeping light bar */
+.hero-bg .glow{opacity:.4;filter:blur(70px)}       /* soften the hero glow */
+.hero-bg::before{opacity:.72}                      /* calmer grid */
+.phbg{background:radial-gradient(85% 80% at 50% -10%,rgba(123,160,212,.10),transparent 60%)}
+.card::after{display:none!important}               /* remove rotating neon card-beam */
+body::after{opacity:.025}                          /* fainter grain */
+
+/* ---- 3. Flatter, crisper surfaces (hairline borders, no float-glow) ---- */
+.dark .card{background:#101A2C}
+.card,.scard,.cscard,.fwcard,.indu,.certcard,.commit,.member,.jobrow,
+.aside-card,.metric,.quote,.post,.feature,.step,.faq{box-shadow:none}
+.card:hover,.scard:hover,.cscard:hover,.jobrow:hover,.post:hover,.feature:hover{
+  transform:translateY(-4px);box-shadow:0 18px 40px -28px rgba(2,6,16,.8)}
+.card:hover{border-color:var(--p-line2)}
+.formcard{box-shadow:0 22px 54px -36px rgba(2,6,16,.7)}
+
+/* ---- 4. Calmer icon tiles + solid, corporate buttons ---- */
+.card .ic,.scard .ic,.hsv-ic,.member .av{box-shadow:0 10px 22px -14px rgba(43,85,148,.55)}
+.card:hover .ic,.scard:hover .ic{transform:translateY(-1px);box-shadow:0 12px 26px -14px rgba(43,85,148,.6)}
+.nav-end .btn{background:#2B5594;box-shadow:0 1px 0 rgba(255,255,255,.10) inset}
+.nav-end .btn:hover{background:#316099;transform:translateY(-1px);
+  box-shadow:0 10px 22px -12px rgba(43,85,148,.55),0 1px 0 rgba(255,255,255,.12) inset}
+.btn-fill:hover{box-shadow:0 10px 24px -16px rgba(43,85,148,.6)}
+
+/* ---- 5. More air / breathing room ---- */
+.sec{padding:clamp(78px,11vh,130px) 0}
+.shead{margin-bottom:clamp(40px,5.5vh,62px)}
+
+/* ---- 6. Measured display type (authority over spectacle) ---- */
+.hero-grid h1{font-size:clamp(2.2rem,4.8vw,3.5rem);letter-spacing:-.025em}
+.phead h1{letter-spacing:-.025em}
