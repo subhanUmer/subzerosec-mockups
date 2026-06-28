@@ -91,31 +91,30 @@
     hsvSet(0); hsvScroll();
   }
 
-  // "Jaws" CTA reveal (Pro variant only — gated by the --jaws CSS flag).
+  // Circular reveal CTA (Pro variant only — gated by the --jaws CSS flag).
+  // The white section is masked by a clip-path circle that blooms from the
+  // bottom-centre of the SCREEN (origin pinned to the viewport bottom) and
+  // grows to cover the whole viewport as the section scrolls up.
   var jaws = document.querySelector('.ctajaws');
   if (jaws) {
-    var jl = jaws.querySelector('.jaw-l'), jr = jaws.querySelector('.jaw-r'), jcta = jaws.querySelector('.cta-in');
+    var jcta = jaws.querySelector('.cta-in');
     var jreduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function jawScroll() {
       var on = getComputedStyle(jaws).getPropertyValue('--jaws').trim() === '1';
-      if (!on || jreduce || !jl || !jr || !jcta) {
-        if (jl) jl.style.transform = ''; if (jr) jr.style.transform = '';
-        jaws.style.removeProperty('--jr');
+      if (!on || jreduce || !jcta) {
+        jaws.style.removeProperty('--cr'); jaws.style.removeProperty('--cy');
         if (jcta) { jcta.style.opacity = ''; jcta.style.transform = ''; }
         return;
       }
       var vh = window.innerHeight, r = jaws.getBoundingClientRect();
-      // progress as the section rises: 0 when its top is at the viewport bottom,
-      // 1 by the time it is roughly centred — so the "mouth" closes while in view.
-      var p = Math.max(0, Math.min(1, (vh - r.top) / (vh * 1.25)));
-      var jp = Math.min(1, p / 0.7);                  // panels close over the first ~70%
-      var cp = Math.max(0, (p - 0.7) / 0.3);          // CTA pops in the last ~30%
-      jl.style.transform = 'translateX(' + (-101 * (1 - jp)) + '%)';
-      jr.style.transform = 'translateX(' + (101 * (1 - jp)) + '%)';
-      // curve radius: full semicircle (~half the height) when open, 0 when shut
-      jaws.style.setProperty('--jr', (vh * 0.5 * (1 - jp)).toFixed(1) + 'px');
-      jcta.style.opacity = cp.toFixed(3);
-      jcta.style.transform = 'translateY(' + (18 * (1 - cp)).toFixed(1) + 'px) scale(' + (0.965 + 0.035 * cp).toFixed(3) + ')';
+      var cover = Math.hypot(window.innerWidth / 2, vh) * 1.05;   // radius to fill from bottom-centre
+      var p = Math.max(0, Math.min(1, (vh - r.top) / (vh * 1.3)));
+      // keep the circle origin at the viewport bottom in the section's local coords
+      jaws.style.setProperty('--cy', (vh - r.top).toFixed(1) + 'px');
+      jaws.style.setProperty('--cr', (cover * Math.min(1, p / 0.85)).toFixed(1) + 'px');
+      var op = Math.max(0, Math.min(1, (p - 0.45) / 0.4));        // CTA settles once the bloom passes it
+      jcta.style.opacity = op.toFixed(3);
+      jcta.style.transform = 'scale(' + (0.97 + 0.03 * op).toFixed(3) + ')';
     }
     window.addEventListener('scroll', jawScroll, { passive: true });
     window.addEventListener('resize', jawScroll);
