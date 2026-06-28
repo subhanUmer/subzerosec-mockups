@@ -565,6 +565,7 @@ header.scrolled .navshell{max-width:980px;height:60px;border-radius:999px;paddin
 @media(max-width:560px){.logorow img{height:24px}}
 
 /* ---------- CTA sheet ---------- */
+.jaw{display:none}/* "jaws" reveal panels — only used by the Pro variant */
 .cta-in{text-align:center;max-width:60ch;margin:0 auto}
 .cta-in h2{font-size:clamp(2rem,4.4vw,3.1rem);margin-top:.5rem;color:var(--p-fg)}
 .cta-in h2 .r{color:var(--p-accent)}

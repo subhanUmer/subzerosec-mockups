@@ -54,3 +54,36 @@ body::after{opacity:.025}                          /* fainter grain */
 /* ---- 6. Measured display type (authority over spectacle) ---- */
 .hero-grid h1{font-size:clamp(2.2rem,4.8vw,3.5rem);letter-spacing:-.025em}
 .phead h1{letter-spacing:-.025em}
+
+/* ---- 7. Full-bleed nav at rest (still contracts to the pill on scroll) ---- */
+.navshell{max-width:none}
+/* header.scrolled .navshell keeps its 980px pill from the base sheet */
+
+/* ---- 8. "Jaws" CTA reveal: two panels close from the sides like a mouth,
+        then the call-to-action pops. Scroll-driven, no JS. ---- */
+.ctajaws{position:relative;overflow:hidden}
+@supports (animation-timeline: view()){
+  .ctajaws{background:#0B1220;clip-path:none!important;min-height:100vh;min-height:100dvh;
+    display:flex;align-items:center;justify-content:center;padding:0 clamp(20px,4vw,40px)}
+  .ctajaws .geo{display:none}
+  /* the two closing panels (paper white, angled inner edges like teeth) */
+  .ctajaws .jaw{display:block;position:absolute;top:0;bottom:0;width:54%;background:#fff;z-index:1;
+    box-shadow:0 0 90px -10px rgba(0,0,0,.45)}
+  .ctajaws .jaw-l{left:0;transform:translateX(-101%);
+    clip-path:polygon(0 0,100% 0,calc(100% - 90px) 50%,100% 100%,0 100%);
+    animation:jawL linear both;animation-timeline:view();animation-range:cover 6% cover 46%}
+  .ctajaws .jaw-r{right:0;transform:translateX(101%);
+    clip-path:polygon(90px 0,100% 0,100% 100%,0 100%,90px 50%);
+    animation:jawR linear both;animation-timeline:view();animation-range:cover 6% cover 46%}
+  @keyframes jawL{to{transform:translateX(0)}}
+  @keyframes jawR{to{transform:translateX(0)}}
+  /* CTA content rides above the panels and pops once they meet */
+  .ctajaws .cta-in{position:relative;z-index:2;opacity:0;transform:translateY(18px) scale(.965);
+    animation:ctaPop linear both;animation-timeline:view();animation-range:cover 46% cover 64%}
+  @keyframes ctaPop{to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion: reduce){
+  .ctajaws .jaw{display:none!important}
+  .ctajaws{background:#fff}
+  .ctajaws .cta-in{opacity:1!important;transform:none!important;animation:none!important}
+}
