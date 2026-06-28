@@ -1,4 +1,4 @@
-@import url("szs.css?v=7");
+@import url("szs.css?v=8");
 
 /* ============================================================
    SubZeroSec — "Pro" enterprise variant
@@ -55,35 +55,31 @@ body::after{opacity:.025}                          /* fainter grain */
 .hero-grid h1{font-size:clamp(2.2rem,4.8vw,3.5rem);letter-spacing:-.025em}
 .phead h1{letter-spacing:-.025em}
 
-/* ---- 7. Full-bleed nav at rest (still contracts to the pill on scroll) ---- */
-.navshell{max-width:none}
-/* header.scrolled .navshell keeps its 980px pill from the base sheet */
+/* ---- 7. Full-bleed nav at rest, smooth contraction to the pill on scroll ----
+   98vw (a real length) instead of none, so max-width interpolates cleanly
+   into the 980px pill rather than snapping. */
+.navshell{max-width:98vw}
+header.scrolled .navshell{max-width:1040px}/* slightly wider pill = gentler travel */
 
-/* ---- 8. "Jaws" CTA reveal: two panels close from the sides like a mouth,
-        then the call-to-action pops. Scroll-driven, no JS. ---- */
-.ctajaws{position:relative;overflow:hidden}
-@supports (animation-timeline: view()){
-  .ctajaws{background:#0B1220;clip-path:none!important;min-height:100vh;min-height:100dvh;
-    display:flex;align-items:center;justify-content:center;padding:0 clamp(20px,4vw,40px)}
+/* ---- 8. "Jaws" CTA reveal (JS-driven; szs.js reads the --jaws flag).
+        Two white panels swarm in from the sides like a mouth, eat the dark
+        page, then the CTA pops. Desktop only; static CTA otherwise. ---- */
+@media (min-width: 881px) {
+  .ctajaws{--jaws:1;position:relative;overflow:hidden;background:#0B1220;clip-path:none!important;
+    min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;
+    padding:0 clamp(20px,4vw,40px)}
   .ctajaws .geo{display:none}
   /* the two closing panels (paper white, angled inner edges like teeth) */
-  .ctajaws .jaw{display:block;position:absolute;top:0;bottom:0;width:54%;background:#fff;z-index:1;
-    box-shadow:0 0 90px -10px rgba(0,0,0,.45)}
+  .ctajaws .jaw{display:block;position:absolute;top:0;bottom:0;width:60%;background:#fff;z-index:1;
+    box-shadow:0 0 90px -10px rgba(0,0,0,.45);will-change:transform}
   .ctajaws .jaw-l{left:0;transform:translateX(-101%);
-    clip-path:polygon(0 0,100% 0,calc(100% - 90px) 50%,100% 100%,0 100%);
-    animation:jawL linear both;animation-timeline:view();animation-range:cover 6% cover 46%}
+    clip-path:polygon(0 0,100% 0,calc(100% - 58px) 50%,100% 100%,0 100%)}
   .ctajaws .jaw-r{right:0;transform:translateX(101%);
-    clip-path:polygon(90px 0,100% 0,100% 100%,0 100%,90px 50%);
-    animation:jawR linear both;animation-timeline:view();animation-range:cover 6% cover 46%}
-  @keyframes jawL{to{transform:translateX(0)}}
-  @keyframes jawR{to{transform:translateX(0)}}
-  /* CTA content rides above the panels and pops once they meet */
-  .ctajaws .cta-in{position:relative;z-index:2;opacity:0;transform:translateY(18px) scale(.965);
-    animation:ctaPop linear both;animation-timeline:view();animation-range:cover 46% cover 64%}
-  @keyframes ctaPop{to{opacity:1;transform:none}}
+    clip-path:polygon(58px 0,100% 0,100% 100%,0 100%,58px 50%)}
+  .ctajaws .cta-in{position:relative;z-index:2;opacity:0;transform:translateY(18px) scale(.965)}
 }
-@media (prefers-reduced-motion: reduce){
-  .ctajaws .jaw{display:none!important}
-  .ctajaws{background:#fff}
-  .ctajaws .cta-in{opacity:1!important;transform:none!important;animation:none!important}
+@media (min-width: 881px) and (prefers-reduced-motion: reduce){
+  .ctajaws{--jaws:0;background:#fff}
+  .ctajaws .jaw{display:none}
+  .ctajaws .cta-in{opacity:1;transform:none}
 }

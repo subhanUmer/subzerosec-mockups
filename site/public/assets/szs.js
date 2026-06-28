@@ -91,6 +91,34 @@
     hsvSet(0); hsvScroll();
   }
 
+  // "Jaws" CTA reveal (Pro variant only — gated by the --jaws CSS flag).
+  var jaws = document.querySelector('.ctajaws');
+  if (jaws) {
+    var jl = jaws.querySelector('.jaw-l'), jr = jaws.querySelector('.jaw-r'), jcta = jaws.querySelector('.cta-in');
+    var jreduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function jawScroll() {
+      var on = getComputedStyle(jaws).getPropertyValue('--jaws').trim() === '1';
+      if (!on || jreduce || !jl || !jr || !jcta) {
+        if (jl) jl.style.transform = ''; if (jr) jr.style.transform = '';
+        if (jcta) { jcta.style.opacity = ''; jcta.style.transform = ''; }
+        return;
+      }
+      var vh = window.innerHeight, r = jaws.getBoundingClientRect();
+      // progress as the section rises: 0 when its top is at the viewport bottom,
+      // 1 by the time it is roughly centred — so the "mouth" closes while in view.
+      var p = Math.max(0, Math.min(1, (vh - r.top) / (vh * 1.25)));
+      var jp = Math.min(1, p / 0.7);                  // panels close over the first ~70%
+      var cp = Math.max(0, (p - 0.7) / 0.3);          // CTA pops in the last ~30%
+      jl.style.transform = 'translateX(' + (-101 * (1 - jp)) + '%)';
+      jr.style.transform = 'translateX(' + (101 * (1 - jp)) + '%)';
+      jcta.style.opacity = cp.toFixed(3);
+      jcta.style.transform = 'translateY(' + (18 * (1 - cp)).toFixed(1) + 'px) scale(' + (0.965 + 0.035 * cp).toFixed(3) + ')';
+    }
+    window.addEventListener('scroll', jawScroll, { passive: true });
+    window.addEventListener('resize', jawScroll);
+    jawScroll();
+  }
+
   document.querySelectorAll('.stats').forEach(function (statsEl) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) { if (en.isIntersecting) { runCounters(statsEl); io.unobserve(en.target); } });
